@@ -12,6 +12,7 @@ class _AddExpenseState extends State<AddExpense> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset:false,
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
@@ -44,26 +45,26 @@ class _AddExpenseState extends State<AddExpense> {
           Expanded(
             flex: 5,
             child: Container(
-              margin: EdgeInsets.only(top:8.0),
+              margin: EdgeInsets.only(top: 8.0),
               child: Column(
                 children: [
                   Expanded(
-                    child: InputField(label:'To'),
+                    child: DropDownArrow(),
                   ),
                   Expanded(
-                    child: InputField(label:'Category'),
+                    child: InputField(label: 'Category'),
                   ),
                   Expanded(
-                    child: InputField(label:'Payment Method'),
+                    child: InputField(label: 'Payment Method'),
                   ),
                   Expanded(
-                    child: InputField(label:'Amount'),
+                    child: InputField(label: 'Amount'),
                   ),
                   Expanded(
-                    child: InputField(label:'Receipt Date'),
+                    child: InputField(label: 'Receipt Date'),
                   ),
                   Expanded(
-                    child: InputField(label:'Description'),
+                    child: InputField(label: 'Description'),
                   ),
                 ],
               ),
@@ -72,9 +73,17 @@ class _AddExpenseState extends State<AddExpense> {
           Expanded(
               flex: 2,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  AttachButton(label: 'Attach Receipt',),
-                  LoginButton(label: 'Submit',)
+                  AttachButton(
+                    label: 'Attach Receipt',
+                  ),
+                  SizedBox(
+                    height:20.0
+                  ),
+                  LoginButton(
+                    label: 'Submit',
+                  )
                 ],
               ))
         ],

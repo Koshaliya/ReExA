@@ -1,30 +1,31 @@
 import 'package:flutter/material.dart';
 import 'constants.dart';
 
+
 class LoginButton extends StatelessWidget {
   final String label;
   const LoginButton({this.label }) ;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(colors: [
-          Colors.deepPurple[600],
-          Colors.cyan[400],
-        ]),
-        borderRadius: BorderRadius.circular(50),
-      ),
-      child: Text(label,
-          style: TextStyle(fontSize: 15.0, color: Colors.white)),
-      width: 250.0,
+    return SizedBox(
       height: 50.0,
-      padding: EdgeInsets.all(15.0),
-      margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+      width: 250.0,
+      child: RaisedButton(onPressed: (){},
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(40.0),
+             ),
+          padding: EdgeInsets.all(15.0),
+          color: Color(0xFFF9AA33),
+          child: Text(label,
+            style: TextStyle(fontSize: 18.0, color: Color(0xFF344955),fontWeight: FontWeight.bold),)
+         ),
     );
   }
 }
+
+//Color(0xFF344955),
+//Color(0xFFF9AA33),
 
 
 class TodayMonth extends StatelessWidget {
