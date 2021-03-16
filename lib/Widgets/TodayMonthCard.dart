@@ -1,32 +1,37 @@
 import 'package:flutter/material.dart';
 import 'constants.dart';
 
-
 class LoginButton extends StatelessWidget {
   final String label;
-  const LoginButton({this.label }) ;
+  const LoginButton({this.label});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50.0,
-      width: 250.0,
-      child: RaisedButton(onPressed: (){},
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(40.0),
-             ),
-          padding: EdgeInsets.all(15.0),
-          color: Color(0xFFF9AA33),
-          child: Text(label,
-            style: TextStyle(fontSize: 18.0, color: Color(0xFF344955),fontWeight: FontWeight.bold),)
-         ),
-    );
+        height: 50.0,
+        width: 250.0,
+        child: ElevatedButton(
+          onPressed: () {},
+          child: Text(
+            label,
+            style: TextStyle(
+                fontSize: 18.0,
+                color: Color(0xFF344955),
+                fontWeight: FontWeight.bold),
+          ),
+          style: ElevatedButton.styleFrom(
+              primary: Color(0xFFF9AA33),
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(40.0),
+              ),
+              padding: EdgeInsetsGeometry.infinity),
+        ));
   }
 }
 
 //Color(0xFF344955),
 //Color(0xFFF9AA33),
-
 
 class TodayMonth extends StatelessWidget {
   const TodayMonth({
@@ -36,7 +41,6 @@ class TodayMonth extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      
       children: [
         Expanded(
           child: Container(
@@ -53,8 +57,7 @@ class TodayMonth extends StatelessWidget {
                 'This month',
                 style: kToday,
               ),
-              padding:
-                  EdgeInsets.only(top: 10.0, left: 50.0)),
+              padding: EdgeInsets.only(top: 10.0, left: 50.0)),
         ),
       ],
     );
@@ -70,7 +73,6 @@ class _AmountState extends State<Amount> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      
       children: [
         Expanded(
           child: Container(
@@ -87,18 +89,18 @@ class _AmountState extends State<Amount> {
                 'Rs 5000',
                 style: kAmount,
               ),
-              padding:
-                  EdgeInsets.only(top: 10.0, left: 50.0)),
+              padding: EdgeInsets.only(top: 10.0, left: 50.0)),
         ),
       ],
     );
   }
 }
+
 class DashboardButton extends StatelessWidget {
   final IconData buttonIcon;
   final String label;
   final Color buttonColor;
-  const DashboardButton({this.buttonIcon,this.label,this.buttonColor }) ;
+  const DashboardButton({this.buttonIcon, this.label, this.buttonColor});
 
   @override
   Widget build(BuildContext context) {
@@ -115,8 +117,7 @@ class DashboardButton extends StatelessWidget {
               size: 40.0,
               color: Colors.white,
             ),
-            Text(label,
-                textAlign: TextAlign.center, style: kButton),
+            Text(label, textAlign: TextAlign.center, style: kButton),
           ],
         ),
         margin: EdgeInsets.all(15.0),
