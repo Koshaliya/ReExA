@@ -12,7 +12,7 @@ const kappBarText = TextStyle(
   color: Colors.black,
 );
 
-const kOverviewText = TextStyle(
+/*const kOverviewText = TextStyle(
   fontSize: 13.0,
   color: Colors.black,
   fontWeight: FontWeight.bold,
@@ -28,11 +28,11 @@ const kDivider = Divider(
   thickness: 3,
   indent: 18,
   endIndent: 200,
-);
+);*/
 
 const kExpense = TextStyle(
   fontSize: 16.0,
-  color: Colors.white,
+  color: Color(0xFFF9AA33),
   fontWeight: FontWeight.bold,
   
 );

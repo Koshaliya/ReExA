@@ -3,6 +3,7 @@ import 'package:ReExA/Widgets/constants.dart';
 import 'package:ReExA/Widgets/InputBoxCard.dart';
 import 'package:ReExA/Widgets/TodayMonthCard.dart';
 
+
 class AddExpense extends StatefulWidget {
   @override
   _AddExpenseState createState() => _AddExpenseState();
@@ -12,7 +13,7 @@ class _AddExpenseState extends State<AddExpense> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset:false,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
@@ -49,22 +50,31 @@ class _AddExpenseState extends State<AddExpense> {
               child: Column(
                 children: [
                   Expanded(
-                    child: DropDownArrow(),
+                    child: DropDownArrow(
+                      hintText: 'Select Manager',
+                      hintList: managerList,
+                    ),
                   ),
                   Expanded(
-                    child: InputField(label: 'Category'),
+                    child: DropDownArrow(
+                      hintText: 'Category',
+                      hintList: categoryList,
+                    ),
                   ),
                   Expanded(
-                    child: InputField(label: 'Payment Method'),
+                    child: DropDownArrow(
+                      hintText: 'Payment Method',
+                      hintList: paymentList,
+                    ),
                   ),
                   Expanded(
-                    child: InputField(label: 'Amount'),
+                    child: AmountField(label: 'Amout',)
                   ),
                   Expanded(
-                    child: InputField(label: 'Receipt Date'),
+                    child: DateField(),
                   ),
                   Expanded(
-                    child: InputField(label: 'Description'),
+                    child: DescriptionField(),
                   ),
                 ],
               ),
@@ -78,9 +88,7 @@ class _AddExpenseState extends State<AddExpense> {
                   AttachButton(
                     label: 'Attach Receipt',
                   ),
-                  SizedBox(
-                    height:20.0
-                  ),
+                  SizedBox(height: 20.0),
                   LoginButton(
                     label: 'Submit',
                   )

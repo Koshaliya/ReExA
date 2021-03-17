@@ -15,17 +15,18 @@ class LoginButton extends StatelessWidget {
           child: Text(
             label,
             style: TextStyle(
-                fontSize: 18.0,
+                fontSize: 20.0,
                 color: Color(0xFF344955),
-                fontWeight: FontWeight.bold),
+                fontWeight: FontWeight.bold,
+                letterSpacing: 0.5),
           ),
           style: ElevatedButton.styleFrom(
-              primary: Color(0xFFF9AA33),
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(40.0),
-              ),
-              padding: EdgeInsetsGeometry.infinity),
+            primary: Color(0xFFF9AA33),
+            elevation: 5,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(40.0),
+            ),
+          ),
         ));
   }
 }
@@ -127,6 +128,120 @@ class DashboardButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.0),
         ),
       ),
+    );
+  }
+}
+
+class OverView extends StatelessWidget {
+  const OverView({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      //mainAxisAlignment: main,
+      children: [
+        Expanded(
+          flex: 2,
+          child: Container(
+            margin: EdgeInsets.all(10.0),
+            color: Color(0xFF344955),
+            /*decoration: BoxDecoration(
+      gradient: LinearGradient(colors: [
+        Color(0xFF344955),
+Color(0xFFF9AA33),
+      ]),
+    ),*/
+            child: Column(
+              children: [
+                Container(
+                  child: Text(
+                    'Expenses',
+                    style: kExpense,
+                  ),
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.only(top: 20.0, left: 20.0, bottom: 20.0),
+                ),
+                Container(
+                  child: TodayMonth(),
+                ),
+                Container(
+                  child: Amount(),
+                )
+              ],
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 4,
+          child: Container(
+            height: 400.0,
+            color: Color(0xFFF9F9F9),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    DashboardButton(
+                        buttonIcon: Icons.approval,
+                        label: 'Top-up request',
+                        buttonColor: Color(0xFFFF716D)),
+                    DashboardButton(
+                        buttonIcon: Icons.mobile_friendly_outlined,
+                        label: 'Reimbursement status',
+                        buttonColor: Color(0xFFA08AF3)),
+                    DashboardButton(
+                        buttonIcon: Icons.assignment_ind_outlined,
+                        label: 'Report',
+                        buttonColor: Color(0xFFF169B1)),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    DashboardButton(
+                        buttonIcon: Icons.my_library_books_outlined,
+                        label: 'News',
+                        buttonColor: Color(0xFF90DDD0)),
+                    DashboardButton(
+                        buttonIcon: Icons.history_outlined,
+                        label: 'History',
+                        buttonColor: Color(0xFFFF8E61)),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.arrow_right_alt_outlined,
+                    size: 30.0,
+                    color: Colors.black45,
+                  ),
+                  SizedBox(
+                    width: 5.0,
+                  ),
+                  Text(
+                    'Swipe right for Expense Statistics',
+                    style: kSwipe,
+                  )
+                ],
+              ),
+              LoginButton(label: 'Add Expense')
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
