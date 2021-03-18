@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 
+const kPrimaryColor =Color(0xFF344955);
+const kSecondColor =Color(0xFFF9AA33);
+
 const kReEx = TextStyle(
   fontFamily: 'OpenSans',
   color: Color(0xFF243656),
   fontSize: 40.0,
+  
 );
 
-const kloginText = TextStyle(fontSize: 15.0, color: Color(0X804D4F53));
+const kloginText = TextStyle(fontSize: 15.0, color: kPrimaryColor);
 const kappBarText = TextStyle(
-  fontSize: 15.0,
+  fontSize: 18.0,
   color: Colors.black,
 );
 
@@ -32,7 +36,7 @@ const kDivider = Divider(
 
 const kExpense = TextStyle(
   fontSize: 16.0,
-  color: Color(0xFFF9AA33),
+  color: kSecondColor,
   fontWeight: FontWeight.bold,
   
 );

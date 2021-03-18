@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ReExA/Widgets/constants.dart';
-import 'package:ReExA/Widgets/InputBoxCard.dart';
-import 'package:ReExA/Widgets/TodayMonthCard.dart';
+import 'package:ReExA/Widgets/expenseCard.dart';
+import 'package:ReExA/Widgets/dashboardCard.dart';
+
 
 
 class AddExpense extends StatefulWidget {
+  static const String id = 'addExpense';
   @override
   _AddExpenseState createState() => _AddExpenseState();
 }
@@ -85,10 +87,8 @@ class _AddExpenseState extends State<AddExpense> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  AttachButton(
-                    label: 'Attach Receipt',
-                  ),
-                  SizedBox(height: 20.0),
+                  AttachImage(),
+                  
                   LoginButton(
                     label: 'Submit',
                   )

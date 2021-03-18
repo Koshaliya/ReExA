@@ -1,9 +1,11 @@
+import 'package:ReExA/screens/addExpense.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
 
 class LoginButton extends StatelessWidget {
   final String label;
-  const LoginButton({this.label});
+  final String route;
+  const LoginButton({this.label,this.route});
 
   @override
   Widget build(BuildContext context) {
@@ -11,17 +13,19 @@ class LoginButton extends StatelessWidget {
         height: 50.0,
         width: 250.0,
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, route);
+          },
           child: Text(
             label,
             style: TextStyle(
                 fontSize: 20.0,
-                color: Color(0xFF344955),
+                color: kPrimaryColor,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 0.5),
           ),
           style: ElevatedButton.styleFrom(
-            primary: Color(0xFFF9AA33),
+            primary: kSecondColor,
             elevation: 5,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(40.0),
@@ -106,7 +110,9 @@ class DashboardButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        print('hi');
+      },
       child: Container(
         height: 100.0,
         width: 100.0,
@@ -146,7 +152,7 @@ class OverView extends StatelessWidget {
           flex: 2,
           child: Container(
             margin: EdgeInsets.all(10.0),
-            color: Color(0xFF344955),
+            color: kPrimaryColor,
             /*decoration: BoxDecoration(
       gradient: LinearGradient(colors: [
         Color(0xFF344955),
@@ -220,24 +226,11 @@ Color(0xFFF9AA33),
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.arrow_right_alt_outlined,
-                    size: 30.0,
-                    color: Colors.black45,
-                  ),
-                  SizedBox(
-                    width: 5.0,
-                  ),
-                  Text(
-                    'Swipe right for Expense Statistics',
-                    style: kSwipe,
-                  )
-                ],
+              Text(
+                'Swipe right for Expense Statistics',
+                style: kSwipe,
               ),
-              LoginButton(label: 'Add Expense')
+              LoginButton(label: 'Add Expense',route: AddExpense.id,)
             ],
           ),
         ),

@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:intl/intl.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class AmountField extends StatelessWidget {
   final String label;
@@ -90,62 +92,15 @@ class _DateFieldState extends State<DateField> {
     );
   }
 }
-
+/*
 class AttachButton extends StatelessWidget {
-  final String label;
-  const AttachButton({this.label});
+  
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 200.0,
-      child: TextButton(
-        onPressed: () {},
-        style: TextButton.styleFrom(
-          padding: EdgeInsets.all(15.0),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-            side: BorderSide(color: Color(0xFF344955), width: 1.5),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ShaderMask(
-                child: Container(
-                  child: Icon(
-                    Icons.camera_enhance_rounded,
-                    color: Colors.white,
-                  ),
-                ),
-                shaderCallback: (bounds) => LinearGradient(colors: [
-                      Color(0xFFF9AA33),
-                      Color(0xFFF9AA33),
-                    ]).createShader(bounds)),
-            /*Container(
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0)),
-              color: Color(0xFF344955),
-              padding: EdgeInsets.all(8.0),
-              
-              child: ShaderMask(
-                              child: Icon(
-                  Icons.camera_enhance_outlined,
-                  color: Color(0xFFF9AA33),
-                  
-                ),
-              ),
-            ),*/
-            SizedBox(width: 15.0),
-            Text(
-              label,
-              style: TextStyle(fontSize: 15.0, color: Colors.black87),
-            ),
-          ],
-        ),
-      ),
-    );
+    return 
   }
-}
+}*/
 
 class DescriptionField extends StatefulWidget {
   @override
@@ -231,6 +186,90 @@ class _DropDownArrowState extends State<DropDownArrow> {
           }).toList(),
         ),
       ),
+    );
+  }
+}
+
+class AttachImage extends StatefulWidget {
+  @override
+  _AttachImageState createState() => _AttachImageState();
+}
+
+class _AttachImageState extends State<AttachImage> {
+  File _image;
+  Future getImage() async {
+    final _picker = ImagePicker();
+    final cameraImage = await _picker.getImage(source: ImageSource.camera);
+    
+    setState(() {
+      print(cameraImage.path);
+      _image = File(cameraImage.path);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        SizedBox(
+          width: 200.0,
+          child: TextButton(
+            onPressed: () {
+              getImage();
+            },
+            style: TextButton.styleFrom(
+              padding: EdgeInsets.all(15.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+                side: BorderSide(color: Color(0xFF344955), width: 1.5),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ShaderMask(
+                    child: Container(
+                      child: Icon(
+                        Icons.camera_enhance_rounded,
+                        color: Colors.white,
+                      ),
+                    ),
+                    shaderCallback: (bounds) => LinearGradient(colors: [
+                          Color(0xFFF9AA33),
+                          Color(0xFFF9AA33),
+                        ]).createShader(bounds)),
+                /*Container(
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0)),
+                  color: Color(0xFF344955),
+                  padding: EdgeInsets.all(8.0),
+                  
+                  child: ShaderMask(
+                                  child: Icon(
+                      Icons.camera_enhance_outlined,
+                      color: Color(0xFFF9AA33),
+                      
+                    ),
+                  ),
+                ),*/
+                SizedBox(width: 15.0),
+                Text(
+                  'Attach Receipt',
+                  style: TextStyle(fontSize: 15.0, color: Colors.black87),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          
+          margin: EdgeInsets.only(top:20.0),
+          //padding: EdgeInsets.all(5.0),
+          height: 30.0,
+          
+          child: _image == null ? Text('') : Text("Receipt Attached",style: TextStyle(fontSize: 16.0,color: Color(0xFF344955)),),
+        ),
+      ],
     );
   }
 }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ReExA/Widgets/constants.dart';
-import 'package:ReExA/Widgets/TodayMonthCard.dart';
+import 'package:ReExA/Widgets/dashboardCard.dart';
 
 class EmpDashboard extends StatefulWidget {
+  static const String id = 'empDashboard';
+
   @override
   _EmpDashboardState createState() => _EmpDashboardState();
 }
@@ -44,7 +46,7 @@ class _EmpDashboardState extends State<EmpDashboard> {
               fontWeight: FontWeight.bold,
               fontSize: 16.0
                             ),
-            indicatorColor: Color(0xFFF9AA33)  ,            
+            indicatorColor: kSecondColor  ,            
             tabs: [
               Tab(text: 'OVERVIEW',),
               Tab(text: 'EXPENSE STAT'),

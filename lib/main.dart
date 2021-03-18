@@ -1,3 +1,5 @@
+
+import 'package:ReExA/screens/forgotPass.dart';
 import 'package:ReExA/screens/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'screens/loginPage.dart';
@@ -16,7 +18,14 @@ class MyApp extends StatelessWidget {
        
         
     ),
-      home: AddExpense(),
+      initialRoute: LoginPage.id,
+      routes: {
+        LoginPage.id:(context) => LoginPage(),
+        ForgotPassword.id:(context) => ForgotPassword(),
+        EmpDashboard.id: (context) => EmpDashboard(),
+        AddExpense.id: (context) => AddExpense(),
+        
+      },
     );
   }
 }
