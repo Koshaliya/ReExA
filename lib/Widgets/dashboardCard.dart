@@ -1,11 +1,23 @@
 import 'package:ReExA/screens/addExpense.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
+//import 'package:ReExA/services/authService.dart';
+
+
+/*class FirstLoginButton extends StatelessWidget {
+  
+
+  @override
+  Widget build(BuildContext context) {
+    return ;
+  }
+}*/
 
 class LoginButton extends StatelessWidget {
   final String label;
   final String route;
-  const LoginButton({this.label,this.route});
+  //final Function onPress;
+  const LoginButton({this.label,this.route,});
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +46,7 @@ class LoginButton extends StatelessWidget {
         ));
   }
 }
+
 
 //Color(0xFF344955),
 //Color(0xFFF9AA33),

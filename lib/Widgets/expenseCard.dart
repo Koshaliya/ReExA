@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'constants.dart';
 import 'package:flutter/material.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:intl/intl.dart';
@@ -19,13 +19,13 @@ class AmountField extends StatelessWidget {
       //height: 100.0,
       margin: const EdgeInsets.all(10.0),
       child: TextField(
-        style: TextStyle(color: Color(0xFFF9AA33), fontWeight: FontWeight.bold),
+        style: TextStyle(color: kSecondColor, fontWeight: FontWeight.bold),
         keyboardType: TextInputType.number,
         inputFormatters: [ThousandsFormatter(allowFraction: true)],
         decoration: InputDecoration(
           prefixText: 'Rs ',
           prefixStyle: TextStyle(
-              color: Color(0xFFF9AA33),
+              color: kSecondColor,
               fontWeight: FontWeight.bold,
               fontSize: 16.0),
           labelText: label,
@@ -33,12 +33,11 @@ class AmountField extends StatelessWidget {
               color: Colors.grey[700],
               fontSize: 14.0,
               fontWeight: FontWeight.bold),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black, width: 2),
-          ),
+          border: kEnabledBorder,
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black54, width: 1),
+            borderSide: BorderSide(color: kPrimaryColor, width: 1),
           ),
+          enabledBorder: kEnabledBorder,
           contentPadding: EdgeInsets.all(15.0),
         ),
       ),
@@ -60,21 +59,19 @@ class _DateFieldState extends State<DateField> {
       //height: 100.0,
       margin: const EdgeInsets.all(10.0),
       child: TextField(
-        style: TextStyle(color: Color(0xFFF9AA33), fontWeight: FontWeight.bold),
+        style: TextStyle(color: kSecondColor, fontWeight: FontWeight.bold),
         controller: dateCtl,
-        inputFormatters: [ThousandsFormatter(allowFraction: true)],
         decoration: InputDecoration(
           labelText: 'Receipt Date',
           labelStyle: TextStyle(
               color: Colors.grey[700],
               fontSize: 14.0,
               fontWeight: FontWeight.bold),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black, width: 2),
-          ),
+          border: kEnabledBorder,
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black54, width: 1),
+            borderSide: BorderSide(color: kPrimaryColor, width: 1.5),
           ),
+          enabledBorder: kEnabledBorder,
           contentPadding: EdgeInsets.all(15.0),
         ),
         onTap: () async {
@@ -82,10 +79,26 @@ class _DateFieldState extends State<DateField> {
           FocusScope.of(context).requestFocus(new FocusNode());
 
           date = await showDatePicker(
-              context: context,
-              initialDate: DateTime.now(),
-              firstDate: DateTime(2019),
-              lastDate: DateTime(2022));
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2019),
+            lastDate: DateTime(2022),
+            builder: (BuildContext context, Widget child) {
+              return Theme(
+                data: ThemeData(
+                  textButtonTheme: new TextButtonThemeData(
+                    style: TextButton.styleFrom(primary: kSecondColor),
+                  ),
+                  colorScheme: ColorScheme.light(
+                    primary: kPrimaryColor,
+                    onPrimary: Colors.white,
+                    onSurface: kPrimaryColor,
+                  ),
+                ),
+                child: child,
+              );
+            },
+          );
           dateCtl.text = DateFormat.yMMMd().format(date);
         },
       ),
@@ -114,19 +127,18 @@ class _DescriptionFieldState extends State<DescriptionField> {
       //height: 100.0,
       margin: const EdgeInsets.all(10.0),
       child: TextField(
-        style: TextStyle(color: Color(0xFFF9AA33), fontWeight: FontWeight.bold),
+        style: TextStyle(color: kSecondColor, fontWeight: FontWeight.bold),
         decoration: InputDecoration(
           labelText: 'Description',
           labelStyle: TextStyle(
               color: Colors.grey[700],
               fontSize: 14.0,
               fontWeight: FontWeight.bold),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black, width: 2),
-          ),
+          border: kEnabledBorder,
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black54, width: 1),
+            borderSide: BorderSide(color: kPrimaryColor, width: 1.5),
           ),
+          enabledBorder: kEnabledBorder,
           contentPadding: EdgeInsets.all(15.0),
         ),
       ),
@@ -161,16 +173,16 @@ class _DropDownArrowState extends State<DropDownArrow> {
       child: Container(
         padding: EdgeInsets.all(10.0),
         decoration: BoxDecoration(
-            border: Border.all(color: Color(0xFF344955), width: 1),
+            border: Border.all(color: kPrimaryColor, width: 1),
             borderRadius: BorderRadius.circular(5.0)),
         child: DropdownButton(
           hint: Text(widget.hintText),
-          dropdownColor: Color(0xFF344955),
+          dropdownColor: kPrimaryColor,
           icon: Icon(Icons.arrow_drop_down),
           iconSize: 36,
           isExpanded: true,
           style:
-              TextStyle(color: Color(0xFFF9AA33), fontWeight: FontWeight.bold),
+              TextStyle(color: kSecondColor, fontWeight: FontWeight.bold),
           underline: SizedBox(),
           value: valueChoose,
           onChanged: (newValue) {
@@ -200,7 +212,7 @@ class _AttachImageState extends State<AttachImage> {
   Future getImage() async {
     final _picker = ImagePicker();
     final cameraImage = await _picker.getImage(source: ImageSource.camera);
-    
+
     setState(() {
       print(cameraImage.path);
       _image = File(cameraImage.path);
@@ -221,25 +233,30 @@ class _AttachImageState extends State<AttachImage> {
             style: TextButton.styleFrom(
               padding: EdgeInsets.all(15.0),
               shape: RoundedRectangleBorder(
+                
                 borderRadius: BorderRadius.circular(20.0),
-                side: BorderSide(color: Color(0xFF344955), width: 1.5),
+                side: BorderSide(color: kPrimaryColor, width: 1.5),
               ),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ShaderMask(
-                    child: Container(
+                //ShaderMask(
+                    //child: 
+                    Container(
+                      decoration: BoxDecoration(
+                        color:kSecondColor,
+                      ),
                       child: Icon(
                         Icons.camera_enhance_rounded,
                         color: Colors.white,
                       ),
                     ),
-                    shaderCallback: (bounds) => LinearGradient(colors: [
-                          Color(0xFFF9AA33),
-                          Color(0xFFF9AA33),
+                   /* shaderCallback: (bounds) => LinearGradient(colors: [
+                          kSecondColor,
+                          kSecondColor
                         ]).createShader(bounds)),
-                /*Container(
+                Container(
                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0)),
                   color: Color(0xFF344955),
                   padding: EdgeInsets.all(8.0),
@@ -262,12 +279,16 @@ class _AttachImageState extends State<AttachImage> {
           ),
         ),
         Container(
-          
-          margin: EdgeInsets.only(top:20.0),
+          margin: EdgeInsets.only(top: 20.0),
           //padding: EdgeInsets.all(5.0),
           height: 30.0,
-          
-          child: _image == null ? Text('') : Text("Receipt Attached",style: TextStyle(fontSize: 16.0,color: Color(0xFF344955)),),
+
+          child: _image == null
+              ? Text('')
+              : Text(
+                  "Receipt Attached",
+                  style: TextStyle(fontSize: 16.0, color: kPrimaryColor),
+                ),
         ),
       ],
     );
