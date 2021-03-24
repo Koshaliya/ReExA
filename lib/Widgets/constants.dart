@@ -70,7 +70,7 @@ const kSwipe = TextStyle(
 );
 
 const kEnabledBorder =OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black, width: 1),
+            borderSide: BorderSide(color: kPrimaryColor, width: 1),
           );
 
 const kMessageTextFieldDecoration = InputDecoration(

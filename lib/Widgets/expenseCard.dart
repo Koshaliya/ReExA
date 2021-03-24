@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
+var managerId, category, payMethod, amount, receiptDate, descrip;
+
 class AmountField extends StatelessWidget {
   final String label;
 
@@ -19,15 +21,17 @@ class AmountField extends StatelessWidget {
       //height: 100.0,
       margin: const EdgeInsets.all(10.0),
       child: TextField(
+        controller: TextEditingController(text: amount),
+        onChanged: (value) {
+          amount = value;
+        },
         style: TextStyle(color: kSecondColor, fontWeight: FontWeight.bold),
         keyboardType: TextInputType.number,
         inputFormatters: [ThousandsFormatter(allowFraction: true)],
         decoration: InputDecoration(
           prefixText: 'Rs ',
           prefixStyle: TextStyle(
-              color: kSecondColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 16.0),
+              color: kSecondColor, fontWeight: FontWeight.bold, fontSize: 16.0),
           labelText: label,
           labelStyle: TextStyle(
               color: Colors.grey[700],
@@ -51,7 +55,7 @@ class DateField extends StatefulWidget {
 }
 
 class _DateFieldState extends State<DateField> {
-  TextEditingController dateCtl = TextEditingController();
+  TextEditingController dateCtl = TextEditingController(text: receiptDate);
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +65,9 @@ class _DateFieldState extends State<DateField> {
       child: TextField(
         style: TextStyle(color: kSecondColor, fontWeight: FontWeight.bold),
         controller: dateCtl,
+        onChanged: (value) {
+          receiptDate = value;
+        },
         decoration: InputDecoration(
           labelText: 'Receipt Date',
           labelStyle: TextStyle(
@@ -127,6 +134,10 @@ class _DescriptionFieldState extends State<DescriptionField> {
       //height: 100.0,
       margin: const EdgeInsets.all(10.0),
       child: TextField(
+        controller: TextEditingController(text: descrip),
+        onChanged: (value) {
+          descrip = value;
+        },
         style: TextStyle(color: kSecondColor, fontWeight: FontWeight.bold),
         decoration: InputDecoration(
           labelText: 'Description',
@@ -146,28 +157,24 @@ class _DescriptionFieldState extends State<DescriptionField> {
   }
 }
 
-String valueChoose;
+//String valueChoose;
 const List managerList = ["M001", "M002", "M003", "M004", "M005", "M006"];
 const List categoryList = ["Food", "Travel", "Clinet Meeting", "Misc"];
 const List paymentList = ["Card", "Cash"];
 
-class DropDownArrow extends StatefulWidget {
+class DropDownManager extends StatefulWidget {
   final String hintText;
   final List hintList;
 
-  DropDownArrow({this.hintList, this.hintText});
+  DropDownManager({this.hintList, this.hintText});
 
   @override
-  _DropDownArrowState createState() => _DropDownArrowState();
+  _DropDownManagerState createState() => _DropDownManagerState();
 }
 
-class _DropDownArrowState extends State<DropDownArrow> {
+class _DropDownManagerState extends State<DropDownManager> {
   @override
   Widget build(BuildContext context) {
-    return selectDownMenu();
-  }
-
-  Padding selectDownMenu() {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Container(
@@ -175,19 +182,18 @@ class _DropDownArrowState extends State<DropDownArrow> {
         decoration: BoxDecoration(
             border: Border.all(color: kPrimaryColor, width: 1),
             borderRadius: BorderRadius.circular(5.0)),
-        child: DropdownButton(
+        child: DropdownButtonFormField(
+          decoration: InputDecoration.collapsed(hintText: ' '),
           hint: Text(widget.hintText),
           dropdownColor: kPrimaryColor,
           icon: Icon(Icons.arrow_drop_down),
           iconSize: 36,
           isExpanded: true,
-          style:
-              TextStyle(color: kSecondColor, fontWeight: FontWeight.bold),
-          underline: SizedBox(),
-          value: valueChoose,
+          style: TextStyle(color: kSecondColor, fontWeight: FontWeight.bold),
+          value: managerId,
           onChanged: (newValue) {
             setState(() {
-              valueChoose = newValue;
+              managerId = newValue;
             });
           },
           items: widget.hintList.map((valueItem) {
@@ -196,6 +202,96 @@ class _DropDownArrowState extends State<DropDownArrow> {
               value: valueItem,
             );
           }).toList(),
+        ),
+      ),
+    );
+  }
+}
+
+class DropDownCategory extends StatefulWidget {
+  final String hintText;
+  final List hintList;
+
+  DropDownCategory({this.hintList, this.hintText});
+  @override
+  _DropDownCategoryState createState() => _DropDownCategoryState();
+}
+
+class _DropDownCategoryState extends State<DropDownCategory> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Container(
+        padding: EdgeInsets.all(10.0),
+        decoration: BoxDecoration(
+            border: Border.all(color: kPrimaryColor, width: 1),
+            borderRadius: BorderRadius.circular(5.0)),
+        child: DropdownButtonFormField(
+          decoration: InputDecoration.collapsed(hintText: ' '),
+          hint: Text(widget.hintText),
+          dropdownColor: kPrimaryColor,
+          icon: Icon(Icons.arrow_drop_down),
+          iconSize: 36,
+          isExpanded: true,
+          style: TextStyle(color: kSecondColor, fontWeight: FontWeight.bold),
+          value: category,
+          onChanged: (newValue) {
+            setState(() {
+              category = newValue;
+            });
+          },
+          items: widget.hintList.map((valueItem) {
+            return DropdownMenuItem(
+              child: Text(valueItem),
+              value: valueItem,
+            );
+          }).toList(),
+        ),
+      ),
+    );
+  }
+}
+
+class DropDownPayMethod extends StatefulWidget {
+  final String hintText;
+  final List hintList;
+
+  DropDownPayMethod({this.hintList, this.hintText});
+  @override
+  _DropDownPayMethodState createState() => _DropDownPayMethodState();
+}
+
+class _DropDownPayMethodState extends State<DropDownPayMethod> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Container(
+        padding: EdgeInsets.all(10.0),
+        decoration: BoxDecoration(
+            border: Border.all(color: kPrimaryColor, width: 1),
+            borderRadius: BorderRadius.circular(5.0)),
+        child: DropdownButtonFormField(
+          decoration: InputDecoration.collapsed(hintText: ' '),
+          hint: Text(widget.hintText),
+          dropdownColor: kPrimaryColor,
+          icon: Icon(Icons.arrow_drop_down),
+          iconSize: 36,
+          isExpanded: true,
+          style: TextStyle(color: kSecondColor, fontWeight: FontWeight.bold),
+          items: widget.hintList.map((valueItem) {
+            return DropdownMenuItem(
+              child: Text(valueItem),
+              value: valueItem,
+            );
+          }).toList(),
+          onChanged: (newValue) {
+            setState(() {
+              payMethod = newValue;
+            });
+          },
+          value: payMethod,
         ),
       ),
     );
@@ -233,7 +329,6 @@ class _AttachImageState extends State<AttachImage> {
             style: TextButton.styleFrom(
               padding: EdgeInsets.all(15.0),
               shape: RoundedRectangleBorder(
-                
                 borderRadius: BorderRadius.circular(20.0),
                 side: BorderSide(color: kPrimaryColor, width: 1.5),
               ),
@@ -242,17 +337,14 @@ class _AttachImageState extends State<AttachImage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 //ShaderMask(
-                    //child: 
-                    Container(
-                      decoration: BoxDecoration(
-                        color:kSecondColor,
-                      ),
-                      child: Icon(
-                        Icons.camera_enhance_rounded,
-                        color: Colors.white,
-                      ),
-                    ),
-                   /* shaderCallback: (bounds) => LinearGradient(colors: [
+                //child:
+                CircleAvatar(
+                  child: Icon(
+                    Icons.camera_enhance_rounded,
+                    color: Colors.white,
+                  ),
+                ),
+                /* shaderCallback: (bounds) => LinearGradient(colors: [
                           kSecondColor,
                           kSecondColor
                         ]).createShader(bounds)),
