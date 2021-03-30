@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'package:ReExA/screens/empDashboard.dart';
+import 'package:ReExA/screens/reimbursementScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:ReExA/Widgets/constants.dart';
 import 'package:ReExA/Widgets/expenseCard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:ReExA/Example.dart';
 import 'package:http/http.dart' as http;
-//import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class AddExpense extends StatefulWidget {
   static const String id = 'addExpense';
@@ -15,10 +17,6 @@ class AddExpense extends StatefulWidget {
 class _AddExpenseState extends State<AddExpense> {
   final _formKey = GlobalKey<FormState>();
 
-  //var amount, receiptDate, descrip;
-
-  //String errorText;
-  //bool validate = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,13 +65,13 @@ class _AddExpenseState extends State<AddExpense> {
                       ),
                     ),
                     Expanded(
-                      child: DropDownManager(
+                      child: DropDownCategory(
                         hintText: 'Category',
                         hintList: categoryList,
                       ),
                     ),
                     Expanded(
-                      child: DropDownManager(
+                      child: DropDownPayMethod(
                         hintText: 'Payment Method',
                         hintList: paymentList,
                       ),
@@ -102,69 +100,309 @@ class _AddExpenseState extends State<AddExpense> {
                     height: 50.0,
                     width: 250.0,
                     child: ElevatedButton(
-                      onPressed: () async {
-                        /*setState(
-                            () {
-                              showSpinner = true;
-                            },
-                          );*/
-                        //unfocus();
-                        print(amount);
-                        print(descrip);
-                        print(receiptDate);
-                        print(managerId);
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                backgroundColor: Color(0xFFF1EFEF),
+                                content: Stack(
+                                  clipBehavior: Clip.none,
+                                  children: <Widget>[
+                                    Positioned(
+                                      right: -40.0,
+                                      top: -40.0,
+                                      child: InkResponse(
+                                        onTap: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: CircleAvatar(
+                                          child: Icon(Icons.close),
+                                          backgroundColor: Colors.red,
+                                        ),
+                                      ),
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: <Widget>[
+                                        Container(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              CircleAvatar(
+                                                backgroundColor: kPrimaryColor,
+                                                child: Icon(Icons
+                                                    .receipt_long_outlined),
+                                              ),
+                                              Text('Add expense approval')
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.all(8.0),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(
+                                                width: 1.0,
+                                                color: Colors.white),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(4.0),
+                                                child: Text(
+                                                  'Authorizer Name',
+                                                  style: kPopTitle,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(4.0),
+                                                child: Text(
+                                                  'T.K. Perera',
+                                                  style: kPopTitleAns,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.all(8.0),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(
+                                                width: 1.0,
+                                                color: Colors.white),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(4.0),
+                                                child: Text(
+                                                  'Authorizer Name',
+                                                  style: kPopTitle,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(4.0),
+                                                child: Text(
+                                                  'T.K. Perera',
+                                                  style: kPopTitleAns,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.all(8.0),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(
+                                                width: 1.0,
+                                                color: Colors.white),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(4.0),
+                                                child: Text(
+                                                  'Authorizer Name',
+                                                  style: kPopTitle,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(4.0),
+                                                child: Text(
+                                                  'T.K. Perera',
+                                                  style: kPopTitleAns,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.all(8.0),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(
+                                                width: 1.0,
+                                                color: Colors.white),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(4.0),
+                                                child: Text(
+                                                  'Authorizer Name',
+                                                  style: kPopTitle,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(4.0),
+                                                child: Text(
+                                                  'T.K. Perera',
+                                                  style: kPopTitleAns,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.all(8.0),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(
+                                                width: 1.0,
+                                                color: Colors.white),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(4.0),
+                                                child: Text(
+                                                  'Authorizer Name',
+                                                  style: kPopTitle,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(4.0),
+                                                child: Text(
+                                                  'T.K. Perera',
+                                                  style: kPopTitleAns,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.all(8.0),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(
+                                                width: 1.0,
+                                                color: Colors.white),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(4.0),
+                                                child: Text(
+                                                  'Authorizer Name',
+                                                  style: kPopTitle,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(4.0),
+                                                child: Text(
+                                                  'T.K. Perera',
+                                                  style: kPopTitleAns,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: ElevatedButton(
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all<
+                                                          Color>(
+                                                      Colors.greenAccent),
+                                            ),
+                                            child: Text(
+                                              "Confirm",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 14.0),
+                                            ),
+                                            onPressed: () {},
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              );
+                            });
+
+                        //String tokenGot;
+/*
+                        var token = await getTokenFromSF();
+                        /*getTokenFromSF().then((value) {
+                          tokenGot=value;
+                          
+                        });*/
+
+                       /* print(amount);
+                        print(description);
+                        print(transactionDate);
+                        print(managerIncharge);
                         print(category);
-                        print(payMethod);
-                        //print(password);
+                        print(paymentMethod);*/
 
-                          var url = Uri.parse(
-                              'https://reexapi.herokuapp.com/transaction');
-                          final http.Response response = await http.post(
-                            url,
-                            headers: <String, String>{
-                              "Content-Type": 'application/json;charset=UTF-8',
-                              // "Accept":'application/json',
+                        print(token);
+
+                        var url = Uri.parse(
+                            'https://reexapi.herokuapp.com/users/me');
+                        final response = await http.get(url,
+                            headers: {
+                              'Content-Type': 'application/json',
+                              'Accept': 'application/json',
+                              'Authorization': 'Bearer $token',
                             },
-                            body: jsonEncode(
-                              <String, String>{
+                            /*body: jsonEncode(
+                              <dynamic, String>{
                                 'amount': amount,
-                                'description': descrip,
-                                'managerId':managerId,
-                                'category':category,
-                                'receiptDate':receiptDate,
-                                'payMethod':payMethod,
+                                'description': description,
+                                'managerIncharge': managerIncharge,
+                                'category': category,
+                                'transationDate': transactionDate,
+                                'paymentMethod': paymentMethod,
                               },
-                            ),
-                          );
-                          //print(response.body);
-                          SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          //var parse;
-                          if (response.body.isNotEmpty) {
-                            //parse = json.decode(response.body);
-                            //print(parse["token"]);
-                            String token = prefs.getString("token");
-                            print(token);
-                            print('ok');
-                            //Navigator.pushNamed(context, EmpDashboard.id);
-                          }
+                            )*/);
+                      
+                        print(response.body);
+                        print(response.statusCode);
+                        //SharedPreferences prefs =
+                        //await SharedPreferences.getInstance();
+                        //var parse;
+                        if (response.statusCode == 201) {
+                          //parse = json.decode(response.body);
+                          //print(parse["token"]);
 
-                        /* SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-
-                          String token = prefs.getString("token");
-                          if (token.isNotEmpty) {
-                            Navigator.pushNamed(context, EmpDashboard.id);
-                          } 
-                          else {
-                            setState(
-                              () {
-                                validate = false;
-                                errorText = 'Wrong input';
-                                //showSpinner = false;
-                              },
-                            );
-                          }*/
+                          print('ok');
+                          Navigator.pushNamed(context, EmpDashboard.id);
+                        } else {
+                          print('not ok');
+                        }*/
                       },
                       child: Text(
                         'Submit',
@@ -191,4 +429,9 @@ class _AddExpenseState extends State<AddExpense> {
       ),
     );
   }
+}
+
+Future getTokenFromSF() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString('token');
 }

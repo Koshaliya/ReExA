@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ReExA/Widgets/constants.dart';
 
 class ReimbursementStatus extends StatefulWidget {
+    static const String id = 'reimbursementStatus';
+ 
   @override
   _ReimbursementStatusState createState() => _ReimbursementStatusState();
 }

@@ -30,6 +30,13 @@ class _LoginPageState extends State<LoginPage>
   var currentFocus;
   bool showSpinner = false;
 
+  Future addTokenToSF() async {
+  String token;
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  token = prefs.getString("token");
+  print(token);
+}
+
   unfocus() {
     currentFocus = FocusScope.of(context);
 
@@ -37,7 +44,7 @@ class _LoginPageState extends State<LoginPage>
       currentFocus.unfocus();
     }
   }
-
+/*
   @override
   void initState() {
     super.initState();
@@ -53,7 +60,7 @@ class _LoginPageState extends State<LoginPage>
       print(controller.value);
     });
   }
-
+*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -179,7 +186,7 @@ class _LoginPageState extends State<LoginPage>
                           url,
                           headers: <String, String>{
                             "Content-Type": 'application/json;charset=UTF-8',
-                            // "Accept":'application/json',
+                            "Accept":'application/json',
                           },
                           body: jsonEncode(
                             <String, String>{
@@ -189,14 +196,12 @@ class _LoginPageState extends State<LoginPage>
                           ),
                         );
                         //print(response.body);
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
+
                         var parse;
                         if (response.body.isNotEmpty) {
                           parse = json.decode(response.body);
                           //print(parse["token"]);
-                          String token = prefs.getString("token");
-                          print(token);
+                          addTokenToSF();
                           Navigator.pushNamed(context, EmpDashboard.id);
                         }
 
@@ -250,3 +255,5 @@ class _LoginPageState extends State<LoginPage>
     );
   }
 }
+
+

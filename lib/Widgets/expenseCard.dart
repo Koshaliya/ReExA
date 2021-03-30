@@ -6,7 +6,12 @@ import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
-var managerId, category, payMethod, amount, receiptDate, descrip;
+var managerIncharge,
+    category,
+    paymentMethod,
+    amount,
+    transactionDate,
+    description;
 
 class AmountField extends StatelessWidget {
   final String label;
@@ -18,7 +23,6 @@ class AmountField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //height: 100.0,
       margin: const EdgeInsets.all(10.0),
       child: TextField(
         controller: TextEditingController(text: amount),
@@ -55,18 +59,17 @@ class DateField extends StatefulWidget {
 }
 
 class _DateFieldState extends State<DateField> {
-  TextEditingController dateCtl = TextEditingController(text: receiptDate);
+  TextEditingController dateCtl = TextEditingController(text: transactionDate);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      //height: 100.0,
       margin: const EdgeInsets.all(10.0),
       child: TextField(
         style: TextStyle(color: kSecondColor, fontWeight: FontWeight.bold),
         controller: dateCtl,
         onChanged: (value) {
-          receiptDate = value;
+          transactionDate = value;
         },
         decoration: InputDecoration(
           labelText: 'Receipt Date',
@@ -112,15 +115,6 @@ class _DateFieldState extends State<DateField> {
     );
   }
 }
-/*
-class AttachButton extends StatelessWidget {
-  
-
-  @override
-  Widget build(BuildContext context) {
-    return 
-  }
-}*/
 
 class DescriptionField extends StatefulWidget {
   @override
@@ -131,12 +125,11 @@ class _DescriptionFieldState extends State<DescriptionField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //height: 100.0,
       margin: const EdgeInsets.all(10.0),
       child: TextField(
-        controller: TextEditingController(text: descrip),
+        controller: TextEditingController(text: description),
         onChanged: (value) {
-          descrip = value;
+          description = value;
         },
         style: TextStyle(color: kSecondColor, fontWeight: FontWeight.bold),
         decoration: InputDecoration(
@@ -157,7 +150,6 @@ class _DescriptionFieldState extends State<DescriptionField> {
   }
 }
 
-//String valueChoose;
 const List managerList = ["M001", "M002", "M003", "M004", "M005", "M006"];
 const List categoryList = ["Food", "Travel", "Clinet Meeting", "Misc"];
 const List paymentList = ["Card", "Cash"];
@@ -190,18 +182,18 @@ class _DropDownManagerState extends State<DropDownManager> {
           iconSize: 36,
           isExpanded: true,
           style: TextStyle(color: kSecondColor, fontWeight: FontWeight.bold),
-          value: managerId,
-          onChanged: (newValue) {
-            setState(() {
-              managerId = newValue;
-            });
-          },
           items: widget.hintList.map((valueItem) {
             return DropdownMenuItem(
               child: Text(valueItem),
               value: valueItem,
             );
           }).toList(),
+          onChanged: (newValue) {
+            setState(() {
+              managerIncharge = newValue;
+            });
+          },
+          value: managerIncharge,
         ),
       ),
     );
@@ -235,18 +227,18 @@ class _DropDownCategoryState extends State<DropDownCategory> {
           iconSize: 36,
           isExpanded: true,
           style: TextStyle(color: kSecondColor, fontWeight: FontWeight.bold),
-          value: category,
-          onChanged: (newValue) {
-            setState(() {
-              category = newValue;
-            });
-          },
           items: widget.hintList.map((valueItem) {
             return DropdownMenuItem(
               child: Text(valueItem),
               value: valueItem,
             );
           }).toList(),
+          onChanged: (newValue) {
+            setState(() {
+              category = newValue;
+            });
+          },
+          value: category,
         ),
       ),
     );
@@ -288,10 +280,10 @@ class _DropDownPayMethodState extends State<DropDownPayMethod> {
           }).toList(),
           onChanged: (newValue) {
             setState(() {
-              payMethod = newValue;
+              paymentMethod = newValue;
             });
           },
-          value: payMethod,
+          value: paymentMethod,
         ),
       ),
     );

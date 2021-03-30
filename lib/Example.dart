@@ -1,71 +1,81 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
-import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:http/http.dart' as http;
+import 'package:ReExA/Widgets/constants.dart';
 
-class ImageSave extends StatefulWidget {
+class MyAppy extends StatefulWidget {
+  static const String id = 'Example';
   @override
-  _ImageSaveState createState() => _ImageSaveState();
+  _MyAppyState createState() => _MyAppyState();
 }
 
-class _ImageSaveState extends State<ImageSave> {
-  File _image;
-  final picker = ImagePicker();
-  Future _getImage() async{
-//ImageSource: camera
-    PickedFile imageFile = await picker.getImage(source: ImageSource.camera);
-//If there is no image selected, return.
-    if (imageFile == null) return;
-//File created.
-    File tmpFile =File(imageFile.path);  
-//it gives path to a directory - path_provider package.
-    final appDir = await getApplicationDocumentsDirectory();
-//filename - returns last part after the separator - path package.
-    final fileName = basename(imageFile.path);
-//copy the file to the specified directory and return File instance.
-    tmpFile = await tmpFile.copy('${appDir.path}/$fileName');
-//prints file location
-    print('File path is :${tmpFile.path}');
-    setState(() {
-      _image = tmpFile;
-    });
-  }
+class _MyAppyState extends State<MyAppy> {
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter ImagePicker - Save Image Example',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Flutter ImagePicker - Save Image Example'),
-        ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Center(
-              child:  _image != null
-        ?Container(
-                height: 300,
-                child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image.file(
-                          _image,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Flutter"),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: Stack(
+                      clipBehavior: Clip.none,
+                      children: <Widget>[
+                        Positioned(
+                          right: -40.0,
+                          top: -40.0,
+                          child: InkResponse(
+                            onTap: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: CircleAvatar(
+                              child: Icon(Icons.close),
+                              backgroundColor: Colors.red,
+                            ),
+                          ),
                         ),
-                      ),)
-                    : Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text('No Image found'),
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: TextFormField(),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: TextFormField(),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ElevatedButton(
+                                  child: Text("Submitß"),
+                                  onPressed: () {
+                                    if (_formKey.currentState.validate()) {
+                                      _formKey.currentState.save();
+                                    }
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-            ),
-            ElevatedButton(
-              child: Text('Capture and Store Image'),
-              onPressed: _getImage,
-            )
-          ],
+                  );
+                });
+          },
+          child: Text("Open Popup"),
         ),
       ),
     );
   }
-  }
-
+}

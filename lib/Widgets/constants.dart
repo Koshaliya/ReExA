@@ -90,3 +90,15 @@ const kSendButtonTextStyle = TextStyle(
   fontWeight: FontWeight.bold,
   fontSize: 18.0,
 );
+
+const kPopTitle = TextStyle(
+  color: Color(0xFF9A9595),
+  letterSpacing: 0.5,
+  fontSize: 12.0,
+);
+
+const kPopTitleAns = TextStyle(
+  color: Color(0xFF1B6DE8),
+  letterSpacing: 0.5,
+  fontSize: 13.0,
+);
