@@ -5,6 +5,7 @@ import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:ReExA/screens/empDashboard.dart';
 
 var managerIncharge,
     category,
@@ -377,4 +378,150 @@ class _AttachImageState extends State<AttachImage> {
       ],
     );
   }
+}
+
+
+//***********************************************PopUp******************************************************
+
+class PopContainer extends StatelessWidget {
+  const PopContainer({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(width: 1.0, color: Colors.white),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          PopTtitle(),
+          PopTitleAns(),
+        ],
+      ),
+    );
+  }
+}
+
+class PopTtitle extends StatelessWidget {
+  const PopTtitle({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Text(
+        'Authorizer Name',
+        style: kPopTitle,
+      ),
+    );
+  }
+}
+
+class PopTitleAns extends StatelessWidget {
+  const PopTitleAns({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Text(
+        'T.K. Perera',
+        style: kPopTitleAns,
+      ),
+    );
+  }
+}
+
+class ConfirmButton extends StatelessWidget {
+  const ConfirmButton({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all<OutlinedBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+        backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+          EdgeInsets.all(15.0),
+        ),
+      ),
+      child: Text(
+        "Confirm",
+        style: TextStyle(color: Colors.white, fontSize: 15.0),
+      ),
+      onPressed: () {
+        Navigator.pushNamed(context, EmpDashboard.id);
+      },
+    );
+  }
+}
+
+Future buildShowDialog(BuildContext context) {
+  return showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: Color(0xFFF1EFEF),
+        insetPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+        content: Stack(
+          clipBehavior: Clip.none,
+          children: <Widget>[
+            Positioned(
+              right: -40.0,
+              top: -40.0,
+              child: InkResponse(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: CircleAvatar(
+                  child: Icon(Icons.close),
+                  backgroundColor: Colors.red,
+                ),
+              ),
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: kPrimaryColor,
+                        child: Icon(Icons.receipt_long_outlined),
+                      ),
+                      Text('Add expense approval')
+                    ],
+                  ),
+                ),
+                PopContainer(),
+                PopContainer(),
+                PopContainer(),
+                PopContainer(),
+                PopContainer(),
+                PopContainer(),
+                ConfirmButton(),
+              ],
+            ),
+          ],
+        ),
+      );
+    },
+  );
 }

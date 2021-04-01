@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ReExA/Widgets/constants.dart';
 
+import 'package:http/http.dart' as http;
+
 class ReimbursementStatus extends StatefulWidget {
     static const String id = 'reimbursementStatus';
  
@@ -59,9 +61,7 @@ class _ReimbursementStatusState extends State<ReimbursementStatus> {
                   Row(
                     children: [
                       Container(
-                        /*decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4.0),
-                      ),*/
+                        
                         width: 30.0,
                         height: 30.0,
                         decoration: BoxDecoration(
@@ -162,3 +162,18 @@ class _ReimbursementStatusState extends State<ReimbursementStatus> {
     );
   }
 }
+
+/*
+Future gettingTaskFromDb() async{
+  logger.d('inside gettingTaskFromDb()');
+  var url = Uri.parse('https://reexapi.herokuapp.com/cashreimbursements');
+
+  var response = await http.get(url);
+  if(response.statusCode == 201){
+    print(response.body);
+
+  }
+  else{
+    print('wrong');
+  }
+}*/

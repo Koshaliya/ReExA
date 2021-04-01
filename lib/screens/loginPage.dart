@@ -195,12 +195,12 @@ class _LoginPageState extends State<LoginPage>
                             },
                           ),
                         );
-                        //print(response.body);
+                       // print(response.body);
 
                         var parse;
                         if (response.body.isNotEmpty) {
                           parse = json.decode(response.body);
-                          //print(parse["token"]);
+                          print(parse["token"]);
                           addTokenToSF();
                           Navigator.pushNamed(context, EmpDashboard.id);
                         }

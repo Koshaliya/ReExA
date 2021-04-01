@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ReExA/Widgets/constants.dart';
-import 'package:ReExA/Widgets/historyCard.dart';
 import 'expenseHistory.dart';
 
 class History extends StatefulWidget {

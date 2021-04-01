@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ReExA/Widgets/constants.dart';
 import 'package:ReExA/Widgets/dashboardCard.dart';
 
+
+
 class EmpDashboard extends StatefulWidget {
   static const String id = 'empDashboard';
 
@@ -10,12 +12,18 @@ class EmpDashboard extends StatefulWidget {
 }
 
 class _EmpDashboardState extends State<EmpDashboard> {
+  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+  ScaffoldState scaffold;
+
+     
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
       initialIndex: 0,
       child: Scaffold(
+        key: scaffoldKey,
         appBar: AppBar(
           backgroundColor: Colors.white,
           centerTitle: true,
@@ -42,27 +50,28 @@ class _EmpDashboardState extends State<EmpDashboard> {
           ),
           bottom: TabBar(
             labelColor: Color(0xFF344955),
-            labelStyle: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16.0
-                            ),
-            indicatorColor: kSecondColor  ,            
+            labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+            indicatorColor: kSecondColor,
             tabs: [
-              Tab(text: 'OVERVIEW',),
+              Tab(
+                text: 'OVERVIEW',
+              ),
               Tab(text: 'EXPENSE STAT'),
             ],
           ),
         ),
-        body: TabBarView(
-          children: [
-            OverView(),
-            OverView(),
-          ],
-                  
+        body: Builder(
+          builder: (BuildContext buildContext) {
+            scaffold = Scaffold.of(buildContext);
+            return TabBarView(
+              children: [
+                OverView(),
+                OverView(),
+              ],
+            );
+          },
         ),
       ),
     );
   }
 }
-
-

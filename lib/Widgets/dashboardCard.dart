@@ -1,4 +1,7 @@
 import 'package:ReExA/screens/addExpense.dart';
+import 'package:ReExA/screens/histroy.dart';
+import 'package:ReExA/screens/reimbursementStatus.dart';
+import 'package:ReExA/screens/topUpRequest.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
 
@@ -107,13 +110,15 @@ class DashboardButton extends StatelessWidget {
   final IconData buttonIcon;
   final String label;
   final Color buttonColor;
-  const DashboardButton({this.buttonIcon, this.label, this.buttonColor});
+  final String route;
+
+  const DashboardButton({this.buttonIcon, this.label, this.buttonColor,this.route});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print('hi');
+        Navigator.pushNamed(context, route);
       },
       child: Container(
         height: 100.0,
@@ -194,15 +199,20 @@ Color(0xFFF9AA33),
                     DashboardButton(
                         buttonIcon: Icons.approval,
                         label: 'Top-up request',
-                        buttonColor: Color(0xFFFF716D)),
+                        buttonColor: Color(0xFFFF716D),
+                        route: TopUpRequest.id,
+                        ),
                     DashboardButton(
                         buttonIcon: Icons.mobile_friendly_outlined,
                         label: 'Reimbursement status',
-                        buttonColor: Color(0xFFA08AF3)),
+                        buttonColor: Color(0xFFA08AF3),
+                        route: ReimbursementStatus.id,),
                     DashboardButton(
                         buttonIcon: Icons.assignment_ind_outlined,
                         label: 'Report',
-                        buttonColor: Color(0xFFF169B1)),
+                        buttonColor: Color(0xFFF169B1),
+                        //route: null,
+                        ),
                   ],
                 ),
                 Row(
@@ -211,11 +221,14 @@ Color(0xFFF9AA33),
                     DashboardButton(
                         buttonIcon: Icons.my_library_books_outlined,
                         label: 'News',
-                        buttonColor: Color(0xFF90DDD0)),
+                        buttonColor: Color(0xFF90DDD0),
+                        //route: null,
+                        ),
                     DashboardButton(
                         buttonIcon: Icons.history_outlined,
                         label: 'History',
-                        buttonColor: Color(0xFFFF8E61)),
+                        buttonColor: Color(0xFFFF8E61),
+                        route: History.id,),
                   ],
                 ),
               ],
