@@ -5,7 +5,7 @@ import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-import 'package:ReExA/screens/empDashboard.dart';
+import 'package:ReExA/empScreens/empDashboard.dart';
 
 var managerIncharge,
     category,

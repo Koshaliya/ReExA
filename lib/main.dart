@@ -1,13 +1,17 @@
 
-import 'package:ReExA/screens/forgotPass.dart';
-import 'package:ReExA/screens/loginPage.dart';
+import 'package:ReExA/empScreens/chatScreen.dart';
+import 'package:ReExA/empScreens/forgotPass.dart';
+import 'package:ReExA/empScreens/loginPage.dart';
+import 'package:ReExA/empScreens/news.dart';
+import 'package:ReExA/empScreens/profilePage.dart';
+import 'package:ReExA/managerScreens/mgrDashboard.dart';
 import 'package:flutter/material.dart';
-import 'screens/loginPage.dart';
-import 'package:ReExA/screens/empDashboard.dart';
-import 'package:ReExA/screens/addExpense.dart';
-import 'package:ReExA/screens/reimbursementStatus.dart';
-import 'package:ReExA/screens/histroy.dart';
-import 'package:ReExA/screens/topUpRequest.dart';
+import 'empScreens/loginPage.dart';
+import 'package:ReExA/empScreens/empDashboard.dart';
+import 'package:ReExA/empScreens/addExpense.dart';
+import 'package:ReExA/empScreens/reimbursementStatus.dart';
+import 'package:ReExA/empScreens/histroy.dart';
+import 'package:ReExA/empScreens/topUpRequest.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,7 +26,7 @@ class MyApp extends StatelessWidget {
         
     ),
    
-     initialRoute: LoginPage.id,
+     initialRoute: MgrDashboard.id,
       routes: {
         LoginPage.id:(context) => LoginPage(),
         ForgotPassword.id:(context) => ForgotPassword(),
@@ -30,8 +34,11 @@ class MyApp extends StatelessWidget {
         AddExpense.id: (context) => AddExpense(),
         ReimbursementStatus.id:(context) => ReimbursementStatus(),
         History.id:(context) => History(),
-       TopUpRequest.id:(context) => TopUpRequest(),
-        
+        TopUpRequest.id:(context) => TopUpRequest(),
+        ChatPage.id:(context) => ChatPage(),
+        ProfilePage.id:(context) => ProfilePage(),
+        MgrDashboard.id:(context) => MgrDashboard(),
+        Newspage.id:(context) => Newspage(),
       },
     );
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ReExA/Widgets/constants.dart';
+import 'package:ReExA/empWidgets/constants.dart';
 import 'expenseHistory.dart';
 
 class History extends StatefulWidget {
@@ -17,29 +17,15 @@ class _HistoryState extends State<History> {
       initialIndex: 0,
       child: Scaffold(
         appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.black),
           backgroundColor: Colors.white,
           centerTitle: true,
-          leading: IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {},
-            color: Colors.black,
-          ),
+          //leading: MenuButton(),
           actions: [
-            IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {},
-              color: Colors.black,
-            ),
-            IconButton(
-              icon: Icon(Icons.notifications),
-              onPressed: () {},
-              color: Colors.black,
-            )
+            SearchButton(),
+            NotificationButton()
           ],
-          title: Text(
-            'History',
-            style: kappBarText,
-          ),
+          title: AppBarTitle(title: 'History',),
           bottom: TabBar(
             labelColor: Color(0xFF344955),
             labelStyle: TextStyle(
@@ -53,6 +39,7 @@ class _HistoryState extends State<History> {
             ],
           ),
         ),
+        drawer: SideDrawer(),
         body: TabBarView(
           children: [
             ExpenseHistory(),

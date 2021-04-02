@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:ReExA/Widgets/constants.dart';
-import 'package:ReExA/Widgets/expenseCard.dart';
+import 'package:ReExA/empWidgets/constants.dart';
+import 'package:ReExA/empWidgets/expenseCard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;
@@ -23,30 +23,17 @@ class _AddExpenseState extends State<AddExpense> {
       
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
         centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          onPressed: () {},
-          color: Colors.black,
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {},
-            color: Colors.black,
-          ),
-          IconButton(
-            icon: Icon(Icons.notifications),
-            onPressed: () {},
-            color: Colors.black,
-          )
-        ],
-        title: Text(
-          'Add Expense',
-          style: kappBarText,
-        ),
+        //leading: MenuButton(),
+          actions: [
+            SearchButton(),
+            NotificationButton()
+          ],
+          title: AppBarTitle(title: 'Add Expense',),
       ),
+      drawer: SideDrawer(),
       body: Form(
         key: _formKey,
         child: Column(

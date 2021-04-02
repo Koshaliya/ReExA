@@ -1,9 +1,13 @@
-import 'package:ReExA/screens/addExpense.dart';
-import 'package:ReExA/screens/histroy.dart';
-import 'package:ReExA/screens/reimbursementStatus.dart';
-import 'package:ReExA/screens/topUpRequest.dart';
+import 'package:ReExA/empScreens/addExpense.dart';
+import 'package:ReExA/empScreens/chatScreen.dart';
+import 'package:ReExA/empScreens/histroy.dart';
+import 'package:ReExA/empScreens/news.dart';
+import 'package:ReExA/empScreens/reimbursementStatus.dart';
+import 'package:ReExA/empScreens/topUpRequest.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
+
+//*********************************************Login Button*******************************************************************
 
 class LoginButton extends StatelessWidget {
   final String label;
@@ -42,6 +46,8 @@ class LoginButton extends StatelessWidget {
 
 //Color(0xFF344955),
 //Color(0xFFF9AA33),
+
+//*********************************************Expense Card*******************************************************************
 
 class TodayMonth extends StatelessWidget {
   const TodayMonth({
@@ -106,6 +112,9 @@ class _AmountState extends State<Amount> {
   }
 }
 
+//*********************************************DashBoard Buttons*******************************************************************
+
+
 class DashboardButton extends StatelessWidget {
   final IconData buttonIcon;
   final String label;
@@ -144,6 +153,9 @@ class DashboardButton extends StatelessWidget {
     );
   }
 }
+
+//*********************************************Overview Page*******************************************************************
+
 
 class OverView extends StatelessWidget {
   const OverView({
@@ -211,7 +223,7 @@ Color(0xFFF9AA33),
                         buttonIcon: Icons.assignment_ind_outlined,
                         label: 'Report',
                         buttonColor: Color(0xFFF169B1),
-                        //route: null,
+                        route: ChatPage.id,
                         ),
                   ],
                 ),
@@ -222,7 +234,7 @@ Color(0xFFF9AA33),
                         buttonIcon: Icons.my_library_books_outlined,
                         label: 'News',
                         buttonColor: Color(0xFF90DDD0),
-                        //route: null,
+                        route: Newspage.id,
                         ),
                     DashboardButton(
                         buttonIcon: Icons.history_outlined,

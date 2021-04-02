@@ -1,14 +1,11 @@
 import 'dart:convert';
-//import 'package:ReExA/services/authService.dart';
-import 'package:ReExA/screens/empDashboard.dart';
+import 'package:ReExA/empScreens/empDashboard.dart';
 import 'package:flutter/material.dart';
-//import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../Widgets/constants.dart';
-import 'package:ReExA/Widgets/dashboardCard.dart';
+import '../empWidgets/constants.dart';
+import 'package:ReExA/empWidgets/dashboardCard.dart';
 import 'forgotPass.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-//import 'package:ReExA/services/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 

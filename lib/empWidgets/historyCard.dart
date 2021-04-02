@@ -1,4 +1,4 @@
-import 'package:ReExA/screens/expenseHistory.dart';
+import 'package:ReExA/empScreens/expenseHistory.dart';
 import 'package:flutter/material.dart';
 
 class HeadingButton extends StatelessWidget {

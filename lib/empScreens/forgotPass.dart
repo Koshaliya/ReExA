@@ -1,7 +1,7 @@
-import 'package:ReExA/screens/empDashboard.dart';
+import 'package:ReExA/empScreens/empDashboard.dart';
 import 'package:flutter/material.dart';
 
-import 'package:ReExA/Widgets/dashboardCard.dart';
+import 'package:ReExA/empWidgets/dashboardCard.dart';
 
 class ForgotPassword extends StatefulWidget {
     static const String id = 'forgotPass';

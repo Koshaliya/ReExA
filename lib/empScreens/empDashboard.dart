@@ -1,8 +1,7 @@
+import 'package:ReExA/empScreens/profilePage.dart';
 import 'package:flutter/material.dart';
-import 'package:ReExA/Widgets/constants.dart';
-import 'package:ReExA/Widgets/dashboardCard.dart';
-
-
+import 'package:ReExA/empWidgets/constants.dart';
+import 'package:ReExA/empWidgets/dashboardCard.dart';
 
 class EmpDashboard extends StatefulWidget {
   static const String id = 'empDashboard';
@@ -15,8 +14,6 @@ class _EmpDashboardState extends State<EmpDashboard> {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   ScaffoldState scaffold;
 
-     
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -25,28 +22,13 @@ class _EmpDashboardState extends State<EmpDashboard> {
       child: Scaffold(
         key: scaffoldKey,
         appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.black),
           backgroundColor: Colors.white,
           centerTitle: true,
-          leading: IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {},
-            color: Colors.black,
-          ),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {},
-              color: Colors.black,
-            ),
-            IconButton(
-              icon: Icon(Icons.notifications),
-              onPressed: () {},
-              color: Colors.black,
-            )
-          ],
-          title: Text(
-            'Dashboard',
-            style: kappBarText,
+          // leading: MenuButton(),
+          actions: [SearchButton(), NotificationButton()],
+          title: AppBarTitle(
+            title: 'Dashboard',
           ),
           bottom: TabBar(
             labelColor: Color(0xFF344955),
@@ -60,6 +42,7 @@ class _EmpDashboardState extends State<EmpDashboard> {
             ],
           ),
         ),
+        drawer: SideDrawer(),
         body: Builder(
           builder: (BuildContext buildContext) {
             scaffold = Scaffold.of(buildContext);
@@ -75,3 +58,4 @@ class _EmpDashboardState extends State<EmpDashboard> {
     );
   }
 }
+
