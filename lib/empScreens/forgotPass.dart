@@ -1,10 +1,11 @@
 import 'package:ReExA/empScreens/empDashboard.dart';
 import 'package:flutter/material.dart';
-
 import 'package:ReExA/empWidgets/dashboardCard.dart';
 
+
+//*******************************************************JustExample****************************************************************
 class ForgotPassword extends StatefulWidget {
-    static const String id = 'forgotPass';
+  static const String id = 'forgotPass';
 
   @override
   _ForgotPasswordState createState() => _ForgotPasswordState();
@@ -30,7 +31,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             SizedBox(
               height: 30.0,
             ),
-            
             SizedBox(
               height: 20.0,
             ),
@@ -44,5 +44,3 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     );
   }
 }
-
-

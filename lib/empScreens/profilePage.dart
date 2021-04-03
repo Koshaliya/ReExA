@@ -25,8 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
         elevation: 0.0,
         title: Text(
           'Profile',
-          style: TextStyle(
-              fontSize: 18.0, color: Colors.white),
+          style: TextStyle(fontSize: 18.0, color: Colors.white),
         ),
         centerTitle: true,
       ),
@@ -53,12 +52,142 @@ class _ProfilePageState extends State<ProfilePage> {
                   top: 30.0,
                   left: (MediaQuery.of(context).size.width / 2) - 100.0,
                   child: CircleAvatar(
-                      radius: 50.0,
-                      backgroundImage: AssetImage('images/pro5.jpg'),
-                      backgroundColor: kPrimaryColor,
+                    radius: 50.0,
+                    backgroundImage: AssetImage('images/pro5.jpg'),
+                    backgroundColor: kPrimaryColor,
+                  ),
+                  height: 200.0,
+                  width: 200.0),
+              Positioned(
+                top: 250.0,
+                left: 25.0,
+                right: 25.0,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      //padding: EdgeInsets.only(right: 40.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              'Personal Info',
+                              style: TextStyle(
+                                  fontSize: 20.0,
+                                  color: Colors.black,
+                                   fontWeight: FontWeight.w300),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Text('Name',style:TextStyle(color: kPrimaryColor,fontWeight: FontWeight.w500),),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Text('Email',style:TextStyle(color: kPrimaryColor,fontWeight: FontWeight.w500)),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Text('Employee Id',style:TextStyle(color: kPrimaryColor,fontWeight: FontWeight.w500),),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Text('Phone',style:TextStyle(color: kPrimaryColor,fontWeight: FontWeight.w500),),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Text('Koshaliya'),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Text('em001@email.com'),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Text('E001'),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Text('077123456'),
+                                  ),
+                                ],
+                              ),
+                              
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                      height: 200.0,
-                      width: 200.0),
+                    SizedBox(height:20.0),
+                    Container(
+                      padding: EdgeInsets.only(right: 40.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              'Account Details',
+                              style: TextStyle(
+                                  fontSize: 20.0,
+                                  color: Colors.black,
+                                   fontWeight: FontWeight.w300),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child:Icon(Icons.account_balance_rounded)
+                                  ),
+                                  
+                                ],
+                              ),
+                              Column(
+                                mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(right:10.0),
+                                    child: Text('4588 **** ****'),
+                                  ),
+                                  
+                                ],
+                              ),
+                              
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           )
         ],

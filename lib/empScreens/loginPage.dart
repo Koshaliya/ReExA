@@ -28,11 +28,11 @@ class _LoginPageState extends State<LoginPage>
   bool showSpinner = false;
 
   Future addTokenToSF() async {
-  String token;
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  token = prefs.getString("token");
-  print(token);
-}
+    String token;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString("token");
+    print("PRANA" + token.toString());
+  }
 
   unfocus() {
     currentFocus = FocusScope.of(context);
@@ -177,13 +177,13 @@ class _LoginPageState extends State<LoginPage>
                         print(userId);
                         print(password);
 
-                        var url = Uri.parse(
+                         var url = Uri.parse(
                             'https://reexapi.herokuapp.com/users/login');
                         final http.Response response = await http.post(
                           url,
                           headers: <String, String>{
                             "Content-Type": 'application/json;charset=UTF-8',
-                            "Accept":'application/json',
+                            "Accept": 'application/json',
                           },
                           body: jsonEncode(
                             <String, String>{
@@ -192,23 +192,18 @@ class _LoginPageState extends State<LoginPage>
                             },
                           ),
                         );
-                       // print(response.body);
+                        final responseData = json.decode(response.body);
+                        print(responseData["user"]["_id"]);
 
                         var parse;
                         if (response.body.isNotEmpty) {
                           parse = json.decode(response.body);
                           print(parse["token"]);
                           addTokenToSF();
-                          Navigator.pushNamed(context, EmpDashboard.id);
+                          Navigator.pushNamed(context, EmpDashboard.id,
+                              arguments: {'id': responseData["user"]["_id"]});
                         }
 
-                        /* SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-
-                        String token = prefs.getString("token");
-                        if (token.isNotEmpty) {
-                          Navigator.pushNamed(context, EmpDashboard.id);
-                        } */
                         else {
                           setState(
                             () {

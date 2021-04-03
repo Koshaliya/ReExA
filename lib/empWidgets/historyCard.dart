@@ -67,28 +67,4 @@ class HistoryContainer extends StatelessWidget {
     );
   }
 }
-/*
-class ShowMore extends StatelessWidget {
-  const ShowMore({
-    Key key,
-  }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Container(
-          child: Text(
-            'Show more',
-            style: TextStyle(
-              color: Color(0xFF1750E0),
-              decoration: TextDecoration.underline,
-            ),
-          ),
-          margin: EdgeInsets.only(right: 10.0),
-        ),
-      ],
-    );
-  }
-}*/

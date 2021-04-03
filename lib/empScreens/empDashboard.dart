@@ -1,4 +1,3 @@
-import 'package:ReExA/empScreens/profilePage.dart';
 import 'package:flutter/material.dart';
 import 'package:ReExA/empWidgets/constants.dart';
 import 'package:ReExA/empWidgets/dashboardCard.dart';
@@ -15,6 +14,15 @@ class _EmpDashboardState extends State<EmpDashboard> {
   ScaffoldState scaffold;
 
   @override
+  void didChangeDependencies() {
+    var arguements =
+        ModalRoute.of(context).settings.arguments as Map<String, Object>;
+    var userId = arguements['id'];
+    print("userId:" + userId);
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
@@ -25,7 +33,6 @@ class _EmpDashboardState extends State<EmpDashboard> {
           iconTheme: IconThemeData(color: Colors.black),
           backgroundColor: Colors.white,
           centerTitle: true,
-          // leading: MenuButton(),
           actions: [SearchButton(), NotificationButton()],
           title: AppBarTitle(
             title: 'Dashboard',
@@ -58,4 +65,3 @@ class _EmpDashboardState extends State<EmpDashboard> {
     );
   }
 }
-

@@ -18,7 +18,6 @@ class _NewspageState extends State<Newspage> {
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
         centerTitle: true,
-        //leading: MenuButton(),
         actions: [SearchButton(), NotificationButton()],
         title: AppBarTitle(
           title: 'News',

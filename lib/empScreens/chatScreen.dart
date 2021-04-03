@@ -17,7 +17,7 @@ class _ChatPageState extends State<ChatPage> {
   TextEditingController textController;
   ScrollController scrollController;
 
-  /*@override
+  @override
   void initState() {
     //Initializing the message list
     messages = [];
@@ -26,8 +26,7 @@ class _ChatPageState extends State<ChatPage> {
     scrollController = ScrollController();
     //Creating the socket
     socketIO = SocketIOManager().createSocketIO(
-      '<ENTER THE URL OF YOUR DEPLOYED APP>',
-      '/',
+      'https://reexapi.herokuapp.com','/'
     );
     //Call init before doing anything with socket
     socketIO.init();
@@ -45,7 +44,7 @@ class _ChatPageState extends State<ChatPage> {
     //Connect to the socket
     socketIO.connect();
     super.initState();
-  }*/
+  }
 
   Widget buildSingleMessage(int index) {
     return Container(
@@ -100,10 +99,10 @@ class _ChatPageState extends State<ChatPage> {
         //Check if the textfield has text or not
         if (textController.text.isNotEmpty) {
           //Send the message as JSON data to send_message event
-         // socketIO.sendMessage(
-         //     'send_message', json.encode({'message': textController.text},));
+          socketIO.sendMessage(
+              'send_message', json.encode({'message': textController.text},));
           //Add the message to the list
-         // this.setState(() => messages.add(textController.text));
+          this.setState(() => messages.add(textController.text));
           textController.text = '';
           //Scrolldown the list to show the latest message
           scrollController.animateTo(

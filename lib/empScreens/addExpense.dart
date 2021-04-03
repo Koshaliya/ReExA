@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ReExA/empWidgets/constants.dart';
 import 'package:ReExA/empWidgets/expenseCard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ReExA/empScreens/empDashboard.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -13,25 +14,20 @@ class AddExpense extends StatefulWidget {
 }
 
 class _AddExpenseState extends State<AddExpense> {
-  
-
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
         centerTitle: true,
-        //leading: MenuButton(),
-          actions: [
-            SearchButton(),
-            NotificationButton()
-          ],
-          title: AppBarTitle(title: 'Add Expense',),
+        actions: [SearchButton(), NotificationButton()],
+        title: AppBarTitle(
+          title: 'Add Expense',
+        ),
       ),
       drawer: SideDrawer(),
       body: Form(
@@ -88,12 +84,12 @@ class _AddExpenseState extends State<AddExpense> {
                     height: 50.0,
                     width: 250.0,
                     child: ElevatedButton(
-                      onPressed: () async{
+                      onPressed: () async {
                         buildShowDialog(context);
 
-                        /*String tokenGot;
+                        //  String tokenGot;
 
-                        var token = await getTokenFromSF();
+                        /*var token = await getTokenFromSF();
                         getTokenFromSF().then((value) {
                           tokenGot=value;
                           
@@ -109,14 +105,14 @@ class _AddExpenseState extends State<AddExpense> {
                         print(token);
 
                         var url = Uri.parse(
-                            'https://reexapi.herokuapp.com/users/me');
-                        final response = await http.get(url,
+                            'https://reexapi.herokuapp.com/transaction');
+                        final response = await http.post(url,
                             headers: {
                               'Content-Type': 'application/json',
                               'Accept': 'application/json',
                               'Authorization': 'Bearer $token',
                             },
-                            /*body: jsonEncode(
+                            body: jsonEncode(
                               <dynamic, String>{
                                 'amount': amount,
                                 'description': description,
@@ -124,7 +120,7 @@ class _AddExpenseState extends State<AddExpense> {
                                 'category': category,
                                 'transationDate': transactionDate,
                                 'paymentMethod': paymentMethod,
-                              },*/
+                              },),
                             );
                       
                         print(response.body);

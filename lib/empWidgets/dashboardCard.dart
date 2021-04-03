@@ -215,12 +215,12 @@ Color(0xFFF9AA33),
                         route: TopUpRequest.id,
                         ),
                     DashboardButton(
-                        buttonIcon: Icons.mobile_friendly_outlined,
+                        buttonIcon: Icons.request_page_rounded,
                         label: 'Reimbursement status',
                         buttonColor: Color(0xFFA08AF3),
                         route: ReimbursementStatus.id,),
                     DashboardButton(
-                        buttonIcon: Icons.assignment_ind_outlined,
+                        buttonIcon: Icons.comment_rounded,
                         label: 'Report',
                         buttonColor: Color(0xFFF169B1),
                         route: ChatPage.id,
@@ -233,7 +233,7 @@ Color(0xFFF9AA33),
                     DashboardButton(
                         buttonIcon: Icons.my_library_books_outlined,
                         label: 'News',
-                        buttonColor: Color(0xFF90DDD0),
+                        buttonColor: Color(0xFF00b894),
                         route: Newspage.id,
                         ),
                     DashboardButton(

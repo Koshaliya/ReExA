@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         
     ),
    
-     initialRoute: MgrDashboard.id,
+     initialRoute: LoginPage.id,
       routes: {
         LoginPage.id:(context) => LoginPage(),
         ForgotPassword.id:(context) => ForgotPassword(),
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         ReimbursementStatus.id:(context) => ReimbursementStatus(),
         History.id:(context) => History(),
         TopUpRequest.id:(context) => TopUpRequest(),
-        ChatPage.id:(context) => ChatPage(),
+        //ChatPage.id:(context) => ChatPage(),
         ProfilePage.id:(context) => ProfilePage(),
         MgrDashboard.id:(context) => MgrDashboard(),
         Newspage.id:(context) => Newspage(),

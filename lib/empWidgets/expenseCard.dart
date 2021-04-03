@@ -14,6 +14,8 @@ var managerIncharge,
     transactionDate,
     description;
 
+//************************************************Amount Input Field************************************************************/
+
 class AmountField extends StatelessWidget {
   final String label;
 
@@ -53,6 +55,8 @@ class AmountField extends StatelessWidget {
     );
   }
 }
+
+//************************************************Date Picker Field************************************************************/
 
 class DateField extends StatefulWidget {
   @override
@@ -117,6 +121,8 @@ class _DateFieldState extends State<DateField> {
   }
 }
 
+//************************************************Description Input Field************************************************************/
+
 class DescriptionField extends StatefulWidget {
   @override
   _DescriptionFieldState createState() => _DescriptionFieldState();
@@ -150,6 +156,8 @@ class _DescriptionFieldState extends State<DescriptionField> {
     );
   }
 }
+
+//************************************************DropDown ManagerIncharge Select************************************************************/
 
 const List managerList = ["M001", "M002", "M003", "M004", "M005", "M006"];
 const List categoryList = ["Food", "Travel", "Clinet Meeting", "Misc"];
@@ -201,6 +209,8 @@ class _DropDownManagerState extends State<DropDownManager> {
   }
 }
 
+//************************************************DropDown Category Select************************************************************/
+
 class DropDownCategory extends StatefulWidget {
   final String hintText;
   final List hintList;
@@ -246,6 +256,8 @@ class _DropDownCategoryState extends State<DropDownCategory> {
   }
 }
 
+//************************************************DropDown PayMethod Select************************************************************/
+
 class DropDownPayMethod extends StatefulWidget {
   final String hintText;
   final List hintList;
@@ -290,6 +302,8 @@ class _DropDownPayMethodState extends State<DropDownPayMethod> {
     );
   }
 }
+
+//************************************************Attach Image Button************************************************************/
 
 class AttachImage extends StatefulWidget {
   @override
@@ -365,9 +379,7 @@ class _AttachImageState extends State<AttachImage> {
         ),
         Container(
           margin: EdgeInsets.only(top: 20.0),
-          //padding: EdgeInsets.all(5.0),
           height: 30.0,
-
           child: _image == null
               ? Text('')
               : Text(
@@ -380,13 +392,13 @@ class _AttachImageState extends State<AttachImage> {
   }
 }
 
-
-//***********************************************PopUp******************************************************
+//************************************************PopUp Widgets************************************************************/
 
 class PopContainer extends StatelessWidget {
-  const PopContainer({
-    Key key,
-  }) : super(key: key);
+  final String title;
+  final String titleAns;
+
+  const PopContainer({this.title,this.titleAns});
 
   @override
   Widget build(BuildContext context) {
@@ -399,43 +411,21 @@ class PopContainer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          PopTtitle(),
-          PopTitleAns(),
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Text(
+              title,
+              style: kPopTitle,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Text(
+              titleAns,
+              style: kPopTitleAns,
+            ),
+          ),
         ],
-      ),
-    );
-  }
-}
-
-class PopTtitle extends StatelessWidget {
-  const PopTtitle({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: Text(
-        'Authorizer Name',
-        style: kPopTitle,
-      ),
-    );
-  }
-}
-
-class PopTitleAns extends StatelessWidget {
-  const PopTitleAns({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: Text(
-        'T.K. Perera',
-        style: kPopTitleAns,
       ),
     );
   }
@@ -470,6 +460,9 @@ class ConfirmButton extends StatelessWidget {
     );
   }
 }
+
+//************************************************PopUp Screen************************************************************/
+
 
 Future buildShowDialog(BuildContext context) {
   return showDialog(
@@ -510,12 +503,12 @@ Future buildShowDialog(BuildContext context) {
                     ],
                   ),
                 ),
-                PopContainer(),
-                PopContainer(),
-                PopContainer(),
-                PopContainer(),
-                PopContainer(),
-                PopContainer(),
+                PopContainer(title: 'Authorizer Name',titleAns: 'P.K.Fernando',),
+                PopContainer(title: 'Expense Category',titleAns: 'Travel',),
+                PopContainer(title: 'Payment Method',titleAns: 'Card',),
+                PopContainer(title: 'Amount',titleAns: 'Rs.520',),
+                PopContainer(title: 'Receipt Date',titleAns: '14/03/2020',),
+                PopContainer(title: 'Description',titleAns: 'Due to client meeting..',),
                 ConfirmButton(),
               ],
             ),

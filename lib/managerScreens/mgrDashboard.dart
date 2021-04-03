@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:ReExA/mgrWidgets/mgrConstants.dart';
+import 'package:ReExA/empWidgets/constants.dart';
 import 'package:ReExA/mgrWidgets/mgrDashCard.dart';
 
 class MgrDashboard extends StatefulWidget {
@@ -64,15 +64,15 @@ class _MgrDashboardState extends State<MgrDashboard> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             DashboardButton(
-                              buttonIcon: Icons.approval,
+                              buttonIcon: Icons.mobile_screen_share_rounded,
                               label: 'Top-up',
-                              buttonColor: Color(0xFFFF716D),
+                              buttonColor: Color(0xFF786fa6),
                               //route: TopUpRequest.id,
                             ),
                             DashboardButton(
                               buttonIcon: Icons.mobile_friendly_outlined,
                               label: 'Reimbursement',
-                              buttonColor: Color(0xFFA08AF3),
+                              buttonColor: Color(0xFFea8685),
                               //route: ReimbursementStatus.id,
                             ),
                             
@@ -82,7 +82,7 @@ class _MgrDashboardState extends State<MgrDashboard> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             DashboardButton(
-                              buttonIcon: Icons.assignment_ind_outlined,
+                              buttonIcon: Icons.comment_rounded,
                               label: 'Report',
                               buttonColor: Color(0xFFF169B1),
                               //route: null,
@@ -90,7 +90,7 @@ class _MgrDashboardState extends State<MgrDashboard> {
                             DashboardButton(
                               buttonIcon: Icons.my_library_books_outlined,
                               label: 'News',
-                              buttonColor: Color(0xFF90DDD0),
+                              buttonColor: Color(0xFF00b894),
                               //route: null,
                             ),
                             
@@ -100,9 +100,9 @@ class _MgrDashboardState extends State<MgrDashboard> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             DashboardButton(
-                              buttonIcon: Icons.history_outlined,
+                              buttonIcon: Icons.calculate_rounded,
                               label: 'Verify Expense',
-                              buttonColor: Color(0xFFFF8E61),
+                              buttonColor: Color(0xFF576574),
                               // route: History.id,
                             ),
                           ],),
