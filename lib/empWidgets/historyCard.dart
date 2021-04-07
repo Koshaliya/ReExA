@@ -1,38 +1,47 @@
 import 'package:ReExA/empScreens/expenseHistory.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
-class HeadingButton extends StatelessWidget {
-  final String label;
-  //final String route;
-  const HeadingButton({this.label,});
+// class HeadingButton extends StatelessWidget {
+//   final String label;
+//   //final String route;
+//   const HeadingButton({
+//     this.label,
+//   });
 
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => ExpenseHistory()),
-  );
-      },
-      child: Container(
-        margin: EdgeInsets.only(left: 10.0),
-        padding: EdgeInsets.symmetric(horizontal:10.0,),
-        color: Color(0xFFFBFBFB),
-        child: Text(
-          label,
-          style:
-              TextStyle(color: Color(0xFF797777), fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: () {
+//         Navigator.push(
+//           context,
+//           MaterialPageRoute(builder: (context) => ExpenseHistory()),
+//         );
+//       },
+//       child: Container(
+//         margin: EdgeInsets.only(left: 10.0),
+//         padding: EdgeInsets.symmetric(
+//           horizontal: 10.0,
+//         ),
+//         color: Color(0xFFFBFBFB),
+//         child: Text(
+//           label,
+//           style:
+//               TextStyle(color: Color(0xFF797777), fontWeight: FontWeight.bold),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class HistoryContainer extends StatelessWidget {
-  const HistoryContainer({
-    Key key,
-  }) : super(key: key);
+  final String uber;
+  final String rupees;
+
+  const HistoryContainer({this.uber, this.rupees});
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +71,16 @@ class HistoryContainer extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [Text('Uber'), Text('Rs 850')],
+        children: [
+          Text(uber),
+          Text(rupees),
+        ],
       ),
     );
   }
+ 
+ 
 }
+
+
 

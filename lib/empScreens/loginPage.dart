@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:ReExA/empScreens/empDashboard.dart';
+import 'package:ReExA/managerScreens/mgrDashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -46,8 +47,23 @@ class _LoginPageState extends State<LoginPage>
     } 
       _formKey.currentState.save();
       try{
+        // print(_authData['userId'] );
+        // print(_authData['password']);
       await Provider.of<Auth>(context, listen: false).authenticate(_authData['userId'],_authData['password'] );
-      Navigator.of(context).pushNamed(EmpDashboard.id);
+      var sharedPreferencesRole = await SharedPreferences.getInstance();
+      var getUserRole=sharedPreferencesRole.getString('userRole');
+      print(getUserRole);
+
+      if(getUserRole == 'employee'){
+        Navigator.of(context).pushNamed(EmpDashboard.id);
+      }
+      else if(getUserRole == 'manager'){
+        Navigator.of(context).pushNamed(MgrDashboard.id);
+      }
+      else{
+        print('error');
+      }
+      
       }
       catch (error)
     {
@@ -56,13 +72,18 @@ class _LoginPageState extends State<LoginPage>
     }
   }
 
-  /* Future addTokenToSF() async {
-    String token;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString("token");
-    print("PRANA" + token.toString());
-  }*/
+  //  Future addTokenToSF() async {
+  //   String token;
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   token = prefs.getString("token");
+  //   print("PRANA" + token.toString());
+  // }
 
+
+
+    // //Retrieve token wherever necessary
+    // SharedPreferences preferences = getActivity().getSharedPreferences("MY_APP",Context.MODE_PRIVATE);
+    // String retrivedToken  = preferences.getString("TOKEN",null);//second parameter default value.
   unfocus() {
     currentFocus = FocusScope.of(context);
 
@@ -213,10 +234,10 @@ class _LoginPageState extends State<LoginPage>
                         );
 
                         _onSubmit();
-
+                        // addTokenToSF();
                         unfocus();
-                        print(userId);
-                        print(password);
+                        // print(userId);
+                        // print(password);
                       },
                       child: Text(
                         'Login',

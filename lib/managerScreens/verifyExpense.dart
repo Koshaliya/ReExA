@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ReExA/empWidgets/constants.dart';
+import 'package:ReExA/mgrWidgets/verifyExpenseCard.dart';
 
 class VerifyExpense extends StatefulWidget {
   static const String id = 'verifyExpense';
@@ -43,7 +44,11 @@ class _VerifyExpenseState extends State<VerifyExpense> {
           builder: (BuildContext buildContext) {
             scaffold = Scaffold.of(buildContext);
             return TabBarView(
-              children: [],
+              children: [
+                VerifyExpenseNew(),
+                VerifyExpenseNew(),
+                VerifyExpenseNew(),
+              ],
             );
           },
         ),

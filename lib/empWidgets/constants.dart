@@ -1,6 +1,7 @@
 import 'package:ReExA/empScreens/empDashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:ReExA/empScreens/profilePage.dart';
+import 'package:ReExA/providers/auth.dart';
 
 const kPrimaryColor = Color(0xFF2C5EA8);
 const kSecondColor = Color(0xFF42C9F3);
@@ -118,7 +119,6 @@ class NotificationButton extends StatelessWidget {
     return IconButton(
       icon: Icon(Icons.notifications),
       onPressed: () {},
-     
     );
   }
 }
@@ -135,7 +135,6 @@ class SearchButton extends StatelessWidget {
       onPressed: () {
         showSearch(context: context, delegate: DataSearch());
       },
-      
     );
   }
 }
@@ -213,7 +212,9 @@ class SideDrawer extends StatelessWidget {
               'Logout',
               style: TextStyle(fontSize: 18),
             ),
-            onTap: null,
+            onTap: () {
+              Auth().logOut();
+            },
           ),
         ],
       ),
@@ -222,18 +223,26 @@ class SideDrawer extends StatelessWidget {
 }
 
 //*********************************************Search*******************************************************************
-final normalEmp = ["M001", "E002", "M002", "E001","M004", "E005", "M005", "E004"];
+final normalEmp = [
+  "M001",
+  "E002",
+  "M002",
+  "E001",
+  "M004",
+  "E005",
+  "M005",
+  "E004"
+];
 final recentEmp = ["M021", "E022", "M022", "E011"];
 
 class DataSearch extends SearchDelegate<String> {
-  
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
         icon: Icon(Icons.clear),
         onPressed: () {
-          query="";
+          query = "";
         },
       )
     ];
@@ -247,33 +256,39 @@ class DataSearch extends SearchDelegate<String> {
         progress: transitionAnimation,
       ),
       onPressed: () {
-        close(context,null);
+        close(context, null);
       },
     );
   }
 
   @override
-  Widget buildResults(BuildContext context) {
-    
-  }
+  Widget buildResults(BuildContext context) {}
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final suggestionList = query.isEmpty ? recentEmp : normalEmp.where((p)=> p.startsWith(query)).toList();
+    final suggestionList = query.isEmpty
+        ? recentEmp
+        : normalEmp.where((p) => p.startsWith(query)).toList();
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
-        onTap: (){
-         Navigator.pushNamed(context, ProfilePage.id);
+        onTap: () {
+          Navigator.pushNamed(context, ProfilePage.id);
         },
         leading: Icon(Icons.person),
-        title: RichText(text: TextSpan(
-          text: suggestionList[index].substring(0,query.length),
-          style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
-          children: [TextSpan(
-            text: suggestionList[index].substring(query.length),
-            style: TextStyle(color: Colors.grey,),
-            ),]
-        ),),
+        title: RichText(
+          text: TextSpan(
+              text: suggestionList[index].substring(0, query.length),
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              children: [
+                TextSpan(
+                  text: suggestionList[index].substring(query.length),
+                  style: TextStyle(
+                    color: Colors.grey,
+                  ),
+                ),
+              ]),
+        ),
       ),
       itemCount: suggestionList.length,
     );

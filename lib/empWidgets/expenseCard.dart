@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:ReExA/empScreens/empDashboard.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 var managerIncharge,
     category,
@@ -159,7 +160,7 @@ class _DescriptionFieldState extends State<DescriptionField> {
 
 //************************************************DropDown ManagerIncharge Select************************************************************/
 
-const List managerList = ["M001", "M002", "M003", "M004", "M005", "M006"];
+const List managerList = ["602ffb42c87096c45e83cea6"];
 const List categoryList = ["Food", "Travel", "Clinet Meeting", "Misc"];
 const List paymentList = ["Card", "Cash"];
 
@@ -311,15 +312,26 @@ class AttachImage extends StatefulWidget {
 }
 
 class _AttachImageState extends State<AttachImage> {
-  File _image;
-  Future getImage() async {
-    final _picker = ImagePicker();
-    final cameraImage = await _picker.getImage(source: ImageSource.camera);
+  // Future getImage() async {
+  //   final _picker = ImagePicker();
+  //   final cameraImage = await _picker.getImage(source: ImageSource.camera);
 
+  //   setState(() {
+  //     print(cameraImage.path);
+  //     _image = File(cameraImage.path);
+  //   });
+  // }
+  PickedFile _imageFile;
+  final ImagePicker _picker = ImagePicker();
+  Image imageFromPreferences;
+  void takePhoto(ImageSource source) async {
+    final pickedFile = await _picker.getImage(source: source);
     setState(() {
-      print(cameraImage.path);
-      _image = File(cameraImage.path);
+      print(pickedFile.path);
+      _imageFile = pickedFile;
     });
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString('pickedImage', _imageFile.toString());
   }
 
   @override
@@ -331,7 +343,10 @@ class _AttachImageState extends State<AttachImage> {
           width: 200.0,
           child: TextButton(
             onPressed: () {
-              getImage();
+              showModalBottomSheet(
+                context: context,
+                builder: ((builder) => bottomSheet()),
+              );
             },
             style: TextButton.styleFrom(
               padding: EdgeInsets.all(15.0),
@@ -380,7 +395,7 @@ class _AttachImageState extends State<AttachImage> {
         Container(
           margin: EdgeInsets.only(top: 20.0),
           height: 30.0,
-          child: _image == null
+          child: _imageFile == null
               ? Text('')
               : Text(
                   "Receipt Attached",
@@ -388,6 +403,42 @@ class _AttachImageState extends State<AttachImage> {
                 ),
         ),
       ],
+    );
+  }
+
+  Widget bottomSheet() {
+    return Container(
+      height: 100.0,
+      width: MediaQuery.of(context).size.width,
+      margin: EdgeInsets.all(10.0),
+      child: Column(
+        children: [
+          Text('Select a photo'),
+          SizedBox(
+            height: 20.0,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton.icon(
+                icon: Icon(Icons.camera_rounded),
+                onPressed: () async {
+                  takePhoto(ImageSource.camera);
+                  
+                },
+                label: Text('Camera'),
+              ),
+              TextButton.icon(
+                icon: Icon(Icons.image),
+                onPressed: () {
+                  takePhoto(ImageSource.gallery);
+                },
+                label: Text('Gallery'),
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }
@@ -398,7 +449,7 @@ class PopContainer extends StatelessWidget {
   final String title;
   final String titleAns;
 
-  const PopContainer({this.title,this.titleAns});
+  const PopContainer({this.title, this.titleAns});
 
   @override
   Widget build(BuildContext context) {
@@ -463,7 +514,6 @@ class ConfirmButton extends StatelessWidget {
 
 //************************************************PopUp Screen************************************************************/
 
-
 Future buildShowDialog(BuildContext context) {
   return showDialog(
     context: context,
@@ -503,12 +553,30 @@ Future buildShowDialog(BuildContext context) {
                     ],
                   ),
                 ),
-                PopContainer(title: 'Authorizer Name',titleAns: 'P.K.Fernando',),
-                PopContainer(title: 'Expense Category',titleAns: 'Travel',),
-                PopContainer(title: 'Payment Method',titleAns: 'Card',),
-                PopContainer(title: 'Amount',titleAns: 'Rs.520',),
-                PopContainer(title: 'Receipt Date',titleAns: '14/03/2020',),
-                PopContainer(title: 'Description',titleAns: 'Due to client meeting..',),
+                PopContainer(
+                  title: 'Authorizer Name',
+                  titleAns: 'P.K.Fernando',
+                ),
+                PopContainer(
+                  title: 'Expense Category',
+                  titleAns: 'Travel',
+                ),
+                PopContainer(
+                  title: 'Payment Method',
+                  titleAns: 'Card',
+                ),
+                PopContainer(
+                  title: 'Amount',
+                  titleAns: 'Rs.520',
+                ),
+                PopContainer(
+                  title: 'Receipt Date',
+                  titleAns: '14/03/2020',
+                ),
+                PopContainer(
+                  title: 'Description',
+                  titleAns: 'Due to client meeting..',
+                ),
                 ConfirmButton(),
               ],
             ),

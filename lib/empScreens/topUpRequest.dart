@@ -22,7 +22,7 @@ class _TopUpRequestState extends State<TopUpRequest> {
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
         centerTitle: true,
-       // leading: MenuButton(),
+
           actions: [
             SearchButton(),
             NotificationButton()
@@ -63,8 +63,40 @@ class _TopUpRequestState extends State<TopUpRequest> {
                     height: 50.0,
                     width: 250.0,
                     child: ElevatedButton(
-                      onPressed: () {
-                        buildShowDialog(context);
+                      onPressed: () async {
+                        try {
+                          print(amount);
+                          print(managerIncharge);
+                          final url = Uri.parse(
+                              'https://reexapi.herokuapp.com/topUpRequest');
+                          var sharedPreferencesX =
+                              await SharedPreferences.getInstance();
+
+                          var getToken = sharedPreferencesX.getString('token');
+                          print(getToken);
+                          final http.Response response = await http.post(
+                            url,
+                            headers: <String, String>{
+                              "Content-Type": 'application/json;charset=UTF-8',
+                              "Accept": 'application/json',
+                              "Authorization": 'Bearer $getToken'
+                            },
+                            body: jsonEncode(
+                              <dynamic, String>{
+                                'amount': amount,
+                                'requestTo': managerIncharge,
+                                'description':description
+                                
+                              },
+                            ),
+                          );
+                          final responseData = json.decode(response.body);
+                          print(responseData);
+                          //buildShowDialog(context);
+                        } catch (error) {
+                          print(error);
+                          throw error;
+                        }
                       },
                       child: Text(
                         'Submit',
