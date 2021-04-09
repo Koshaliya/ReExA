@@ -1,9 +1,7 @@
 import 'package:ReExA/empScreens/addExpense.dart';
-import 'package:ReExA/empScreens/chatScreen.dart';
 import 'package:ReExA/empScreens/example.dart';
 import 'package:ReExA/empScreens/histroy.dart';
 import 'package:ReExA/empScreens/news.dart';
-import 'package:ReExA/empScreens/reimbursementStatus.dart';
 import 'package:ReExA/empScreens/topUpRequest.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
@@ -224,7 +222,7 @@ Color(0xFFF9AA33),
                         buttonIcon: Icons.comment_rounded,
                         label: 'Report',
                         buttonColor: Color(0xFFF169B1),
-                        route: ChatPage.id,
+                        route: null,
                         ),
                   ],
                 ),

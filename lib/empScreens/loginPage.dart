@@ -1,14 +1,10 @@
-import 'dart:convert';
 import 'package:ReExA/empScreens/empDashboard.dart';
 import 'package:ReExA/managerScreens/mgrDashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../empWidgets/constants.dart';
-import 'package:ReExA/empWidgets/dashboardCard.dart';
-import 'forgotPass.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:http/http.dart' as http;
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:ReExA/providers/auth.dart';
 
@@ -30,12 +26,9 @@ class _LoginPageState extends State<LoginPage>
   var currentFocus;
   bool showSpinner = false;
 
-  Map<String,String> _authData={
-    'userId':'',
-    'password':''
-  };
+  Map<String, String> _authData = {'userId': '', 'password': ''};
 
- Future<void> _onSubmit() async {
+  Future<void> _onSubmit() async {
     if (!_formKey.currentState.validate()) {
       setState(
         () {
@@ -44,46 +37,27 @@ class _LoginPageState extends State<LoginPage>
           showSpinner = false;
         },
       );
-    } 
-      _formKey.currentState.save();
-      try{
-        // print(_authData['userId'] );
-        // print(_authData['password']);
-      await Provider.of<Auth>(context, listen: false).authenticate(_authData['userId'],_authData['password'] );
+    }
+    _formKey.currentState.save();
+    try {
+      await Provider.of<Auth>(context, listen: false)
+          .authenticate(_authData['userId'], _authData['password']);
       var sharedPreferencesRole = await SharedPreferences.getInstance();
-      var getUserRole=sharedPreferencesRole.getString('userRole');
+      var getUserRole = sharedPreferencesRole.getString('userRole');
       print(getUserRole);
 
-      if(getUserRole == 'employee'){
+      if (getUserRole == 'employee') {
         Navigator.of(context).pushNamed(EmpDashboard.id);
-      }
-      else if(getUserRole == 'manager'){
+      } else if (getUserRole == 'manager') {
         Navigator.of(context).pushNamed(MgrDashboard.id);
-      }
-      else{
+      } else {
         print('error');
       }
-      
-      }
-      catch (error)
-    {
-      
+    } catch (error) {
       print('Authentication Failed. Please try again later.');
     }
   }
 
-  //  Future addTokenToSF() async {
-  //   String token;
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   token = prefs.getString("token");
-  //   print("PRANA" + token.toString());
-  // }
-
-
-
-    // //Retrieve token wherever necessary
-    // SharedPreferences preferences = getActivity().getSharedPreferences("MY_APP",Context.MODE_PRIVATE);
-    // String retrivedToken  = preferences.getString("TOKEN",null);//second parameter default value.
   unfocus() {
     currentFocus = FocusScope.of(context);
 
@@ -92,23 +66,6 @@ class _LoginPageState extends State<LoginPage>
     }
   }
 
-/*
-  @override
-  void initState() {
-    super.initState();
-
-    controller = AnimationController(
-      duration: Duration(seconds: 1),
-      vsync: this,
-    );
-
-    controller.forward();
-    controller.addListener(() {
-      setState(() {});
-      print(controller.value);
-    });
-  }
-*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,25 +97,18 @@ class _LoginPageState extends State<LoginPage>
                     margin: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 25.0),
                     child: TextFormField(
-                      onSaved: (value)
-                          {
-                            _authData['userId'] = value;
-                          },
-                      // onChanged: (value) {
-                      //   userId = value;
-                      // },
+                      onSaved: (value) {
+                        _authData['userId'] = value;
+                      },
                       validator: (value) {
                         if (value.isEmpty) {
                           return 'Empty value not accepted';
-                        } 
-                          
-                         else {
+                        } else {
                           return null;
                         }
                       },
                       controller: TextEditingController(text: userId),
                       textAlign: TextAlign.center,
-                      //autofocus: true,
                       style: TextStyle(
                           color: kSecondColor, fontWeight: FontWeight.bold),
                       decoration: InputDecoration(
@@ -183,13 +133,9 @@ class _LoginPageState extends State<LoginPage>
                     margin: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 25.0),
                     child: TextFormField(
-                      onSaved:  (value)
-                          {
-                            _authData['password'] = value;
-                          },
-                      // onChanged: (value) {
-                      //   password = value;
-                      // },
+                      onSaved: (value) {
+                        _authData['password'] = value;
+                      },
                       validator: (value) {
                         if (value.isEmpty) {
                           return 'Empty value not accepted';
@@ -202,7 +148,6 @@ class _LoginPageState extends State<LoginPage>
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: kSecondColor, fontWeight: FontWeight.bold),
-                      //keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         hintText: 'Password',
                         labelStyle: kloginText,
@@ -234,10 +179,8 @@ class _LoginPageState extends State<LoginPage>
                         );
 
                         _onSubmit();
-                        // addTokenToSF();
+
                         unfocus();
-                        // print(userId);
-                        // print(password);
                       },
                       child: Text(
                         'Login',
@@ -255,13 +198,6 @@ class _LoginPageState extends State<LoginPage>
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  LoginButton(
-                    label: 'Forgot Password?',
-                    route: ForgotPassword.id,
                   ),
                 ],
               ),

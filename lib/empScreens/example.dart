@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
@@ -16,7 +15,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Future<List<ReimbursementStatusA>> _getUsers() async{
+  Future<List<ReimbursementStatusA>> _getUsers() async {
     final url = Uri.parse('https://reexapi.herokuapp.com/reimbursementTo');
     var sharedPreferencesX = await SharedPreferences.getInstance();
 
@@ -40,8 +39,9 @@ class _MyHomePageState extends State<MyHomePage> {
         u["amount"],
         u["status"],
         u["reimbursementBy"],
+        
       );
-
+// print(u["amount"]);
       reimbursementStatusFull.add(reimbursementStatus);
     }
 
@@ -60,45 +60,32 @@ class _MyHomePageState extends State<MyHomePage> {
         child: FutureBuilder(
           future: _getUsers(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
+            
             print(snapshot.data);
+            
             if (snapshot.data == null) {
               return Container(child: Center(child: Text("Loading...")));
             } else {
-              return ListView.builder(
-                itemCount: snapshot.data.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    
-                    title: Text(snapshot.data[index].amount),
-                      subtitle: Text(snapshot.data[index].status),
-                      onTap: (){
-
-                        Navigator.push(context, 
-                          new MaterialPageRoute(builder: (context) => DetailPage(snapshot.data[index]))
-                        );}
-                  );
-                },
+              return ListView(
+                // itemCount: snapshot.data.length,
+                // itemBuilder: (BuildContext context, int index) {
+                children: <Widget>[
+                  Text('Result: ${snapshot.data[0]}'),
+                  Text('Result: ${snapshot.data[1]}'),
+                ],
               );
+              // return ListTile(
+
+              //   title: Text(snapshot.data[index].amount),
+              //     subtitle: Text(snapshot.data[index].status),
+
+              // );
+              //   },
+              // );
             }
           },
         ),
       ),
-    );
-  }
-}
-
-class DetailPage extends StatelessWidget {
-
-  final ReimbursementStatusA reimbursementStatus;
-
-  DetailPage(this.reimbursementStatus);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(reimbursementStatus.status),
-        )
     );
   }
 }

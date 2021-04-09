@@ -1,7 +1,10 @@
 import 'package:ReExA/empScreens/empDashboard.dart';
+import 'package:ReExA/empScreens/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:ReExA/empScreens/profilePage.dart';
 import 'package:ReExA/providers/auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ReExA/managerScreens/mgrDashboard.dart';
 
 const kPrimaryColor = Color(0xFF2C5EA8);
 const kSecondColor = Color(0xFF42C9F3);
@@ -18,23 +21,6 @@ const kappBarText = TextStyle(
   color: Colors.black,
 );
 
-/*const kOverviewText = TextStyle(
-  fontSize: 13.0,
-  color: Colors.black,
-  fontWeight: FontWeight.bold,
-);
-
-const kExpenseStat = TextStyle(
-  fontSize: 13.0,
-  color: Color(0x95000000),
-);
-
-const kDivider = Divider(
-  color: Color(0x95000000),
-  thickness: 3,
-  indent: 18,
-  endIndent: 200,
-);*/
 
 const kExpense = TextStyle(
   fontSize: 16.0,
@@ -203,8 +189,20 @@ class SideDrawer extends StatelessWidget {
                 'Dashboard',
                 style: TextStyle(fontSize: 18),
               ),
-              onTap: () {
-                Navigator.pushNamed(context, EmpDashboard.id);
+              onTap: () async{
+                var sharedPreferencesRole = await SharedPreferences.getInstance();
+      var getUserRole=sharedPreferencesRole.getString('userRole');
+      print(getUserRole);
+
+      if(getUserRole == 'employee'){
+        Navigator.of(context).pushNamed(EmpDashboard.id);
+      }
+      else if(getUserRole == 'manager'){
+        Navigator.of(context).pushNamed(MgrDashboard.id);
+      }
+      else{
+        print('error');
+      }
               }),
           ListTile(
             leading: Icon(Icons.arrow_back),
@@ -214,6 +212,7 @@ class SideDrawer extends StatelessWidget {
             ),
             onTap: () {
               Auth().logOut();
+               Navigator.pushNamed(context, LoginPage.id);
             },
           ),
         ],

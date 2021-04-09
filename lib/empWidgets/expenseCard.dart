@@ -1,12 +1,12 @@
 import 'dart:ui';
+
 import 'constants.dart';
 import 'package:flutter/material.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
-import 'package:intl/intl.dart';
+
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
+
 import 'package:ReExA/empScreens/empDashboard.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 var managerIncharge,
     category,
@@ -19,13 +19,13 @@ var managerIncharge,
 
 class AmountField extends StatelessWidget {
   final String label;
-
   const AmountField({
     this.label,
   });
 
   @override
   Widget build(BuildContext context) {
+    //print('Prana :' + transactionDate);
     return Container(
       margin: const EdgeInsets.all(10.0),
       child: TextField(
@@ -52,71 +52,6 @@ class AmountField extends StatelessWidget {
           enabledBorder: kEnabledBorder,
           contentPadding: EdgeInsets.all(15.0),
         ),
-      ),
-    );
-  }
-}
-
-//************************************************Date Picker Field************************************************************/
-
-class DateField extends StatefulWidget {
-  @override
-  _DateFieldState createState() => _DateFieldState();
-}
-
-class _DateFieldState extends State<DateField> {
-  TextEditingController dateCtl = TextEditingController(text: transactionDate);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(10.0),
-      child: TextField(
-        style: TextStyle(color: kSecondColor, fontWeight: FontWeight.bold),
-        controller: dateCtl,
-        onChanged: (value) {
-          transactionDate = value;
-        },
-        decoration: InputDecoration(
-          labelText: 'Receipt Date',
-          labelStyle: TextStyle(
-              color: Colors.grey[700],
-              fontSize: 14.0,
-              fontWeight: FontWeight.bold),
-          border: kEnabledBorder,
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: kPrimaryColor, width: 1.5),
-          ),
-          enabledBorder: kEnabledBorder,
-          contentPadding: EdgeInsets.all(15.0),
-        ),
-        onTap: () async {
-          DateTime date = DateTime(2019);
-          FocusScope.of(context).requestFocus(new FocusNode());
-
-          date = await showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime(2019),
-            lastDate: DateTime(2022),
-            builder: (BuildContext context, Widget child) {
-              return Theme(
-                data: ThemeData(
-                  textButtonTheme: new TextButtonThemeData(
-                    style: TextButton.styleFrom(primary: kSecondColor),
-                  ),
-                  colorScheme: ColorScheme.light(
-                    primary: kPrimaryColor,
-                    onPrimary: Colors.white,
-                    onSurface: kPrimaryColor,
-                  ),
-                ),
-                child: child,
-              );
-            },
-          );
-          dateCtl.text = DateFormat.yMMMd().format(date);
-        },
       ),
     );
   }
@@ -159,6 +94,8 @@ class _DescriptionFieldState extends State<DescriptionField> {
 }
 
 //************************************************DropDown ManagerIncharge Select************************************************************/
+
+//var managerdetails= User().getManagers();
 
 const List managerList = ["602ffb42c87096c45e83cea6"];
 const List categoryList = ["Food", "Travel", "Clinet Meeting", "Misc"];
@@ -330,8 +267,8 @@ class _AttachImageState extends State<AttachImage> {
       print(pickedFile.path);
       _imageFile = pickedFile;
     });
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setString('pickedImage', _imageFile.toString());
+    // final SharedPreferences preferences = await SharedPreferences.getInstance();
+    // preferences.setString('pickedImage', _imageFile.toString());
   }
 
   @override
@@ -424,7 +361,6 @@ class _AttachImageState extends State<AttachImage> {
                 icon: Icon(Icons.camera_rounded),
                 onPressed: () async {
                   takePhoto(ImageSource.camera);
-                  
                 },
                 label: Text('Camera'),
               ),

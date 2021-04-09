@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'verifyExpense.dart';
 import 'package:flutter/material.dart';
 import 'package:ReExA/empWidgets/constants.dart';
 import 'package:ReExA/mgrWidgets/mgrDashCard.dart';
@@ -103,7 +103,7 @@ class _MgrDashboardState extends State<MgrDashboard> {
                               buttonIcon: Icons.calculate_rounded,
                               label: 'Verify Expense',
                               buttonColor: Color(0xFF576574),
-                              // route: History.id,
+                              route: VerifyExpense.id,
                             ),
                           ],),
                         

@@ -1,10 +1,13 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:ReExA/empWidgets/constants.dart';
 import 'package:ReExA/empWidgets/expenseCard.dart';
-import 'package:image_picker/image_picker.dart';
+
+import 'package:intl/intl.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ReExA/empScreens/empDashboard.dart';
+
 
 import 'package:http/http.dart' as http;
 
@@ -16,6 +19,8 @@ class AddExpense extends StatefulWidget {
 
 class _AddExpenseState extends State<AddExpense> {
   final _formKey = GlobalKey<FormState>();
+  TextEditingController dateCtl = TextEditingController(text: transactionDate);
+  String dateDood;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +71,63 @@ class _AddExpenseState extends State<AddExpense> {
                       label: 'Amout',
                     )),
                     Expanded(
-                      child: DateField(),
+                      child: Container(
+                        margin: const EdgeInsets.all(10.0),
+                        child: TextField(
+                          style: TextStyle(
+                              color: kSecondColor, fontWeight: FontWeight.bold),
+                          controller: dateCtl,
+                          onChanged: (value) {
+                            //print('valuesss : ' + value.toString());
+                            transactionDate = value;
+
+                            //print('transac :' + format(transactionDate).toString());
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Receipt Date',
+                            labelStyle: TextStyle(
+                                color: Colors.grey[700],
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.bold),
+                            border: kEnabledBorder,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: kPrimaryColor, width: 1.5),
+                            ),
+                            enabledBorder: kEnabledBorder,
+                            contentPadding: EdgeInsets.all(15.0),
+                          ),
+                          onTap: () async {
+                            DateTime date = DateTime(2019);
+                            FocusScope.of(context)
+                                .requestFocus(new FocusNode());
+
+                            date = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2019),
+                              lastDate: DateTime(2022),
+                              builder: (BuildContext context, Widget child) {
+                                return Theme(
+                                  data: ThemeData(
+                                    textButtonTheme: new TextButtonThemeData(
+                                      style: TextButton.styleFrom(
+                                          primary: kSecondColor),
+                                    ),
+                                    colorScheme: ColorScheme.light(
+                                      primary: kPrimaryColor,
+                                      onPrimary: Colors.white,
+                                      onSurface: kPrimaryColor,
+                                    ),
+                                  ),
+                                  child: child,
+                                );
+                              },
+                            );
+                            dateCtl.text = DateFormat.yMMMd().format(date);
+                          },
+                        ),
+                      ),
                     ),
                     Expanded(
                       child: DescriptionField(),
@@ -88,12 +149,12 @@ class _AddExpenseState extends State<AddExpense> {
                       onPressed: () async {
                         try {
                           print(amount);
-                        print(description);
-                        print(transactionDate);
-                        print(managerIncharge);
-                        print(category);
-                        print(paymentMethod);
-                        
+                          print(description);
+                          print(dateCtl.text);
+                          print(managerIncharge);
+                          print(category);
+                          print(paymentMethod);
+
                           final url = Uri.parse(
                               'https://reexapi.herokuapp.com/transaction');
                           var sharedPreferencesX =
@@ -101,11 +162,10 @@ class _AddExpenseState extends State<AddExpense> {
 
                           var getToken = sharedPreferencesX.getString('token');
                           print(getToken);
-                  //         final SharedPreferences preferences =
-                  //     await SharedPreferences.getInstance();
-                  // var imageBody = preferences.getString('pickedImage');
-                  
-                             
+                          //         final SharedPreferences preferences =
+                          //     await SharedPreferences.getInstance();
+                          // var imageBody = preferences.getString('pickedImage');
+
                           final http.Response response = await http.post(
                             url,
                             headers: <String, String>{
@@ -126,7 +186,10 @@ class _AddExpenseState extends State<AddExpense> {
                             ),
                           );
                           final responseData = json.decode(response.body);
+                          _formKey.currentState.reset();
+                          _formKey.currentState.dispose();
                           print(responseData);
+
                           //buildShowDialog(context);
                         } catch (error) {
                           print(error);
@@ -207,11 +270,7 @@ class _AddExpenseState extends State<AddExpense> {
         ),
       ),
     );
-
-    
   }
-
-  
 }
 
 // Future getTokenFromSF() async {

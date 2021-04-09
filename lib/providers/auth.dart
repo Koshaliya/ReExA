@@ -1,4 +1,4 @@
-import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -8,25 +8,12 @@ import 'dart:async';
 class Auth with ChangeNotifier {
   String _token;
   Object _user;
-  String _userId;
-  Timer _authTimer;
+  
   String _userRole;
 
-  // bool get isAuth {
-  //   return (_token != null);
-  // }
+  String userInputDate;
 
-  // String get getUserId {
-  //   return _userId;
-  // }
   
- 
-  // String get token {
-  //   if (_token != null) {
-  //     return _token;
-  //   }
-  //   return null;
-  // }
 
   Future<void> authenticate(String userId, String password) async {
     try {
@@ -61,29 +48,26 @@ class Auth with ChangeNotifier {
         'user': _user,
       });
       prefs.setString('auth', authData);
-     // print(authData);
-
-      
+      // print(authData);
 
       var sharedPreferencesToken = await SharedPreferences.getInstance();
       sharedPreferencesToken.setString('token', _token);
       print('shared Token = ');
       print(sharedPreferencesToken.getString('token'));
 
-
       String userJson = jsonEncode(_user);
       var sharedPreferencesUser = await SharedPreferences.getInstance();
       sharedPreferencesUser.setString('user', userJson);
       print('shared user = ');
-      String s =sharedPreferencesUser.getString('user');
+
+      String s = sharedPreferencesUser.getString('user');
       var currentuser = jsonDecode(s);
       print(currentuser);
-      _userRole=currentuser['role'];
+      _userRole = currentuser['role'];
       print(_userRole);
       var sharedPreferencesRole = await SharedPreferences.getInstance();
       sharedPreferencesRole.setString('userRole', _userRole);
 
-      // var saved_val = sp.getString('key');
     } catch (error) {
       print(error);
       throw error;
@@ -91,16 +75,13 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> logOut() async {
-    _token = null;
-    _userId = null;
+    // _token = null;
 
-    if (_authTimer != null) {
-      _authTimer.cancel();
-      _authTimer = null;
-    }
     notifyListeners();
-    final prefs = await SharedPreferences.getInstance();
-    prefs.clear();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+    print(prefs.getString('token'));
+    print(prefs.getString('user'));
   }
 }
 
