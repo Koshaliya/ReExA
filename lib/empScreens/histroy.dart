@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ReExA/empWidgets/constants.dart';
 import 'expenseHistory.dart';
-
+import 'topUpHistory.dart';
 class History extends StatefulWidget {
   static const String id = 'history';
 
@@ -20,7 +20,6 @@ class _HistoryState extends State<History> {
           iconTheme: IconThemeData(color: Colors.black),
           backgroundColor: Colors.white,
           centerTitle: true,
-          //leading: MenuButton(),
           actions: [
             SearchButton(),
             NotificationButton()
@@ -43,7 +42,7 @@ class _HistoryState extends State<History> {
         body: TabBarView(
           children: [
             ExpenseHistory(),
-            ExpenseHistory(),
+            TopUpHistory(),
           ],
                   
         ),

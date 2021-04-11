@@ -1,5 +1,5 @@
 
-import 'package:ReExA/empScreens/example.dart';
+
 import 'package:ReExA/empScreens/forgotPass.dart';
 import 'package:ReExA/empScreens/loginPage.dart';
 import 'package:ReExA/empScreens/news.dart';
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
           MgrDashboard.id:(context) => MgrDashboard(),
           Newspage.id:(context) => Newspage(),
           VerifyExpense.id:(context) => VerifyExpense(),
-          MyHomePage.id:(context) => MyHomePage(),
+          // MyHomePage.id:(context) => MyHomePage(),
         },
        ),
     );

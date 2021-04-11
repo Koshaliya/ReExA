@@ -1,7 +1,8 @@
 import 'package:ReExA/empScreens/addExpense.dart';
-import 'package:ReExA/empScreens/example.dart';
+
 import 'package:ReExA/empScreens/histroy.dart';
 import 'package:ReExA/empScreens/news.dart';
+import 'package:ReExA/empScreens/reimbursementStatus.dart';
 import 'package:ReExA/empScreens/topUpRequest.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
@@ -217,7 +218,7 @@ Color(0xFFF9AA33),
                         buttonIcon: Icons.request_page_rounded,
                         label: 'Reimbursement status',
                         buttonColor: Color(0xFFA08AF3),
-                        route: MyHomePage.id,),
+                        route: ReimbursementStatus.id,),
                     DashboardButton(
                         buttonIcon: Icons.comment_rounded,
                         label: 'Report',

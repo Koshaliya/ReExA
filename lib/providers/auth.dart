@@ -17,8 +17,8 @@ class Auth with ChangeNotifier {
 
   Future<void> authenticate(String userId, String password) async {
     try {
-      print(userId);
-      print(password);
+      // print(userId);
+      // print(password);
       final url = Uri.parse('https://reexapi.herokuapp.com/users/login');
       final http.Response response = await http.post(
         url,
@@ -52,19 +52,19 @@ class Auth with ChangeNotifier {
 
       var sharedPreferencesToken = await SharedPreferences.getInstance();
       sharedPreferencesToken.setString('token', _token);
-      print('shared Token = ');
-      print(sharedPreferencesToken.getString('token'));
+      // print('shared Token = ');
+      // print(sharedPreferencesToken.getString('token'));
 
       String userJson = jsonEncode(_user);
       var sharedPreferencesUser = await SharedPreferences.getInstance();
       sharedPreferencesUser.setString('user', userJson);
-      print('shared user = ');
+      // print('shared user = ');
 
       String s = sharedPreferencesUser.getString('user');
       var currentuser = jsonDecode(s);
-      print(currentuser);
+      // print(currentuser);
       _userRole = currentuser['role'];
-      print(_userRole);
+      // print(_userRole);
       var sharedPreferencesRole = await SharedPreferences.getInstance();
       sharedPreferencesRole.setString('userRole', _userRole);
 

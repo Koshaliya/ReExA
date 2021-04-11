@@ -28,11 +28,13 @@ class AmountField extends StatelessWidget {
     //print('Prana :' + transactionDate);
     return Container(
       margin: const EdgeInsets.all(10.0),
-      child: TextField(
+      child: TextFormField(
+        
         controller: TextEditingController(text: amount),
         onChanged: (value) {
           amount = value;
         },
+        
         style: TextStyle(color: kSecondColor, fontWeight: FontWeight.bold),
         keyboardType: TextInputType.number,
         inputFormatters: [ThousandsFormatter(allowFraction: true)],

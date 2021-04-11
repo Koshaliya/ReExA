@@ -1,58 +1,18 @@
-
 import 'package:flutter/material.dart';
 import '../empWidgets/constants.dart';
 
+//************************************************Expense History PopUp Screen************************************************************/
 
-
-//*******************************************************History Container***********************************************************/
-class HistoryContainer extends StatelessWidget {
-  final String uber;
-  final String rupees;
-
-  const HistoryContainer({this.uber, this.rupees});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding:
-          EdgeInsets.only(left: 15.0, right: 40.0, top: 15.0, bottom: 15.0),
-      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-      decoration: BoxDecoration(
-        border: Border(
-          right: BorderSide(
-            color: Colors.green,
-            width: 10,
-          ),
-          left: BorderSide(
-            color: Color(0x40878383),
-            width: 1,
-          ),
-          top: BorderSide(
-            color: Color(0x40878383),
-            width: 1,
-          ),
-          bottom: BorderSide(
-            color: Color(0x40878383),
-            width: 1,
-          ),
-        ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(uber),
-          Text(rupees),
-        ],
-      ),
-    );
-  }
-}
-
-//*******************************************************History PopUp***********************************************************/
-
-//************************************************PopUp Screen************************************************************/
-
-Future buildShowDialog(BuildContext context) {
+Future expenseHistoryShowDialog(
+    BuildContext context,
+    Color colorX,
+    String managerId,
+    String empId,
+    var amount,
+    String pay,
+    String category,
+    var date,
+    String description) {
   return showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -75,123 +35,421 @@ Future buildShowDialog(BuildContext context) {
                 ),
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+            Container(
+              height: 600.0,
+              width: 500.0,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+                    color: colorX,
+                    child: Text(
+                      'Expense History',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        color: Colors.greenAccent[400],
-                        child: Text(
-                          'Add expense approval',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      )
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Manager Name',
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'M001',
+                              style: TextStyle(
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Employee Name',
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'E001',
+                              style: TextStyle(
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: [
-                        Text(
-                          'Manager Name',
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                        Text(
-                          'M001',
-                          style: TextStyle(
-                            color: kPrimaryColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          'Employee Name',
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                        Text(
-                          'E001',
-                          style: TextStyle(
-                            color: kPrimaryColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Divider(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          children: [
-                            Text(
-                              'Amount',
+                  Divider(
+                    color: Colors.grey[700],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Amount   ',
                               style: TextStyle(
-                                color: Colors.grey,
+                                color: Colors.grey[700],
                               ),
                             ),
-                            Text(
-                              'Rs 52000',
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Rs $amount',
                               style: TextStyle(
                                 color: kPrimaryColor,
                               ),
                             ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              'Requested Date',
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Date of Receipt',
                               style: TextStyle(
-                                color: Colors.grey,
+                                color: Colors.grey[700],
                               ),
                             ),
-                            Text(
-                              '02/04/2020',
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              date,
                               style: TextStyle(
                                 color: kPrimaryColor,
                               ),
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Divider(),
-                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          children: [
-                            Text(
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    color: Colors.grey[700],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Category',
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              category,
+                              style: TextStyle(
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Payment Method',
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              pay,
+                              style: TextStyle(
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    color: Colors.grey[700],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
                               'Description',
                               style: TextStyle(
-                                color: Colors.grey,
+                                color: Colors.grey[700],
                               ),
                             ),
-                            Text(
-                              'Client meeting',
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              description,
                               style: TextStyle(
                                 color: kPrimaryColor,
                               ),
                             ),
-                          ],
-                        ),
-                        
-                      ],
-                    ),
-                  ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    color: Colors.grey[700],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+//************************************************TopUpHistory PopUp Screen************************************************************/
+
+Future topUpHistoryShowDialog(
+    BuildContext context,
+    Color colorX,
+    String managerId,
+    String empId,
+    var amount,
+    var date,
+    String description) {
+  return showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: Color(0xFFF1EFEF),
+        insetPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+        content: Stack(
+          clipBehavior: Clip.none,
+          children: <Widget>[
+            Positioned(
+              right: -40.0,
+              top: -40.0,
+              child: InkResponse(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: CircleAvatar(
+                  child: Icon(Icons.close),
+                  backgroundColor: Colors.red,
                 ),
-              ],
+              ),
+            ),
+            Container(
+              height: 450.0,
+              width: 450.0,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+                    color: colorX,
+                    child: Text(
+                      'Expense History',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Manager Name',
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'M001',
+                              style: TextStyle(
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Employee Name',
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'E001',
+                              style: TextStyle(
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    color: Colors.grey[700],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Amount   ',
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Rs $amount',
+                              style: TextStyle(
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Date of Receipt',
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              date,
+                              style: TextStyle(
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    color: Colors.grey[700],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Description',
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              description,
+                              style: TextStyle(
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),

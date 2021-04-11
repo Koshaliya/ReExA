@@ -4,18 +4,17 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ExpenseHistory extends StatefulWidget {
-  static const String id = 'ExpenseHistory';
-
+class TopUpHistory extends StatefulWidget {
+  static const String id = 'TopUpHistory';
   @override
-  _ExpenseHistoryState createState() => _ExpenseHistoryState();
+  _TopUpHistoryState createState() => _TopUpHistoryState();
 }
 
-class _ExpenseHistoryState extends State<ExpenseHistory> {
-  Color color;
+class _TopUpHistoryState extends State<TopUpHistory> {
+   Color color;
 
-  Future<List<dynamic>> _getExpenseHistory() async {
-    final url = Uri.parse('https://reexapi.herokuapp.com/transactionMade');
+  Future<List<dynamic>> _getTopUpHistory() async {
+    final url = Uri.parse('https://reexapi.herokuapp.com/topUpRequestSended');
 
     var sharedPreferencesX = await SharedPreferences.getInstance();
 
@@ -33,7 +32,6 @@ class _ExpenseHistoryState extends State<ExpenseHistory> {
 
     return responseData;
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,31 +39,29 @@ class _ExpenseHistoryState extends State<ExpenseHistory> {
       backgroundColor: Color(0xFFFBFBFB),
       body: FutureBuilder(
           initialData: [],
-          future: _getExpenseHistory(),
+          future: _getTopUpHistory(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (context, index) {
-                  if (snapshot.data[index]['status'] == 'Approved') {
-                    color = Color(0xFF4CAF50);
+                  if (snapshot.data[index]['status'] == 'Rejected') {
+                    color = Colors.red;
                   } else if (snapshot.data[index]['status'] == 'Pending') {
                     color = Colors.yellow;
                   } 
                    else {
-                    color = Colors.red;
+                    color = Color(0xFF4CAF50);
                   }
 
                   return GestureDetector(
                     onTap: () {
-                      expenseHistoryShowDialog(
+                      topUpHistoryShowDialog(
                         context,
                         color,
-                        snapshot.data[index]['managerIncharge'].toString(),
-                        snapshot.data[index]['transactionBy'].toString(),
+                        snapshot.data[index]['requestTo'].toString(),
+                        snapshot.data[index]['requestBy'].toString(),
                         snapshot.data[index]['amount'].toString(),
-                        snapshot.data[index]['paymentMethod'].toString(),
-                        snapshot.data[index]['category'].toString(),
-                        snapshot.data[index]['transactionDate'].toString(),
+                        snapshot.data[index]['createdAt'].toString(),
                         snapshot.data[index]['description'].toString(),
                         );
                     },
@@ -101,7 +97,7 @@ class _ExpenseHistoryState extends State<ExpenseHistory> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                snapshot.data[index]['category'],
+                                'Mooo1'
                               ),
                             ],
                           ),

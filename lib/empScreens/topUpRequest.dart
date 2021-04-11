@@ -67,6 +67,7 @@ class _TopUpRequestState extends State<TopUpRequest> {
                         try {
                           print(amount);
                           print(managerIncharge);
+                          print(description);
                           final url = Uri.parse(
                               'https://reexapi.herokuapp.com/topUpRequest');
                           var sharedPreferencesX =

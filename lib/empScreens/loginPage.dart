@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage>
       setState(
         () {
           validate = false;
-          errorText = 'Wrong input';
+          errorText = 'Enter the correct value';
           showSpinner = false;
         },
       );
