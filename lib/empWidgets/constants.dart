@@ -5,6 +5,7 @@ import 'package:ReExA/empScreens/profilePage.dart';
 import 'package:ReExA/providers/auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ReExA/managerScreens/mgrDashboard.dart';
+import 'dart:convert';
 
 const kPrimaryColor = Color(0xFF2C5EA8);
 const kSecondColor = Color(0xFF42C9F3);
@@ -20,7 +21,6 @@ const kappBarText = TextStyle(
   fontSize: 18.0,
   color: Colors.black,
 );
-
 
 const kExpense = TextStyle(
   fontSize: 16.0,
@@ -127,14 +127,36 @@ class SearchButton extends StatelessWidget {
 
 //*********************************************Side Drawer*******************************************************************
 
-class SideDrawer extends StatelessWidget {
-  const SideDrawer({
-    Key key,
-  }) : super(key: key);
+class SideDrawer extends StatefulWidget {
+  @override
+  _SideDrawerState createState() => _SideDrawerState();
+}
 
+class _SideDrawerState extends State<SideDrawer> {
+  bool circular = true;
+  var currentuser;
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  void fetchData() async {
+    var sharedPreferencesX = await SharedPreferences.getInstance();
+    String s = sharedPreferencesX.getString('user');
+     currentuser = jsonDecode(s);
+
+    setState(() {
+      circular = false;
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
-    return Drawer(
+    
+    return circular
+          ? Center(child: CircularProgressIndicator())
+          : Drawer(
       child: Column(
         children: [
           Container(
@@ -155,11 +177,11 @@ class SideDrawer extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Koshi',
+                    currentuser['name'].toString(),
                     style: TextStyle(fontSize: 22, color: Colors.white),
                   ),
                   Text(
-                    '184163G',
+                    currentuser['userId'].toString(),
                     style: TextStyle(fontSize: 18, color: Colors.white54),
                   )
                 ],
@@ -173,6 +195,7 @@ class SideDrawer extends StatelessWidget {
                 style: TextStyle(fontSize: 18),
               ),
               onTap: () {
+                // getUserDetail();
                 Navigator.pushNamed(context, ProfilePage.id);
               }),
           ListTile(
@@ -189,20 +212,19 @@ class SideDrawer extends StatelessWidget {
                 'Dashboard',
                 style: TextStyle(fontSize: 18),
               ),
-              onTap: () async{
-                var sharedPreferencesRole = await SharedPreferences.getInstance();
-      var getUserRole=sharedPreferencesRole.getString('userRole');
-      print(getUserRole);
+              onTap: () async {
+                var sharedPreferencesRole =
+                    await SharedPreferences.getInstance();
+                var getUserRole = sharedPreferencesRole.getString('userRole');
+                print(getUserRole);
 
-      if(getUserRole == 'employee'){
-        Navigator.of(context).pushNamed(EmpDashboard.id);
-      }
-      else if(getUserRole == 'manager'){
-        Navigator.of(context).pushNamed(MgrDashboard.id);
-      }
-      else{
-        print('error');
-      }
+                if (getUserRole == 'employee') {
+                  Navigator.of(context).pushNamed(EmpDashboard.id);
+                } else if (getUserRole == 'manager') {
+                  Navigator.of(context).pushNamed(MgrDashboard.id);
+                } else {
+                  print('error');
+                }
               }),
           ListTile(
             leading: Icon(Icons.arrow_back),
@@ -212,7 +234,7 @@ class SideDrawer extends StatelessWidget {
             ),
             onTap: () {
               Auth().logOut();
-               Navigator.pushNamed(context, LoginPage.id);
+              Navigator.pushNamed(context, LoginPage.id);
             },
           ),
         ],

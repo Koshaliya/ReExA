@@ -1,8 +1,11 @@
 import 'dart:ui';
+import 'package:ReExA/managerScreens/verifyTopUp.dart';
+
 import 'verifyExpense.dart';
 import 'package:flutter/material.dart';
 import 'package:ReExA/empWidgets/constants.dart';
 import 'package:ReExA/mgrWidgets/mgrDashCard.dart';
+import 'package:ReExA/empScreens/news.dart';
 
 class MgrDashboard extends StatefulWidget {
   static const String id = 'mgrDashboard';
@@ -67,7 +70,7 @@ class _MgrDashboardState extends State<MgrDashboard> {
                               buttonIcon: Icons.mobile_screen_share_rounded,
                               label: 'Top-up',
                               buttonColor: Color(0xFF786fa6),
-                              //route: TopUpRequest.id,
+                              route: VerifyTopUp.id,
                             ),
                             DashboardButton(
                               buttonIcon: Icons.mobile_friendly_outlined,
@@ -91,7 +94,7 @@ class _MgrDashboardState extends State<MgrDashboard> {
                               buttonIcon: Icons.my_library_books_outlined,
                               label: 'News',
                               buttonColor: Color(0xFF00b894),
-                              //route: null,
+                              route: Newspage.id,
                             ),
                             
                           ],

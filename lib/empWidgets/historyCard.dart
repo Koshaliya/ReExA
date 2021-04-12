@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import '../empWidgets/constants.dart';
-
 //************************************************Expense History PopUp Screen************************************************************/
 
 Future expenseHistoryShowDialog(
     BuildContext context,
-    Color colorX,
+    String status,
     String managerId,
     String empId,
     var amount,
@@ -13,6 +12,16 @@ Future expenseHistoryShowDialog(
     String category,
     var date,
     String description) {
+      
+      Color colorX;
+      if (status == 'Approved') {
+                    colorX = Color(0xFF4CAF50);
+                  } else if (status == 'Pending') {
+                    colorX = Colors.yellow;
+                  } 
+                   else {
+                    colorX = Colors.red;
+                  }
   return showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -265,12 +274,22 @@ Future expenseHistoryShowDialog(
 
 Future topUpHistoryShowDialog(
     BuildContext context,
-    Color colorX,
+    String status,
     String managerId,
     String empId,
     var amount,
     var date,
     String description) {
+      
+       Color colorX;
+      if (status == 'Approved') {
+                    colorX = Color(0xFF4CAF50);
+                  } else if (status == 'Pending') {
+                    colorX = Colors.yellow;
+                  } 
+                   else {
+                    colorX = Colors.red;
+                  }
   return showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -305,7 +324,7 @@ Future topUpHistoryShowDialog(
                         EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
                     color: colorX,
                     child: Text(
-                      'Expense History',
+                      'Top-Up History',
                       style: TextStyle(
                         color: Colors.white,
                       ),

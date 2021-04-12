@@ -13,6 +13,16 @@ class Newspage extends StatefulWidget {
 }
 
 class _NewspageState extends State<Newspage> {
+   bool circular = true;
+  var currentuser;
+  
+  @override
+  void initState() {
+    super.initState();
+    _getNews();
+  }
+
+  var username;
   Future<List<dynamic>> _getNews() async {
     final url = Uri.parse('https://reexapi.herokuapp.com/news');
     var sharedPreferencesX = await SharedPreferences.getInstance();
@@ -26,9 +36,16 @@ class _NewspageState extends State<Newspage> {
         "Authorization": 'Bearer $getToken'
       },
     );
+    
+    var sharedPreferencesUserName = await SharedPreferences.getInstance();
+    String s = sharedPreferencesUserName.getString('user');
+      var currentuser = jsonDecode(s);
+       username = currentuser['name'];
 
     final responseData = json.decode(response.body);
-
+setState(() {
+      circular = false;
+    });
     return responseData;
   }
 
@@ -57,8 +74,10 @@ class _NewspageState extends State<Newspage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Hello, Koshaliya',
+                circular
+          ? Center(child: CircularProgressIndicator())
+          : Text(
+                  'Hello, $username',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                 ),
                 SizedBox(

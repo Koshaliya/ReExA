@@ -18,7 +18,7 @@ class _ReimbursementStatusState extends State<ReimbursementStatus> {
   IconData icon;
   Color iconColor;
 
-  Future<List<dynamic>> _getUsers() async {
+  Future<List<dynamic>> _getReimbursement() async {
     final url = Uri.parse('https://reexapi.herokuapp.com/reimbursementTo');
     var sharedPreferencesX = await SharedPreferences.getInstance();
 
@@ -55,7 +55,7 @@ class _ReimbursementStatusState extends State<ReimbursementStatus> {
       drawer: SideDrawer(),
       body: FutureBuilder(
           initialData: [],
-          future: _getUsers(),
+          future: _getReimbursement(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             return ListView.builder(
               itemCount: snapshot.data.length,

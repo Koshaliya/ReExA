@@ -3,6 +3,7 @@ import 'package:ReExA/empWidgets/historyCard.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 
 class TopUpHistory extends StatefulWidget {
   static const String id = 'TopUpHistory';
@@ -44,24 +45,25 @@ class _TopUpHistoryState extends State<TopUpHistory> {
             return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (context, index) {
-                  if (snapshot.data[index]['status'] == 'Rejected') {
-                    color = Colors.red;
+                  if (snapshot.data[index]['status'] == 'Approved') {
+                    color = Color(0xFF4CAF50);
                   } else if (snapshot.data[index]['status'] == 'Pending') {
                     color = Colors.yellow;
                   } 
                    else {
-                    color = Color(0xFF4CAF50);
+                    color = Colors.red;
                   }
-
+                  var parsedDate = DateTime.parse(snapshot.data[index]['createdAt']);
+      var transDate=DateFormat.yMMMd().format(parsedDate).toString();
                   return GestureDetector(
                     onTap: () {
                       topUpHistoryShowDialog(
                         context,
-                        color,
+                        snapshot.data[index]['status'],
                         snapshot.data[index]['requestTo'].toString(),
                         snapshot.data[index]['requestBy'].toString(),
                         snapshot.data[index]['amount'].toString(),
-                        snapshot.data[index]['createdAt'].toString(),
+                        transDate,
                         snapshot.data[index]['description'].toString(),
                         );
                     },
@@ -102,13 +104,12 @@ class _TopUpHistoryState extends State<TopUpHistory> {
                             ],
                           ),
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
                                 'Rs ${snapshot.data[index]['amount']}',
                               ),
-                              Text(snapshot.data[index]['createdAt']
-                                  .toString()),
+                              Text(transDate),
                             ],
                           ),
                         ],

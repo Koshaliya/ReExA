@@ -1,11 +1,12 @@
 import 'dart:ui';
-
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'constants.dart';
 import 'package:flutter/material.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
-
+import 'dart:io';
 import 'package:image_picker/image_picker.dart';
-
+import 'dart:convert';
 import 'package:ReExA/empScreens/empDashboard.dart';
 
 var managerIncharge,
@@ -29,12 +30,10 @@ class AmountField extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(10.0),
       child: TextFormField(
-        
         controller: TextEditingController(text: amount),
         onChanged: (value) {
           amount = value;
         },
-        
         style: TextStyle(color: kSecondColor, fontWeight: FontWeight.bold),
         keyboardType: TextInputType.number,
         inputFormatters: [ThousandsFormatter(allowFraction: true)],
@@ -97,9 +96,7 @@ class _DescriptionFieldState extends State<DescriptionField> {
 
 //************************************************DropDown ManagerIncharge Select************************************************************/
 
-//var managerdetails= User().getManagers();
-
-const List managerList = ["602ffb42c87096c45e83cea6"];
+List managerList = ['hi'];
 const List categoryList = ["Food", "Travel", "Clinet Meeting", "Misc"];
 const List paymentList = ["Card", "Cash"];
 
@@ -114,6 +111,55 @@ class DropDownManager extends StatefulWidget {
 }
 
 class _DropDownManagerState extends State<DropDownManager> {
+  // bool circular = true;
+  
+  // List manager = [];
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   fetchData();
+  // }
+
+  // Future<void> fetchData() async {
+  //   try {
+  //     var sharedPreferencesX = await SharedPreferences.getInstance();
+
+  //     var getToken = sharedPreferencesX.getString('token');
+
+  //     final url = Uri.parse('https://reexapi.herokuapp.com/getallmanager');
+  //     final http.Response response = await http.get(
+  //       url,
+  //       headers: <String, String>{
+  //         "Content-Type": 'application/json;charset=UTF-8',
+  //         "Accept": 'application/json',
+  //         "Authorization": 'Bearer $getToken'
+  //       },
+  //     );
+  //     final responseData = json.decode(response.body);
+  //     print(responseData);
+  
+  //     if (responseData['error'] != null) {
+  //       throw HttpException(responseData['error']['message']);
+  //     }
+  //     // String jsonsDataString = responseData.toString();
+  //     // print(jsonsDataString);
+  //     // final jsonData = jsonDecode(jsonsDataString);
+  //     // print(jsonData);
+  //     // // jsonData.forEach((element) => manager.add(element['userId']));
+     
+  //     // print(manager);
+      
+  //   } catch (error) {
+  //     print(error);
+  //     throw error;
+  //   }
+  // }
+
+  // setState(() {
+  //   circular = false;
+  // });
+
   @override
   Widget build(BuildContext context) {
     return Padding(
