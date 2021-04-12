@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:ReExA/empWidgets/constants.dart';
 import 'package:ReExA/empWidgets/expenseCard.dart';
-
+import 'package:ReExA/providers/users.dart';
 import 'package:intl/intl.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -147,104 +147,105 @@ class _AddExpenseState extends State<AddExpense> {
                     width: 250.0,
                     child: ElevatedButton(
                       onPressed: () async {
-                        try {
-                          print(amount);
-                          print(description);
-                          print(dateCtl.text);
-                          print(managerIncharge);
-                          print(category);
-                          print(paymentMethod);
+                        
+                      //   try {
+                      //     print(amount);
+                      //     print(description);
+                      //     print(dateCtl.text);
+                      //     print(managerIncharge);
+                      //     print(category);
+                      //     print(paymentMethod);
 
-                          final url = Uri.parse(
-                              'https://reexapi.herokuapp.com/transaction');
-                          var sharedPreferencesX =
-                              await SharedPreferences.getInstance();
+                      //     final url = Uri.parse(
+                      //         'https://reexapi.herokuapp.com/transaction');
+                      //     var sharedPreferencesX =
+                      //         await SharedPreferences.getInstance();
 
-                          var getToken = sharedPreferencesX.getString('token');
-                          print(getToken);
-                          //         final SharedPreferences preferences =
-                          //     await SharedPreferences.getInstance();
-                          // var imageBody = preferences.getString('pickedImage');
+                      //     var getToken = sharedPreferencesX.getString('token');
+                      //     print(getToken);
+                      //     //         final SharedPreferences preferences =
+                      //     //     await SharedPreferences.getInstance();
+                      //     // var imageBody = preferences.getString('pickedImage');
 
-                          final http.Response response = await http.post(
-                            url,
-                            headers: <String, String>{
-                              "Content-Type": 'application/json;charset=UTF-8',
-                              "Accept": 'application/json',
-                              "Authorization": 'Bearer $getToken'
-                            },
-                            body: jsonEncode(
-                              <dynamic, String>{
-                                'amount': amount,
-                                'description': description,
-                                'managerIncharge': managerIncharge,
-                                'category': category,
-                                'transationDate': transactionDate,
-                                'paymentMethod': paymentMethod,
-                                //'receiptImage':imageBody2,
-                              },
-                            ),
-                          );
-                          final responseData = json.decode(response.body);
-                          _formKey.currentState.reset();
-                          _formKey.currentState.dispose();
-                          print(responseData);
+                      //     final http.Response response = await http.post(
+                      //       url,
+                      //       headers: <String, String>{
+                      //         "Content-Type": 'application/json;charset=UTF-8',
+                      //         "Accept": 'application/json',
+                      //         "Authorization": 'Bearer $getToken'
+                      //       },
+                      //       body: jsonEncode(
+                      //         <dynamic, String>{
+                      //           'amount': amount,
+                      //           'description': description,
+                      //           'managerIncharge': managerIncharge,
+                      //           'category': category,
+                      //           'transationDate': transactionDate,
+                      //           'paymentMethod': paymentMethod,
+                      //           //'receiptImage':imageBody2,
+                      //         },
+                      //       ),
+                      //     );
+                      //     final responseData = json.decode(response.body);
+                      //     _formKey.currentState.reset();
+                      //     _formKey.currentState.dispose();
+                      //     print(responseData);
 
-                          //buildShowDialog(context);
-                        } catch (error) {
-                          print(error);
-                          throw error;
-                        }
-                        //  String tokenGot;
+                      //     //buildShowDialog(context);
+                      //   } catch (error) {
+                      //     print(error);
+                      //     throw error;
+                      //   }
+                      //   //  String tokenGot;
 
-                        /*var token = await getTokenFromSF();
-                        getTokenFromSF().then((value) {
-                          tokenGot=value;
+                      //   /*var token = await getTokenFromSF();
+                      //   getTokenFromSF().then((value) {
+                      //     tokenGot=value;
                           
-                        });
+                      //   });
 
-                       print(amount);
-                        print(description);
-                        print(transactionDate);
-                        print(managerIncharge);
-                        print(category);
-                        print(paymentMethod);
+                      //  print(amount);
+                      //   print(description);
+                      //   print(transactionDate);
+                      //   print(managerIncharge);
+                      //   print(category);
+                      //   print(paymentMethod);
 
-                        print(token);
+                      //   print(token);
 
-                        var url = Uri.parse(
-                            'https://reexapi.herokuapp.com/transaction');
-                        final response = await http.post(url,
-                            headers: {
-                              'Content-Type': 'application/json',
-                              'Accept': 'application/json',
-                              'Authorization': 'Bearer $token',
-                            },
-                            body: jsonEncode(
-                              <dynamic, String>{
-                                'amount': amount,
-                                'description': description,
-                                'managerIncharge': managerIncharge,
-                                'category': category,
-                                'transationDate': transactionDate,
-                                'paymentMethod': paymentMethod,
-                              },),
-                            );
+                      //   var url = Uri.parse(
+                      //       'https://reexapi.herokuapp.com/transaction');
+                      //   final response = await http.post(url,
+                      //       headers: {
+                      //         'Content-Type': 'application/json',
+                      //         'Accept': 'application/json',
+                      //         'Authorization': 'Bearer $token',
+                      //       },
+                      //       body: jsonEncode(
+                      //         <dynamic, String>{
+                      //           'amount': amount,
+                      //           'description': description,
+                      //           'managerIncharge': managerIncharge,
+                      //           'category': category,
+                      //           'transationDate': transactionDate,
+                      //           'paymentMethod': paymentMethod,
+                      //         },),
+                      //       );
                       
-                        print(response.body);
-                        print(response.statusCode);
-                        //SharedPreferences prefs =
-                        //await SharedPreferences.getInstance();
-                        //var parse;
-                        if (response.statusCode == 201) {
-                          //parse = json.decode(response.body);
-                          //print(parse["token"]);
+                      //   print(response.body);
+                      //   print(response.statusCode);
+                      //   //SharedPreferences prefs =
+                      //   //await SharedPreferences.getInstance();
+                      //   //var parse;
+                      //   if (response.statusCode == 201) {
+                      //     //parse = json.decode(response.body);
+                      //     //print(parse["token"]);
 
-                          print('ok');
-                          Navigator.pushNamed(context, EmpDashboard.id);
-                        } else {
-                          print('not ok');
-                        }*/
+                      //     print('ok');
+                      //     Navigator.pushNamed(context, EmpDashboard.id);
+                      //   } else {
+                      //     print('not ok');
+                      //   }*/
                       },
                       child: Text(
                         'Submit',

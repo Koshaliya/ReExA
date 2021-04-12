@@ -3,6 +3,7 @@ import 'package:ReExA/empScreens/loginPage.dart';
 import 'package:ReExA/empScreens/news.dart';
 import 'package:ReExA/empScreens/profilePage.dart';
 import 'package:ReExA/managerScreens/mgrDashboard.dart';
+import 'package:ReExA/managerScreens/reimburse.dart';
 import 'package:ReExA/managerScreens/verifyExpense.dart';
 import 'package:ReExA/managerScreens/verifyTopUp.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
           Newspage.id: (context) => Newspage(),
           VerifyExpense.id: (context) => VerifyExpense(),
           VerifyTopUp.id: (context) => VerifyTopUp(),
+          Reimburse.id: (context) => Reimburse(),
         },
       ),
     );

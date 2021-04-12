@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:ReExA/managerScreens/reimburse.dart';
 import 'package:ReExA/managerScreens/verifyTopUp.dart';
 
 import 'verifyExpense.dart';
@@ -76,7 +77,7 @@ class _MgrDashboardState extends State<MgrDashboard> {
                               buttonIcon: Icons.mobile_friendly_outlined,
                               label: 'Reimbursement',
                               buttonColor: Color(0xFFea8685),
-                              //route: ReimbursementStatus.id,
+                              route: Reimburse.id,
                             ),
                             
                           ],

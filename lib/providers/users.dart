@@ -1,5 +1,5 @@
 
-
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,12 +12,12 @@ class Users {
   var manager;
 
 
-  Future<List> getManagers() async {
+  Future<void> getManagers() async {
     try {
       var sharedPreferencesX = await SharedPreferences.getInstance();
 
       var getToken = sharedPreferencesX.getString('token');
-      print(getToken);
+      //print(getToken);
       final url = Uri.parse('https://reexapi.herokuapp.com/getallmanager');
       final http.Response response = await http.get(
         url,
@@ -28,18 +28,19 @@ class Users {
         },
       );
       final responseData = json.decode(response.body);
-      print(responseData);
+       print(responseData);
       if (responseData['error'] != null) {
         throw HttpException(responseData['error']['message']);
       }
 
-      manager = responseData['userId'];
-      String managerJson = jsonEncode(manager);
-      var sharedPreferencesManager = await SharedPreferences.getInstance();
-      sharedPreferencesManager.setString('managers', managerJson);
+      // manager = responseData['userId'];
+      // String managerJson = jsonEncode(manager);
+      // print(managerJson);
+      // var sharedPreferencesManager = await SharedPreferences.getInstance();
+      // sharedPreferencesManager.setString('managers', managerJson);
       
 
-     return responseData;
+     
 
     } catch (error) {
       print(error);
@@ -47,3 +48,4 @@ class Users {
     }
   }
 }
+

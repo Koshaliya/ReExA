@@ -1,3 +1,4 @@
+import 'package:ReExA/empWidgets/expenseCard.dart';
 import 'package:flutter/material.dart';
 import '../empWidgets/constants.dart';
 //************************************************Expense History PopUp Screen************************************************************/
@@ -243,7 +244,7 @@ Future expenseHistoryShowDialog(
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              description,
+                              description == null ? 'no description' : description,
                               style: TextStyle(
                                 color: kPrimaryColor,
                               ),
@@ -457,7 +458,7 @@ Future topUpHistoryShowDialog(
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              description,
+                              description == null ? 'no description' : description,
                               style: TextStyle(
                                 color: kPrimaryColor,
                               ),
