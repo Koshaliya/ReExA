@@ -96,7 +96,7 @@ class _DescriptionFieldState extends State<DescriptionField> {
 
 //************************************************DropDown ManagerIncharge Select************************************************************/
 
-List managerList = ['hi'];
+List managerList = ['602ffb42c87096c45e83cea6','606d974a1752f021c8687bd9'];
 const List categoryList = ["Food", "Travel", "Clinet Meeting", "Misc"];
 const List paymentList = ["Card", "Cash"];
 

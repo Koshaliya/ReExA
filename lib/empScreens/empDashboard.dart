@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ReExA/empWidgets/constants.dart';
 import 'package:ReExA/empWidgets/dashboardCard.dart';
 
+
 class EmpDashboard extends StatefulWidget {
   static const String id = 'empDashboard';
 
@@ -13,20 +14,10 @@ class _EmpDashboardState extends State<EmpDashboard> {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   ScaffoldState scaffold;
 
-  // var userId;
-  // @override
-  // void didChangeDependencies() {
-
-
-  //   var arguements =
-  //       ModalRoute.of(context).settings.arguments as Map<String, Object>;
-  //   if (arguements != null) {
-  //     userId = arguements['id'];
-  //     print("userId:" + userId);
-  //   }
-
-  //   super.didChangeDependencies();
-  // }
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +53,7 @@ class _EmpDashboardState extends State<EmpDashboard> {
             return TabBarView(
               children: [
                 OverView(),
-                OverView(),
+                ExpenseStatTab(),
               ],
             );
           },

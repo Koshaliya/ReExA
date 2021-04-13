@@ -28,7 +28,7 @@ class _ReimburseState extends State<Reimburse> {
     );
 
     final responseData = json.decode(response.body);
-  
+
     return responseData;
   }
 
@@ -54,109 +54,140 @@ class _ReimburseState extends State<Reimburse> {
                 itemCount: snapshot.data.length,
                 scrollDirection: Axis.vertical,
                 itemBuilder: (context, index) {
-                   var parsedDate = DateTime.parse(snapshot.data[index]['createdAt']);
-      var transDate=DateFormat.yMMMd().format(parsedDate).toString();
+                  var parsedDate =
+                      DateTime.parse(snapshot.data[index]['createdAt']);
+                  var transDate =
+                      DateFormat.yMMMd().format(parsedDate).toString();
+                  
+                  return (snapshot.data[index]['status'] == 'Pending')
+                      ? Dismissible(
+                          key: Key(index.toString()),
+                          background: myHiddenContainer(),
+                          direction: DismissDirection.endToStart,
+                          onDismissed: (direction) async {
+                            final url = Uri.parse(
+                                'https://reexapi.herokuapp.com/cashreimbursement/${snapshot.data[index]['_id']}');
+                            var sharedPreferencesX =
+                                await SharedPreferences.getInstance();
 
-                  return (snapshot.data[index]['status'] == 'Pending') ? Dismissible(
-                    key: Key(index.toString()),
-                    background: myHiddenContainer(),
-                    direction: DismissDirection.endToStart,
-                    onDismissed: (direction) {
-                      
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: const Text('Reimbursement has been done'),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(15.0),
-                      margin: EdgeInsets.all(15.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.0),
-                        color: Color(0xFFb2ebf2),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Text(
-                                  'M K Fernando',
-                                  style: TextStyle(fontSize: 16.0),
-                                ),
+                            var getToken =
+                                sharedPreferencesX.getString('token');
+                            final http.Response response = await http.patch(
+                              url,
+                              headers: <String, String>{
+                                "Content-Type":
+                                    'application/json;charset=UTF-8',
+                                "Accept": 'application/json',
+                                "Authorization": 'Bearer $getToken'
+                              },
+                              body: jsonEncode(
+                                <dynamic, String>{
+                                  'status': 'Done',
+                                },
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Text(
-                                  transDate,
-                                  style: TextStyle(
-                                      color: Colors.grey[700], fontSize: 16.0),
+                            );
+
+                            
+                            
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content:
+                                    const Text('Reimbursement has been done'),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(15.0),
+                            margin: EdgeInsets.all(15.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20.0),
+                              color: Color(0xFFb2ebf2),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Text(
+                                        'M K Fernando',
+                                        style: TextStyle(fontSize: 16.0),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Text(
+                                        transDate,
+                                        style: TextStyle(
+                                            color: Colors.grey[700],
+                                            fontSize: 16.0),
+                                      ),
+                                    ),
+                                  ],
                                 ),
+                                Column(
+                                  children: [
+                                    Text(
+                                      'Rs ${snapshot.data[index]['amount']}'
+                                          .toString(),
+                                      style: TextStyle(
+                                          color: kPrimaryColor, fontSize: 16.0),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      : Container(
+                          padding: EdgeInsets.all(15.0),
+                          margin: EdgeInsets.all(15.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.0),
+                            color: Color(0xFFF9F9F9),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Text(
+                                      'M K Fernando',
+                                      style: TextStyle(fontSize: 16.0),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Text(
+                                      transDate,
+                                      style: TextStyle(
+                                          color: Colors.grey[700],
+                                          fontSize: 16.0),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    'Rs ${snapshot.data[index]['amount']}'
+                                        .toString(),
+                                    style: TextStyle(
+                                        color: kPrimaryColor, fontSize: 16.0),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                          Column(
-                            children: [
-                              Text(
-                                'Rs ${snapshot.data[index]['amount']}'.toString(),
-                                style: TextStyle(
-                                    color: kPrimaryColor, fontSize: 16.0),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                  : Container(
-                      padding: EdgeInsets.all(15.0),
-                      margin: EdgeInsets.all(15.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.0),
-                        color: Color(0xFFF9F9F9),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Text(
-                                  'M K Fernando',
-                                  style: TextStyle(fontSize: 16.0),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Text(
-                                  transDate,
-                                  style: TextStyle(
-                                      color: Colors.grey[700], fontSize: 16.0),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Text(
-                               'Rs ${snapshot.data[index]['amount']}'.toString(),
-                                style: TextStyle(
-                                    color: kPrimaryColor, fontSize: 16.0),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    );
-                }
-                
-                );
+                        );
+                });
           }),
     );
   }

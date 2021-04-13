@@ -32,7 +32,7 @@ const kToday =
     TextStyle(fontSize: 13.0, color: Colors.white, fontWeight: FontWeight.bold);
 
 const kAmount = TextStyle(
-  fontSize: 13.0,
+  fontSize: 16.0,
   color: Colors.white,
 );
 
@@ -182,6 +182,10 @@ class _SideDrawerState extends State<SideDrawer> {
                   ),
                   Text(
                     currentuser['userId'].toString(),
+                    style: TextStyle(fontSize: 18, color: Colors.white54),
+                  ),
+                  Text(
+                    currentuser['role'].toString(),
                     style: TextStyle(fontSize: 18, color: Colors.white54),
                   )
                 ],

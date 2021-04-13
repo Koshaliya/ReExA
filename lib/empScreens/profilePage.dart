@@ -1,8 +1,8 @@
 import 'package:ReExA/empWidgets/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 
 class ProfilePage extends StatefulWidget {
   static const String id = 'profilePage';
@@ -15,6 +15,7 @@ class _ProfilePageState extends State<ProfilePage> {
   bool circular = true;
   var currentuser;
   
+
   @override
   void initState() {
     super.initState();
@@ -24,7 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void fetchData() async {
     var sharedPreferencesX = await SharedPreferences.getInstance();
     String s = sharedPreferencesX.getString('user');
-     currentuser = jsonDecode(s);
+    currentuser = jsonDecode(s);
 
     setState(() {
       circular = false;
@@ -38,7 +39,6 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            
             Navigator.of(context).pop();
           },
           icon: Icon(Icons.arrow_back_ios),
@@ -84,7 +84,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         height: 200.0,
                         width: 200.0),
                     Positioned(
-                      top: 250.0,
+                      top: 225.0,
                       left: 25.0,
                       right: 25.0,
                       child: Column(
@@ -116,7 +116,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Padding(
-                                          padding: EdgeInsets.all(10.0),
+                                          padding: EdgeInsets.all(8.0),
                                           child: Text(
                                             'Name',
                                             style: TextStyle(
@@ -125,14 +125,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                           ),
                                         ),
                                         Padding(
-                                          padding: EdgeInsets.all(10.0),
+                                          padding: EdgeInsets.all(8.0),
                                           child: Text('Email',
                                               style: TextStyle(
                                                   color: kPrimaryColor,
                                                   fontWeight: FontWeight.w500)),
                                         ),
                                         Padding(
-                                          padding: EdgeInsets.all(10.0),
+                                          padding: EdgeInsets.all(8.0),
                                           child: Text(
                                             'Employee Id',
                                             style: TextStyle(
@@ -141,9 +141,27 @@ class _ProfilePageState extends State<ProfilePage> {
                                           ),
                                         ),
                                         Padding(
-                                          padding: EdgeInsets.all(10.0),
+                                          padding: EdgeInsets.all(8.0),
                                           child: Text(
                                             'Phone',
+                                            style: TextStyle(
+                                                color: kPrimaryColor,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text(
+                                            'Date of Birth',
+                                            style: TextStyle(
+                                                color: kPrimaryColor,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text(
+                                            'Gender',
                                             style: TextStyle(
                                                 color: kPrimaryColor,
                                                 fontWeight: FontWeight.w500),
@@ -158,20 +176,37 @@ class _ProfilePageState extends State<ProfilePage> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Padding(
-                                          padding: EdgeInsets.all(10.0),
-                                          child: Text(currentuser['name'].toString()),
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text(
+                                              currentuser['name'].toString()),
                                         ),
                                         Padding(
-                                          padding: EdgeInsets.all(10.0),
-                                          child: Text(currentuser['email'].toString()),
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text(
+                                              currentuser['email'].toString()),
                                         ),
                                         Padding(
-                                          padding: EdgeInsets.all(10.0),
-                                          child: Text(currentuser['userId'].toString()),
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text(
+                                              currentuser['userId'].toString()),
                                         ),
                                         Padding(
-                                          padding: EdgeInsets.all(10.0),
-                                          child: Text(currentuser['mobileNumber'].toString()),
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text(
+                                              currentuser['mobileNumber']
+                                                  .toString()),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text(DateFormat.yMMMd()
+                                              .format(DateTime.parse(
+                                                  currentuser['dateOfBirth']))
+                                              .toString()),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text(
+                                              currentuser['gender'].toString()),
                                         ),
                                       ],
                                     ),
