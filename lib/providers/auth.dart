@@ -52,8 +52,7 @@ class Auth with ChangeNotifier {
 
       var sharedPreferencesToken = await SharedPreferences.getInstance();
       sharedPreferencesToken.setString('token', _token);
-      // print('shared Token = ');
-      // print(sharedPreferencesToken.getString('token'));
+      
 
       String userJson = jsonEncode(_user);
       var sharedPreferencesUser = await SharedPreferences.getInstance();
@@ -77,11 +76,11 @@ class Auth with ChangeNotifier {
   Future<void> logOut() async {
     // _token = null;
 
-    notifyListeners();
+    
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
     print(prefs.getString('token'));
-    print(prefs.getString('user'));
+    notifyListeners();
   }
 }
 

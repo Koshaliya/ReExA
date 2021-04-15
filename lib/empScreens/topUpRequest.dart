@@ -68,32 +68,7 @@ class _TopUpRequestState extends State<TopUpRequest> {
                           print(amount);
                           print(managerIncharge);
                           print(description);
-                          final url = Uri.parse(
-                              'https://reexapi.herokuapp.com/topUpRequest');
-                          var sharedPreferencesX =
-                              await SharedPreferences.getInstance();
-
-                          var getToken = sharedPreferencesX.getString('token');
-                          print(getToken);
-                          final http.Response response = await http.post(
-                            url,
-                            headers: <String, String>{
-                              "Content-Type": 'application/json;charset=UTF-8',
-                              "Accept": 'application/json',
-                              "Authorization": 'Bearer $getToken'
-                            },
-                            body: jsonEncode(
-                              <dynamic, String>{
-                                'amount': amount,
-                                'requestTo': managerIncharge,
-                                'description':description
-                                
-                              },
-                            ),
-                          );
-                          final responseData = json.decode(response.body);
-                          print(responseData);
-                          //buildShowDialog(context);
+                          buildTopUpPopUp(context,managerIncharge,amount,description);
                         } catch (error) {
                           print(error);
                           throw error;

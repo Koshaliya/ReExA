@@ -8,6 +8,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'dart:convert';
 import 'package:ReExA/empScreens/empDashboard.dart';
+import 'package:cloudinary_public/cloudinary_public.dart';
 
 var managerIncharge,
     category,
@@ -15,7 +16,7 @@ var managerIncharge,
     amount,
     transactionDate,
     description;
-
+  var receiptUrl;
 //************************************************Amount Input Field************************************************************/
 
 class AmountField extends StatelessWidget {
@@ -26,7 +27,6 @@ class AmountField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //print('Prana :' + transactionDate);
     return Container(
       margin: const EdgeInsets.all(10.0),
       child: TextFormField(
@@ -96,8 +96,8 @@ class _DescriptionFieldState extends State<DescriptionField> {
 
 //************************************************DropDown ManagerIncharge Select************************************************************/
 
-List managerList = ['602ffb42c87096c45e83cea6','606d974a1752f021c8687bd9'];
-const List categoryList = ["Food", "Travel", "Clinet Meeting", "Misc"];
+List managerList = ['602ffb42c87096c45e83cea6', '606d974a1752f021c8687bd9'];
+const List categoryList = ["Food", "Travel", "Client Meeting", "Misc"];
 const List paymentList = ["Card", "Cash"];
 
 class DropDownManager extends StatefulWidget {
@@ -112,7 +112,7 @@ class DropDownManager extends StatefulWidget {
 
 class _DropDownManagerState extends State<DropDownManager> {
   // bool circular = true;
-  
+
   // List manager = [];
 
   // @override
@@ -138,7 +138,7 @@ class _DropDownManagerState extends State<DropDownManager> {
   //     );
   //     final responseData = json.decode(response.body);
   //     print(responseData);
-  
+
   //     if (responseData['error'] != null) {
   //       throw HttpException(responseData['error']['message']);
   //     }
@@ -147,9 +147,9 @@ class _DropDownManagerState extends State<DropDownManager> {
   //     // final jsonData = jsonDecode(jsonsDataString);
   //     // print(jsonData);
   //     // // jsonData.forEach((element) => manager.add(element['userId']));
-     
+
   //     // print(manager);
-      
+
   //   } catch (error) {
   //     print(error);
   //     throw error;
@@ -297,26 +297,26 @@ class AttachImage extends StatefulWidget {
 }
 
 class _AttachImageState extends State<AttachImage> {
-  // Future getImage() async {
-  //   final _picker = ImagePicker();
-  //   final cameraImage = await _picker.getImage(source: ImageSource.camera);
 
-  //   setState(() {
-  //     print(cameraImage.path);
-  //     _image = File(cameraImage.path);
-  //   });
-  // }
-  PickedFile _imageFile;
   final ImagePicker _picker = ImagePicker();
-  Image imageFromPreferences;
+
   void takePhoto(ImageSource source) async {
+    final cloudinary =
+        CloudinaryPublic('avok', 'receipt-expense-management', cache: false);
+
     final pickedFile = await _picker.getImage(source: source);
-    setState(() {
-      print(pickedFile.path);
-      _imageFile = pickedFile;
-    });
-    // final SharedPreferences preferences = await SharedPreferences.getInstance();
-    // preferences.setString('pickedImage', _imageFile.toString());
+    try {
+      CloudinaryResponse response = await cloudinary.uploadFile(
+        CloudinaryFile.fromFile(pickedFile.path,
+            resourceType: CloudinaryResourceType.Image),
+      );
+      print(response.secureUrl);
+      receiptUrl=response.secureUrl.toString();
+
+    } on CloudinaryException catch (e) {
+      print(e.message);
+      print(e.request);
+    }
   }
 
   @override
@@ -343,31 +343,12 @@ class _AttachImageState extends State<AttachImage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                //ShaderMask(
-                //child:
                 CircleAvatar(
                   child: Icon(
                     Icons.camera_enhance_rounded,
                     color: Colors.white,
                   ),
                 ),
-                /* shaderCallback: (bounds) => LinearGradient(colors: [
-                          kSecondColor,
-                          kSecondColor
-                        ]).createShader(bounds)),
-                Container(
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0)),
-                  color: Color(0xFF344955),
-                  padding: EdgeInsets.all(8.0),
-                  
-                  child: ShaderMask(
-                                  child: Icon(
-                      Icons.camera_enhance_outlined,
-                      color: Color(0xFFF9AA33),
-                      
-                    ),
-                  ),
-                ),*/
                 SizedBox(width: 15.0),
                 Text(
                   'Attach Receipt',
@@ -377,16 +358,15 @@ class _AttachImageState extends State<AttachImage> {
             ),
           ),
         ),
-        Container(
-          margin: EdgeInsets.only(top: 20.0),
-          height: 30.0,
-          child: _imageFile == null
-              ? Text('')
-              : Text(
-                  "Receipt Attached",
-                  style: TextStyle(fontSize: 16.0, color: kPrimaryColor),
-                ),
-        ),
+        // Container(
+        //   margin: EdgeInsets.only(top: 20.0),
+        //   height: 30.0,
+        //   child: receiptUrl != null ? ''
+        //   : Text(
+        //     "Receipt Attached",
+        //     style: TextStyle(fontSize: 16.0, color: kPrimaryColor),
+        //   ),
+        // ),
       ],
     );
   }
@@ -496,9 +476,10 @@ class ConfirmButton extends StatelessWidget {
   }
 }
 
-//************************************************PopUp Screen************************************************************/
+//************************************************Top Up PopUp Screen************************************************************/
 
-Future buildShowDialog(BuildContext context) {
+Future buildTopUpPopUp(BuildContext context, String managerIncharge, var amount,
+    String description) {
   return showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -521,48 +502,172 @@ Future buildShowDialog(BuildContext context) {
                 ),
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: kPrimaryColor,
-                        child: Icon(Icons.receipt_long_outlined),
+            Container(
+              height: 450.0,
+              width: 450.0,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+                    color: kPrimaryColor,
+                    child: Text(
+                      'Top-Up Request',
+                      style: TextStyle(
+                        color: Colors.white,
                       ),
-                      Text('Add expense approval')
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Manager Name',
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              managerIncharge.toString(),
+                              style: TextStyle(
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
-                ),
-                PopContainer(
-                  title: 'Authorizer Name',
-                  titleAns: 'P.K.Fernando',
-                ),
-                PopContainer(
-                  title: 'Expense Category',
-                  titleAns: 'Travel',
-                ),
-                PopContainer(
-                  title: 'Payment Method',
-                  titleAns: 'Card',
-                ),
-                PopContainer(
-                  title: 'Amount',
-                  titleAns: 'Rs.520',
-                ),
-                PopContainer(
-                  title: 'Receipt Date',
-                  titleAns: '14/03/2020',
-                ),
-                PopContainer(
-                  title: 'Description',
-                  titleAns: 'Due to client meeting..',
-                ),
-                ConfirmButton(),
-              ],
+                  Divider(
+                    color: Colors.grey[700],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Amount   ',
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Rs $amount',
+                              style: TextStyle(
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    color: Colors.grey[700],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Description',
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              description == null
+                                  ? 'no description'
+                                  : description,
+                              style: TextStyle(
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 150.0,
+                        child: ElevatedButton(
+                          style:
+                              ElevatedButton.styleFrom(primary: Colors.green),
+                          child: Text(
+                            'Confirm',
+                            style:
+                                TextStyle(fontSize: 16.0, color: Colors.white),
+                          ),
+                          onPressed: () async {
+                            final url = Uri.parse(
+                                'https://reexapi.herokuapp.com/topUpRequest');
+                            var sharedPreferencesX =
+                                await SharedPreferences.getInstance();
+
+                            var getToken =
+                                sharedPreferencesX.getString('token');
+                            final http.Response response = await http.post(
+                              url,
+                              headers: <String, String>{
+                                "Content-Type":
+                                    'application/json;charset=UTF-8',
+                                "Accept": 'application/json',
+                                "Authorization": 'Bearer $getToken'
+                              },
+                              body: jsonEncode(
+                                <dynamic, String>{
+                                  'amount': amount,
+                                  'requestTo': managerIncharge,
+                                  'description': description
+                                },
+                              ),
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: const Text(
+                                  'Top Up request has been sent.',
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                  ),
+                                ),
+                                elevation: 5,
+                              ),
+                            );
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),

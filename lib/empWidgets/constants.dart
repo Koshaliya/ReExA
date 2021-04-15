@@ -144,121 +144,119 @@ class _SideDrawerState extends State<SideDrawer> {
   void fetchData() async {
     var sharedPreferencesX = await SharedPreferences.getInstance();
     String s = sharedPreferencesX.getString('user');
-     currentuser = jsonDecode(s);
+    currentuser = jsonDecode(s);
 
     setState(() {
       circular = false;
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
-    
     return circular
-          ? Center(child: CircularProgressIndicator())
-          : Drawer(
-      child: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.all(20.0),
-            color: kPrimaryColor,
-            child: Center(
-              child: Column(
-                children: [
-                  Container(
-                    width: 100.0,
-                    height: 100.0,
-                    margin: EdgeInsets.only(top: 30.0, bottom: 10.0),
-                    child: CircleAvatar(
-                      radius: 50.0,
-                      backgroundImage: AssetImage('images/pro5.jpg'),
-                      backgroundColor: kPrimaryColor,
+        ? Center(child: CircularProgressIndicator())
+        : Drawer(
+            child: Column(
+              children: [
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.all(20.0),
+                  color: kPrimaryColor,
+                  child: Center(
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 100.0,
+                          height: 100.0,
+                          margin: EdgeInsets.only(top: 30.0, bottom: 10.0),
+                          child: CircleAvatar(
+                            radius: 50.0,
+                            backgroundImage: AssetImage('images/pro5.jpg'),
+                            backgroundColor: kPrimaryColor,
+                          ),
+                        ),
+                        Text(
+                          currentuser['name'].toString(),
+                          style: TextStyle(fontSize: 22, color: Colors.white),
+                        ),
+                        Text(
+                          currentuser['userId'].toString(),
+                          style: TextStyle(fontSize: 18, color: Colors.white54),
+                        ),
+                        Text(
+                          currentuser['role'].toString(),
+                          style: TextStyle(fontSize: 18, color: Colors.white54),
+                        )
+                      ],
                     ),
                   ),
-                  Text(
-                    currentuser['name'].toString(),
-                    style: TextStyle(fontSize: 22, color: Colors.white),
-                  ),
-                  Text(
-                    currentuser['userId'].toString(),
-                    style: TextStyle(fontSize: 18, color: Colors.white54),
-                  ),
-                  Text(
-                    currentuser['role'].toString(),
-                    style: TextStyle(fontSize: 18, color: Colors.white54),
-                  )
-                ],
-              ),
-            ),
-          ),
-          ListTile(
-              leading: Icon(Icons.person),
-              title: Text(
-                'Profile',
-                style: TextStyle(fontSize: 18),
-              ),
-              onTap: () {
-                // getUserDetail();
-                Navigator.pushNamed(context, ProfilePage.id);
-              }),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text(
-              'Settings',
-              style: TextStyle(fontSize: 18),
-            ),
-            onTap: null,
-          ),
-          ListTile(
-              leading: Icon(Icons.dashboard),
-              title: Text(
-                'Dashboard',
-                style: TextStyle(fontSize: 18),
-              ),
-              onTap: () async {
-                var sharedPreferencesRole =
-                    await SharedPreferences.getInstance();
-                var getUserRole = sharedPreferencesRole.getString('userRole');
-                print(getUserRole);
+                ),
+                ListTile(
+                    leading: Icon(Icons.person),
+                    title: Text(
+                      'Profile',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(context, ProfilePage.id);
+                    }),
+                ListTile(
+                    leading: Icon(Icons.dashboard),
+                    title: Text(
+                      'Dashboard',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    onTap: () async {
+                      var sharedPreferencesRole =
+                          await SharedPreferences.getInstance();
+                      var getUserRole =
+                          sharedPreferencesRole.getString('userRole');
+                      print(getUserRole);
 
-                if (getUserRole == 'employee') {
-                  Navigator.of(context).pushNamed(EmpDashboard.id);
-                } else if (getUserRole == 'manager') {
-                  Navigator.of(context).pushNamed(MgrDashboard.id);
-                } else {
-                  print('error');
-                }
-              }),
-          ListTile(
-            leading: Icon(Icons.arrow_back),
-            title: Text(
-              'Logout',
-              style: TextStyle(fontSize: 18),
+                      if (getUserRole == 'employee') {
+                        Navigator.of(context).pushNamed(EmpDashboard.id);
+                      } else if (getUserRole == 'manager') {
+                        Navigator.of(context).pushNamed(MgrDashboard.id);
+                      } else {
+                        print('error');
+                      }
+                    }),
+                ListTile(
+                  leading: Icon(Icons.arrow_back),
+                  title: Text(
+                    'Logout',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  onTap: () {
+                    Auth().logOut();
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                        (route) => false);
+                    //Navigator.pushNamed(context, LoginPage.id);
+                  },
+                ),
+              ],
             ),
-            onTap: () {
-              Auth().logOut();
-              Navigator.pushNamed(context, LoginPage.id);
-            },
-          ),
-        ],
-      ),
-    );
+          );
   }
 }
 
 //*********************************************Search*******************************************************************
 final normalEmp = [
-  "M001",
-  "E002",
-  "M002",
-  "E001",
-  "M004",
-  "E005",
-  "M005",
-  "E004"
+  "184081D",
+  "184082D",
+  "184083D",
+  "184084D",
+  "184085D",
+  "184130E",
+  "184184V",
 ];
-final recentEmp = ["M021", "E022", "M022", "E011"];
+final recentEmp = [
+  "184082D",
+  "184130E",
+  "184184V",
+];
 
 class DataSearch extends SearchDelegate<String> {
   @override

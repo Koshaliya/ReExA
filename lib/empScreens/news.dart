@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:ReExA/empWidgets/constants.dart';
+import 'package:intl/intl.dart';
 
 class Newspage extends StatefulWidget {
   static const String id = 'newsPage';
@@ -13,9 +14,9 @@ class Newspage extends StatefulWidget {
 }
 
 class _NewspageState extends State<Newspage> {
-   bool circular = true;
+  bool circular = true;
   var currentuser;
-  
+
   @override
   void initState() {
     super.initState();
@@ -36,14 +37,14 @@ class _NewspageState extends State<Newspage> {
         "Authorization": 'Bearer $getToken'
       },
     );
-    
+
     var sharedPreferencesUserName = await SharedPreferences.getInstance();
     String s = sharedPreferencesUserName.getString('user');
-      var currentuser = jsonDecode(s);
-       username = currentuser['name'];
+    var currentuser = jsonDecode(s);
+    username = currentuser['name'];
 
     final responseData = json.decode(response.body);
-setState(() {
+    setState(() {
       circular = false;
     });
     return responseData;
@@ -75,11 +76,12 @@ setState(() {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 circular
-          ? Center(child: CircularProgressIndicator())
-          : Text(
-                  'Hello, $username',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-                ),
+                    ? Center(child: CircularProgressIndicator())
+                    : Text(
+                        'Hello, $username',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 25),
+                      ),
                 SizedBox(
                   height: 10.0,
                 ),
@@ -124,16 +126,19 @@ setState(() {
                                     fontSize: 18.0,
                                     fontWeight: FontWeight.w400),
                               ),
-                              SizedBox(height:10.0),
+                              SizedBox(height: 10.0),
                               Text(
                                 snapshot.data[index]['news'],
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w300),
                               ),
-                              SizedBox(height:10.0),
+                              SizedBox(height: 10.0),
                               Text(
-                                snapshot.data[index]['createdAt'].toString(),
+                                DateFormat.yMMMd()
+                                    .format(DateTime.parse(
+                                        snapshot.data[index]['createdAt']))
+                                    .toString(),
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w300),
