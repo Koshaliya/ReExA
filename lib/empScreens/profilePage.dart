@@ -101,6 +101,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: CircleAvatar(
                           radius: 40.0,
                           backgroundImage: AssetImage('images/pro5.jpg'),
+                          //CloudinaryImage('https://res.cloudinary.com/demo/image/upload/front_face.png');
                           backgroundColor: kPrimaryColor,
                         ),
                         height: 150.0,

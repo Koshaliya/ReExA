@@ -1,4 +1,5 @@
 import 'package:ReExA/empScreens/addExpense.dart';
+import 'package:ReExA/empScreens/report.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -291,7 +292,7 @@ class OverView extends StatelessWidget {
                       buttonIcon: Icons.comment_rounded,
                       label: 'Report',
                       buttonColor: Color(0xFFF169B1),
-                      route: null,
+                      route: ReportPage.id,
                     ),
                   ],
                 ),

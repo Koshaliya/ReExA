@@ -355,7 +355,7 @@ class _VerifyExpensePendingState extends State<VerifyExpensePending> {
 
                             var getToken =
                                 sharedPreferencesX.getString('token');
-                            final http.Response response = await http.patch(
+                            await http.patch(
                               url,
                               headers: <String, String>{
                                 "Content-Type":
@@ -397,7 +397,7 @@ class _VerifyExpensePendingState extends State<VerifyExpensePending> {
 
                             var getToken =
                                 sharedPreferencesX.getString('token');
-                            final http.Response response = await http.patch(
+                            await http.patch(
                               url,
                               headers: <String, String>{
                                 "Content-Type":
@@ -438,7 +438,7 @@ class _VerifyExpensePendingState extends State<VerifyExpensePending> {
 
                             var getToken =
                                 sharedPreferencesX.getString('token');
-                            final http.Response response = await http.patch(
+                             await http.patch(
                               url,
                               headers: <String, String>{
                                 "Content-Type":
