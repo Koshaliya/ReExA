@@ -1,32 +1,37 @@
 import 'package:flutter/material.dart';
 import '../empWidgets/constants.dart';
 
-
 //************************************************Expense History PopUp Screen************************************************************/
 
 Future expenseHistoryShowDialog(
     BuildContext context,
     String status,
     String managerId,
-    String empId,
     var amount,
     String pay,
     String category,
     var date,
-    String description) {
-      
-      Color colorX;
-      if (status == 'Approved') {
-                    colorX = Color(0xFF4CAF50);
-                  } else if (status == 'Pending') {
-                    colorX = Colors.yellow;
-                  } 
-                   else {
-                    colorX = Colors.red;
-                  }
+    String description,
+    var managerData) {
+  Color colorX;
+  if (status == 'Approved') {
+    colorX = Color(0xFF4CAF50);
+  } else if (status == 'Pending') {
+    colorX = Colors.yellow;
+  } else {
+    colorX = Colors.red;
+  }
+  var managerName;
+  for (var i = 0; i < managerData.length; i++) {
+      if (managerData[i]['_id'].toString() ==
+          managerId.toString()) {
+       managerName = (managerData[i]['name'].toString());
+      } else {}
+    }
   return showDialog(
     context: context,
     builder: (BuildContext context) {
+      
       return AlertDialog(
         backgroundColor: Color(0xFFF1EFEF),
         insetPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
@@ -83,30 +88,7 @@ Future expenseHistoryShowDialog(
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              'M001',
-                              style: TextStyle(
-                                color: kPrimaryColor,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'Employee Name',
-                              style: TextStyle(
-                                color: Colors.grey[700],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'E001',
+                              managerName,
                               style: TextStyle(
                                 color: kPrimaryColor,
                               ),
@@ -245,7 +227,9 @@ Future expenseHistoryShowDialog(
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              description == null ? 'no description' : description,
+                              description == null
+                                  ? 'no description'
+                                  : description,
                               style: TextStyle(
                                 color: kPrimaryColor,
                               ),
@@ -274,24 +258,24 @@ Future expenseHistoryShowDialog(
 
 //************************************************TopUpHistory PopUp Screen************************************************************/
 
-Future topUpHistoryShowDialog(
-    BuildContext context,
-    String status,
-    String managerId,
-    String empId,
-    var amount,
-    var date,
-    String description) {
-      
-       Color colorX;
-      if (status == 'Approved') {
-                    colorX = Color(0xFF4CAF50);
-                  } else if (status == 'Pending') {
-                    colorX = Colors.yellow;
-                  } 
-                   else {
-                    colorX = Colors.red;
+Future topUpHistoryShowDialog(BuildContext context, String status,var managerId,
+    var managerData, var amount, var date, String description) {
+  Color colorX;
+  if (status == 'Approved') {
+    colorX = Color(0xFF4CAF50);
+  } else if (status == 'Pending') {
+    colorX = Colors.yellow;
+  } else {
+    colorX = Colors.red;
+  }
+  var managerName;
+  for (var i = 0; i < managerData.length; i++) {
+                    if (managerData[i]['_id'].toString() ==
+                        managerId.toString()) {
+                      managerName = (managerData[i]['name'].toString());
+                    } else {}
                   }
+  
   return showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -351,30 +335,7 @@ Future topUpHistoryShowDialog(
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              'M001',
-                              style: TextStyle(
-                                color: kPrimaryColor,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'Employee Name',
-                              style: TextStyle(
-                                color: Colors.grey[700],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'E001',
+                              managerName,
                               style: TextStyle(
                                 color: kPrimaryColor,
                               ),
@@ -459,7 +420,9 @@ Future topUpHistoryShowDialog(
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              description == null ? 'no description' : description,
+                              description == null
+                                  ? 'no description'
+                                  : description,
                               style: TextStyle(
                                 color: kPrimaryColor,
                               ),

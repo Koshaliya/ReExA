@@ -61,7 +61,8 @@ class _ReimburseState extends State<Reimburse> {
                   
                   return (snapshot.data[index]['status'] == 'Pending')
                       ? Dismissible(
-                          key: Key(index.toString()),
+                        
+                          key: UniqueKey(),
                           background: myHiddenContainer(),
                           direction: DismissDirection.endToStart,
                           onDismissed: (direction) async {

@@ -1,13 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:ReExA/empWidgets/constants.dart';
 import 'package:ReExA/empWidgets/expenseCard.dart';
-import 'package:intl/intl.dart';
 
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:http/http.dart' as http;
 
 class AddExpense extends StatefulWidget {
   static const String id = 'addExpense';
@@ -43,13 +37,13 @@ class _AddExpenseState extends State<AddExpense> {
             Expanded(
               flex: 5,
               child: Container(
-                margin: EdgeInsets.only(top: 8.0),
+                margin: EdgeInsets.only(top: 10.0),
                 child: Column(
                   children: [
                     Expanded(
                       child: DropDownManager(
                         hintText: 'Select Manager',
-                        hintList: managerList,
+                        //hintList: manager,
                       ),
                     ),
                     Expanded(
@@ -78,10 +72,7 @@ class _AddExpenseState extends State<AddExpense> {
                           onChanged: (value) {
                             setState(() {
                               dateCtl.text = value;
-
                             });
-                            
-                            
                           },
                           decoration: InputDecoration(
                             labelText: 'Receipt Date',
@@ -124,8 +115,8 @@ class _AddExpenseState extends State<AddExpense> {
                                 );
                               },
                             );
-                             dateCtl.text = DateFormat('dMy').format(date);
-                             
+                            dateCtl.text = date.toIso8601String();
+                                
                           },
                         ),
                       ),
@@ -138,7 +129,7 @@ class _AddExpenseState extends State<AddExpense> {
               ),
             ),
             Expanded(
-              flex: 2,
+              flex: 3,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -148,7 +139,6 @@ class _AddExpenseState extends State<AddExpense> {
                     width: 250.0,
                     child: ElevatedButton(
                       onPressed: () async {
-                       
                         print(amount);
                         print(description);
                         print(dateCtl.text);
@@ -156,57 +146,7 @@ class _AddExpenseState extends State<AddExpense> {
                         print(category);
                         print(paymentMethod);
                         print(receiptUrl);
-                        try {
-                          final url = Uri.parse(
-                              'https://reexapi.herokuapp.com/transaction');
-                          var sharedPreferencesX =
-                              await SharedPreferences.getInstance();
-
-                          var getToken = sharedPreferencesX.getString('token');
-
-                          final http.Response response = await http.post(
-                            url,
-                            headers: <String, String>{
-                              "Content-Type": 'application/json;charset=UTF-8',
-                              "Accept": 'application/json',
-                              "Authorization": 'Bearer $getToken'
-                            },
-                            body: jsonEncode(
-                              <dynamic, dynamic>{
-                                'amount': amount,
-                                'description': description,
-                                'managerIncharge': managerIncharge,
-                                'category': category,
-                                'transationDate': dateCtl.text,
-                                'paymentMethod': paymentMethod,
-                                'receiptUrl': receiptUrl,
-                              },
-                            ),
-                          );
-
-                          final responseData = json.decode(response.body);
-                          // _formKey.currentState.reset();
-                          // _formKey.currentState.dispose();
-                          print(responseData);
-
-                          //buildShowDialog(context);
-
-                          //  ScaffoldMessenger.of(context).showSnackBar(
-                          //           SnackBar(
-                          //             content: const Text(
-                          //               'Expense request has been sent.',
-                          //               style: TextStyle(
-                          //                 fontSize: 16.0,
-                          //               ),
-                          //             ),
-                          //             elevation: 5,
-                          //           ),
-                          //         );
-
-                        } catch (error) {
-                          print(error);
-                          throw error;
-                        }
+                        buildAddExpensePopUp(context,managerIncharge,category,paymentMethod,amount,dateCtl.text,description,receiptUrl);
                       },
                       child: Text(
                         'Submit',

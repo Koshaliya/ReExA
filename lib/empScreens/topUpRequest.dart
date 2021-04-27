@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:ReExA/empWidgets/constants.dart';
 import 'package:ReExA/empWidgets/expenseCard.dart';
-
 
 class TopUpRequest extends StatefulWidget {
   static const String id = 'topUpRequest';
@@ -12,6 +10,7 @@ class TopUpRequest extends StatefulWidget {
 
 class _TopUpRequestState extends State<TopUpRequest> {
   final _formKey = GlobalKey<FormState>();
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +20,10 @@ class _TopUpRequestState extends State<TopUpRequest> {
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
         centerTitle: true,
-
-          actions: [
-            SearchButton(),
-            NotificationButton()
-          ],
-          title: AppBarTitle(title: 'Top Up Request',),
+        actions: [SearchButton(), NotificationButton()],
+        title: AppBarTitle(
+          title: 'Top Up Request',
+        ),
       ),
       drawer: SideDrawer(),
       body: Form(
@@ -44,7 +41,7 @@ class _TopUpRequestState extends State<TopUpRequest> {
                   children: [
                     DropDownManager(
                       hintText: 'Select Manager',
-                      hintList: managerList,
+                      //hintList: manager,
                     ),
                     AmountField(
                       label: 'Amout',
@@ -64,10 +61,8 @@ class _TopUpRequestState extends State<TopUpRequest> {
                     child: ElevatedButton(
                       onPressed: () async {
                         try {
-                          print(amount);
-                          print(managerIncharge);
-                          print(description);
-                          buildTopUpPopUp(context,managerIncharge,amount,description);
+                          buildTopUpPopUp(
+                              context, managerIncharge, amount, description);
                         } catch (error) {
                           print(error);
                           throw error;

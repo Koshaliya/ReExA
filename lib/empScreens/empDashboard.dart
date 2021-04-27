@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ReExA/empWidgets/constants.dart';
 import 'package:ReExA/empWidgets/dashboardCard.dart';
 
-
 class EmpDashboard extends StatefulWidget {
   static const String id = 'empDashboard';
 

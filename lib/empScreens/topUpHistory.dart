@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+import 'package:ReExA/data/users.dart';
 
 class TopUpHistory extends StatefulWidget {
   static const String id = 'TopUpHistory';
@@ -12,7 +13,16 @@ class TopUpHistory extends StatefulWidget {
 }
 
 class _TopUpHistoryState extends State<TopUpHistory> {
-   Color color;
+  @override
+  void initState() {
+    super.initState();
+    _getTopUpHistory();
+    fetchManegerData();
+  }
+
+  var managerName;
+
+  Color color;
 
   Future<List<dynamic>> _getTopUpHistory() async {
     final url = Uri.parse('https://reexapi.herokuapp.com/topUpRequestSended');
@@ -33,6 +43,7 @@ class _TopUpHistoryState extends State<TopUpHistory> {
 
     return responseData;
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,23 +60,30 @@ class _TopUpHistoryState extends State<TopUpHistory> {
                     color = Color(0xFF4CAF50);
                   } else if (snapshot.data[index]['status'] == 'Pending') {
                     color = Colors.yellow;
-                  } 
-                   else {
+                  } else {
                     color = Colors.red;
                   }
-                  var parsedDate = DateTime.parse(snapshot.data[index]['createdAt']);
-      var transDate=DateFormat.yMMMd().format(parsedDate).toString();
+                  var managerId=snapshot.data[index]['requestTo'];
+                  for (var i = 0; i < managerData.length; i++) {
+                    if (managerData[i]['_id'].toString() ==
+                        managerId.toString()) {
+                      managerName = (managerData[i]['name'].toString());
+                    } else {}
+                  }
+                  var parsedDate =
+                      DateTime.parse(snapshot.data[index]['createdAt']);
+                  var transDate =
+                      DateFormat.yMMMd().format(parsedDate).toString();
                   return GestureDetector(
                     onTap: () {
                       topUpHistoryShowDialog(
-                        context,
-                        snapshot.data[index]['status'],
-                        snapshot.data[index]['requestTo'].toString(),
-                        snapshot.data[index]['requestBy'].toString(),
-                        snapshot.data[index]['amount'].toString(),
-                        transDate,
-                        snapshot.data[index]['description'].toString(),
-                        );
+                          context,
+                          snapshot.data[index]['status'],
+                          managerId,
+                          managerData,
+                          snapshot.data[index]['amount'].toString(),
+                          transDate,
+                          snapshot.data[index]['description'].toString(),);
                     },
                     child: Container(
                       padding: EdgeInsets.only(
@@ -98,9 +116,7 @@ class _TopUpHistoryState extends State<TopUpHistory> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Mooo1'
-                              ),
+                              Text(managerName),
                             ],
                           ),
                           Column(

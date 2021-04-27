@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:ReExA/empWidgets/expenseCard.dart';
+import 'package:ReExA/data/users.dart';
 
 //************************************************************ inbox ***********************************************/
 
@@ -13,13 +14,23 @@ class InboxTab extends StatefulWidget {
 }
 
 class _InboxTabState extends State<InboxTab> {
-  var message,title;
+  var message, title;
+  var managerName;
+  //var getUserRole;
+
+  @override
+  void initState() {
+    super.initState();
+    _getInbox();
+    fetchManegerData();
+  }
+
   Future _getInbox() async {
     final url = Uri.parse('https://reexapi.herokuapp.com/reportReceiver');
     var sharedPreferencesX = await SharedPreferences.getInstance();
-
+    // getUserRole = sharedPreferencesX.getString('userRole');
     var getToken = sharedPreferencesX.getString('token');
-    //print(getToken);
+
     final http.Response response = await http.get(
       url,
       headers: <String, String>{
@@ -38,71 +49,98 @@ class _InboxTabState extends State<InboxTab> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          height: 500.0,
-          child: FutureBuilder(
-              initialData: [],
-              future: _getInbox(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                return ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.0),
-                        color: Color(0xFFFBFBFB),
-                        border: Border.all(
-                          color: kPrimaryColor,
+        Expanded(
+          child: Container(
+            child: FutureBuilder(
+                initialData: [],
+                future: _getInbox(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  return ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (context, index) {
+                      var managerId = snapshot.data[index]['sender'];
+                      for (var i = 0; i < managerData.length; i++) {
+                        if (managerData[i]['_id'].toString() ==
+                            managerId.toString()) {
+                          managerName = (managerData[i]['name'].toString());
+                          //print(managerName);
+                        } else {}
+                      }
+                      return Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: Color(0xFFFBFBFB),
+                          border: Border.all(
+                            color: kPrimaryColor,
+                          ),
                         ),
-                      ),
-                      margin: EdgeInsets.all(15.0),
-                      padding: EdgeInsets.all(15.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                snapshot.data[index]['title'],
-                                style: TextStyle(
-                                    fontSize: 15.0,
-                                    color: Colors.black87,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 15.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                snapshot.data[index]['message'],
-                                style: TextStyle(
-                                  fontSize: 13.0,
-                                  color: Colors.black,
+                        margin: EdgeInsets.all(15.0),
+                        padding: EdgeInsets.all(15.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  snapshot.data[index]['title'],
+                                  style: TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.black87,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 15.0),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                snapshot.data[index]['sender'],
-                                style: TextStyle(
-                                  fontSize: 13.0,
-                                  color: Colors.black,
+                              ],
+                            ),
+                            SizedBox(height: 15.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    child: Text(
+                                      snapshot.data[index]['message'],
+                                      style: TextStyle(
+                                        fontSize: 13.0,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                );
-              }),
+                              ],
+                            ),
+                            SizedBox(height: 15.0),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(right: 20.0),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        'Sender:',
+                                        style: TextStyle(
+                                            fontSize: 13.0,
+                                            color: Colors.black87),
+                                      ),
+                                      SizedBox(width: 10.0),
+                                      Text(
+                                        managerName,
+                                        style: TextStyle(
+                                            fontSize: 14.0,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                }),
+          ),
         ),
         FloatingActionButton(
           onPressed: () {
@@ -114,7 +152,9 @@ class _InboxTabState extends State<InboxTab> {
       ],
     );
   }
+
   //************************************************************ new report ***********************************************/
+
   Future newReport() {
     return showDialog(
         context: context,
@@ -140,85 +180,90 @@ class _InboxTabState extends State<InboxTab> {
                   ),
                 ),
                 Container(
-                  width: 400.0,
-                  height: 400.0,
+                  height: 450.0,
+                  width: 450.0,
                   child: Column(children: [
-                    Container(
-                      width: 300.0,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          DropDownManager(
-                            hintText: 'Select Manager',
-                        hintList: managerList,
-                          ),
-                          SizedBox(
-                            height: 20.0,
-                          ),
-                          TextFormField(
-                            maxLines: 2,
-                            controller: TextEditingController(text: title),
-                            validator: (value) {
-                              if (value.isEmpty) return "Title can't be empty";
-
-                              return null;
-                            },
-                            onChanged: (value) {
-                              setState(() {
-                                title = value;
-                              });
-                            },
-                            style: TextStyle(
-                                color: kSecondColor, fontWeight: FontWeight.bold),
-                            decoration: InputDecoration(
-                              labelText: 'Title',
-                              labelStyle: TextStyle(
-                                  color: Colors.grey[700],
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.bold),
-                              border: kEnabledBorder,
-                              focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: kPrimaryColor, width: 1),
-                              ),
-                              enabledBorder: kEnabledBorder,
-                              contentPadding: EdgeInsets.all(15.0),
+                    Expanded(
+                      child: Container(
+                        width: 300.0,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            DropDownManager(
+                              hintText: 'Select Manager',
                             ),
-                          ),
-                           SizedBox(
-                            height: 20.0,
-                          ),
-                          TextFormField(
-                            maxLines: 4,
-                            controller: TextEditingController(text: message),
-                            validator: (value) {
-                              if (value.isEmpty) return "Message can't be empty";
-
-                              return null;
-                            },
-                            onChanged: (value) {
-                              setState(() {
-                                message = value;
-                              });
-                            },
-                            style: TextStyle(
-                                color: kSecondColor, fontWeight: FontWeight.bold),
-                            decoration: InputDecoration(
-                              labelText: 'Message',
-                              labelStyle: TextStyle(
-                                  color: Colors.grey[700],
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.bold),
-                              border: kEnabledBorder,
-                              focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: kPrimaryColor, width: 1),
-                              ),
-                              enabledBorder: kEnabledBorder,
-                              contentPadding: EdgeInsets.all(15.0),
+                            SizedBox(
+                              height: 20.0,
                             ),
-                          ),
-                        ],
+                            TextFormField(
+                              maxLines: 2,
+                              controller: TextEditingController(text: title),
+                              validator: (value) {
+                                if (value.isEmpty)
+                                  return "Title can't be empty";
+
+                                return null;
+                              },
+                              onChanged: (value) {
+                                setState(() {
+                                  title = value;
+                                });
+                              },
+                              style: TextStyle(
+                                  color: kSecondColor,
+                                  fontWeight: FontWeight.bold),
+                              decoration: InputDecoration(
+                                labelText: 'Title',
+                                labelStyle: TextStyle(
+                                    color: Colors.grey[700],
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.bold),
+                                border: kEnabledBorder,
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: kPrimaryColor, width: 1),
+                                ),
+                                enabledBorder: kEnabledBorder,
+                                contentPadding: EdgeInsets.all(15.0),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20.0,
+                            ),
+                            TextFormField(
+                              maxLines: 4,
+                              controller: TextEditingController(text: message),
+                              validator: (value) {
+                                if (value.isEmpty)
+                                  return "Message can't be empty";
+
+                                return null;
+                              },
+                              onChanged: (value) {
+                                setState(() {
+                                  message = value;
+                                });
+                              },
+                              style: TextStyle(
+                                  color: kSecondColor,
+                                  fontWeight: FontWeight.bold),
+                              decoration: InputDecoration(
+                                labelText: 'Message',
+                                labelStyle: TextStyle(
+                                    color: Colors.grey[700],
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.bold),
+                                border: kEnabledBorder,
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: kPrimaryColor, width: 1),
+                                ),
+                                enabledBorder: kEnabledBorder,
+                                contentPadding: EdgeInsets.all(15.0),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -233,14 +278,13 @@ class _InboxTabState extends State<InboxTab> {
                           style: TextStyle(fontSize: 16),
                         ),
                         onPressed: () async {
-                          
-                          final url = Uri.parse(
-                              'https://reexapi.herokuapp.com/report');
+                          final url =
+                              Uri.parse('https://reexapi.herokuapp.com/report');
                           var sharedPreferencesX =
                               await SharedPreferences.getInstance();
 
                           var getToken = sharedPreferencesX.getString('token');
-                          await http.post(
+                          final http.Response response = await http.post(
                             url,
                             headers: <String, String>{
                               "Content-Type": 'application/json;charset=UTF-8',
@@ -250,13 +294,13 @@ class _InboxTabState extends State<InboxTab> {
                             body: jsonEncode(
                               <dynamic, String>{
                                 'receiver': managerIncharge,
-                                'title':title,
-                                'message':message,
+                                'title': title,
+                                'message': message,
                               },
                             ),
                           );
-                          
-
+                          final responseData = json.decode(response.body);
+                          print(responseData);
                         },
                         style: ElevatedButton.styleFrom(
                           primary: kPrimaryColor,
@@ -268,7 +312,7 @@ class _InboxTabState extends State<InboxTab> {
                       ),
                     ),
                   ]),
-                )
+                ),
               ],
             ),
           );
@@ -284,6 +328,16 @@ class SentTab extends StatefulWidget {
 }
 
 class _SentTabState extends State<SentTab> {
+  var userName;
+
+  @override
+  void initState() {
+    super.initState();
+    _getSent();
+    fetchUserData();
+    
+  }
+
   Future<List<dynamic>> _getSent() async {
     final url = Uri.parse('https://reexapi.herokuapp.com/reportSender');
     var sharedPreferencesX = await SharedPreferences.getInstance();
@@ -313,6 +367,14 @@ class _SentTabState extends State<SentTab> {
           return ListView.builder(
             itemCount: snapshot.data.length,
             itemBuilder: (context, index) {
+
+              var userId = snapshot.data[index]['receiver'];
+              for (var i = 0; i < userData.length; i++) {
+                if (userData[i]['_id'].toString() == userId.toString()) {
+                  userName = (userData[i]['name'].toString());
+                  
+                } else {}
+              }
               return Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20.0),
@@ -329,22 +391,27 @@ class _SentTabState extends State<SentTab> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                            snapshot.data[index]['title'],
-                            style: TextStyle(
-                                fontSize: 15.0, color: Colors.white,fontWeight: FontWeight.bold),
-                          ),
-                        
+                          snapshot.data[index]['title'],
+                          style: TextStyle(
+                              fontSize: 15.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ],
                     ),
                     SizedBox(height: 15.0),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          snapshot.data[index]['message'],
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            color: Colors.white,
+                        Expanded(
+                          child: Container(
+                            child: Text(
+                              snapshot.data[index]['message'],
+                              style: TextStyle(
+                                fontSize: 13.0,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -353,11 +420,24 @@ class _SentTabState extends State<SentTab> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          snapshot.data[index]['receiver'],
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            color: Colors.white,
+                        Container(
+                          margin: EdgeInsets.only(right: 20.0),
+                          child: Row(
+                            children: [
+                              Text(
+                                'Receiver:',
+                                style: TextStyle(
+                                    fontSize: 13.0, color: Colors.white54),
+                              ),
+                              SizedBox(width: 10.0),
+                              Text(
+                                userName,
+                                style: TextStyle(
+                                    fontSize: 14.0,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
                           ),
                         ),
                       ],

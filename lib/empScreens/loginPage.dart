@@ -42,9 +42,9 @@ class _LoginPageState extends State<LoginPage>
     try {
       await Provider.of<Auth>(context, listen: false)
           .authenticate(_authData['userId'], _authData['password']);
+
       var sharedPreferencesRole = await SharedPreferences.getInstance();
       var getUserRole = sharedPreferencesRole.getString('userRole');
-      print(getUserRole);
 
       if (getUserRole == 'employee') {
         Navigator.of(context).pushNamed(EmpDashboard.id);

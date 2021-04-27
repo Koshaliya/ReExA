@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:convert';
 import 'package:ReExA/empScreens/empDashboard.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
+import 'package:ReExA/data/users.dart';
 
 var managerIncharge,
     category,
@@ -15,7 +16,9 @@ var managerIncharge,
     amount,
     transactionDate,
     description;
-  var receiptUrl;
+var receiptUrl;
+var amountControlller = TextEditingController();
+var descriptionController = TextEditingController();
 //************************************************Amount Input Field************************************************************/
 
 class AmountField extends StatelessWidget {
@@ -29,7 +32,7 @@ class AmountField extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(10.0),
       child: TextFormField(
-        controller: TextEditingController(text: amount),
+        controller: amountControlller,
         onChanged: (value) {
           amount = value;
         },
@@ -69,8 +72,8 @@ class _DescriptionFieldState extends State<DescriptionField> {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(10.0),
-      child: TextField(
-        controller: TextEditingController(text: description),
+      child: TextFormField(
+        controller: descriptionController,
         onChanged: (value) {
           description = value;
         },
@@ -95,102 +98,129 @@ class _DescriptionFieldState extends State<DescriptionField> {
 
 //************************************************DropDown ManagerIncharge Select************************************************************/
 
-List managerList = ['602ffb42c87096c45e83cea6', '606d974a1752f021c8687bd9'];
-const List categoryList = ["Food", "Travel", "Client Meeting", "Misc"];
+const List categoryList = ["Food", "Travel", "Client Meeting", "Hotel", "Other"];
 const List paymentList = ["Card", "Cash"];
 
 class DropDownManager extends StatefulWidget {
   final String hintText;
-  final List hintList;
 
-  DropDownManager({this.hintList, this.hintText});
+  DropDownManager({this.hintText});
 
   @override
   _DropDownManagerState createState() => _DropDownManagerState();
 }
 
 class _DropDownManagerState extends State<DropDownManager> {
-  // bool circular = true;
+  bool circular = true;
 
-  // List manager = [];
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   fetchData();
-  // }
-
-  // Future<void> fetchData() async {
-  //   try {
-  //     var sharedPreferencesX = await SharedPreferences.getInstance();
-
-  //     var getToken = sharedPreferencesX.getString('token');
-
-  //     final url = Uri.parse('https://reexapi.herokuapp.com/getallmanager');
-  //     final http.Response response = await http.get(
-  //       url,
-  //       headers: <String, String>{
-  //         "Content-Type": 'application/json;charset=UTF-8',
-  //         "Accept": 'application/json',
-  //         "Authorization": 'Bearer $getToken'
-  //       },
-  //     );
-  //     final responseData = json.decode(response.body);
-  //     print(responseData);
-
-  //     if (responseData['error'] != null) {
-  //       throw HttpException(responseData['error']['message']);
-  //     }
-  //     // String jsonsDataString = responseData.toString();
-  //     // print(jsonsDataString);
-  //     // final jsonData = jsonDecode(jsonsDataString);
-  //     // print(jsonData);
-  //     // // jsonData.forEach((element) => manager.add(element['userId']));
-
-  //     // print(manager);
-
-  //   } catch (error) {
-  //     print(error);
-  //     throw error;
-  //   }
-  // }
-
-  // setState(() {
-  //   circular = false;
-  // });
+  @override
+  void initState() {
+    super.initState();
+    fetchManegerData();
+    setState(() {
+      circular = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Container(
-        padding: EdgeInsets.all(10.0),
-        decoration: BoxDecoration(
-            border: Border.all(color: kPrimaryColor, width: 1),
-            borderRadius: BorderRadius.circular(5.0)),
-        child: DropdownButtonFormField(
-          decoration: InputDecoration.collapsed(hintText: ' '),
-          hint: Text(widget.hintText),
-          dropdownColor: kPrimaryColor,
-          icon: Icon(Icons.arrow_drop_down),
-          iconSize: 36,
-          isExpanded: true,
-          style: TextStyle(color: kSecondColor, fontWeight: FontWeight.bold),
-          items: widget.hintList.map((valueItem) {
-            return DropdownMenuItem(
-              child: Text(valueItem),
-              value: valueItem,
-            );
-          }).toList(),
-          onChanged: (newValue) {
-            setState(() {
-              managerIncharge = newValue;
-            });
-          },
-          value: managerIncharge,
-        ),
-      ),
-    );
+    return circular
+        ? Center(child: CircularProgressIndicator())
+        : Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              padding: EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                  border: Border.all(color: kPrimaryColor, width: 1),
+                  borderRadius: BorderRadius.circular(5.0)),
+              child: DropdownButtonFormField<String>(
+                decoration: InputDecoration.collapsed(hintText: ' '),
+                hint: Text(widget.hintText),
+                dropdownColor: kPrimaryColor,
+                icon: Icon(Icons.arrow_drop_down),
+                iconSize: 36,
+                isExpanded: true,
+                style:
+                    TextStyle(color: kSecondColor, fontWeight: FontWeight.bold),
+                items: managerData?.map<DropdownMenuItem<String>>((value) {
+                      return new DropdownMenuItem<String>(
+                        value: value['_id'],
+                        child: new Text(value['userId']),
+                      );
+                    })?.toList() ??
+                    [],
+                onChanged: (newValue) {
+                  setState(() {
+                    managerIncharge = newValue;
+                  });
+                },
+                value: managerIncharge,
+              ),
+            ),
+          );
+  }
+}
+
+//************************************************DropDown Employee Select************************************************************/
+
+class DropDownEmployee extends StatefulWidget {
+  final String hintText;
+
+  DropDownEmployee({this.hintText});
+
+  @override
+  _DropDownEmployeeState createState() => _DropDownEmployeeState();
+}
+
+class _DropDownEmployeeState extends State<DropDownEmployee> {
+  bool circular = true;
+  var employeeData;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchEmployeeData();
+    setState(() {
+      circular = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return circular
+        ? Center(child: CircularProgressIndicator())
+        : Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              padding: EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                  border: Border.all(color: kPrimaryColor, width: 1),
+                  borderRadius: BorderRadius.circular(5.0)),
+              child: DropdownButtonFormField<String>(
+                decoration: InputDecoration.collapsed(hintText: ' '),
+                hint: Text(widget.hintText),
+                dropdownColor: kPrimaryColor,
+                icon: Icon(Icons.arrow_drop_down),
+                iconSize: 36,
+                isExpanded: true,
+                style:
+                    TextStyle(color: kSecondColor, fontWeight: FontWeight.bold),
+                items: employeeData?.map<DropdownMenuItem<String>>((value) {
+                      return new DropdownMenuItem<String>(
+                        value: value['_id'],
+                        child: new Text(value['userId']),
+                      );
+                    })?.toList() ??
+                    [],
+                onChanged: (newValue) {
+                  setState(() {
+                    managerIncharge = newValue;
+                  });
+                },
+                value: managerIncharge,
+              ),
+            ),
+          );
   }
 }
 
@@ -296,7 +326,6 @@ class AttachImage extends StatefulWidget {
 }
 
 class _AttachImageState extends State<AttachImage> {
-
   final ImagePicker _picker = ImagePicker();
 
   void takePhoto(ImageSource source) async {
@@ -310,8 +339,7 @@ class _AttachImageState extends State<AttachImage> {
             resourceType: CloudinaryResourceType.Image),
       );
       print(response.secureUrl);
-      receiptUrl=response.secureUrl.toString();
-
+      receiptUrl = response.secureUrl.toString();
     } on CloudinaryException catch (e) {
       print(e.message);
       print(e.request);
@@ -633,7 +661,7 @@ Future buildTopUpPopUp(BuildContext context, String managerIncharge, var amount,
 
                             var getToken =
                                 sharedPreferencesX.getString('token');
-                            final http.Response response = await http.post(
+                            await http.post(
                               url,
                               headers: <String, String>{
                                 "Content-Type":
@@ -660,6 +688,278 @@ Future buildTopUpPopUp(BuildContext context, String managerIncharge, var amount,
                                 elevation: 5,
                               ),
                             );
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+//************************************************Top Up PopUp Screen************************************************************/
+
+Future buildAddExpensePopUp(
+    BuildContext context,
+    String managerIncharge,
+    String category,
+    String paymentMethod,
+    var amount,
+    var date,
+    String description,
+    var receiptUrl) {
+  return showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: Color(0xFFF1EFEF),
+        insetPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+        content: Stack(
+          clipBehavior: Clip.none,
+          children: <Widget>[
+            Positioned(
+              right: -40.0,
+              top: -40.0,
+              child: InkResponse(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: CircleAvatar(
+                  child: Icon(Icons.close),
+                  backgroundColor: Colors.red,
+                ),
+              ),
+            ),
+            Container(
+              height: 550.0,
+              width: 550.0,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+                    color: kPrimaryColor,
+                    child: Text(
+                      'Expense Request',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Manager Name',
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              managerIncharge.toString(),
+                              style: TextStyle(
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    color: Colors.grey[700],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Category',
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              category,
+                              style: TextStyle(
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    color: Colors.grey[700],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Amount   ',
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Rs $amount',
+                              style: TextStyle(
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Payment Method',
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              paymentMethod,
+                              style: TextStyle(
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    color: Colors.grey[700],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Description',
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              description == null
+                                  ? 'no description'
+                                  : description,
+                              style: TextStyle(
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 150.0,
+                        child: ElevatedButton(
+                          style:
+                              ElevatedButton.styleFrom(primary: Colors.green),
+                          child: Text(
+                            'Confirm',
+                            style:
+                                TextStyle(fontSize: 16.0, color: Colors.white),
+                          ),
+                          onPressed: () async {
+                            try {
+                              final url = Uri.parse(
+                                  'https://reexapi.herokuapp.com/transaction');
+                              var sharedPreferencesX =
+                                  await SharedPreferences.getInstance();
+
+                              var getToken =
+                                  sharedPreferencesX.getString('token');
+
+                              await http.post(
+                                url,
+                                headers: <String, String>{
+                                  "Content-Type":
+                                      'application/json;charset=UTF-8',
+                                  "Accept": 'application/json',
+                                  "Authorization": 'Bearer $getToken'
+                                },
+                                body: jsonEncode(
+                                  <dynamic, dynamic>{
+                                    'amount': amount,
+                                    'description': description,
+                                    'managerIncharge': managerIncharge,
+                                    'category': category,
+                                    'paymentMethod': paymentMethod,
+                                    'transactionDate': date,
+                                    'receiptUrl': receiptUrl,
+                                  },
+                                ),
+                              );
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: const Text(
+                                    'Expense request has been sent.',
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                    ),
+                                  ),
+                                  elevation: 5,
+                                ),
+                              );
+                            } catch (error) {
+                              print(error);
+                              throw error;
+                            }
                           },
                         ),
                       )

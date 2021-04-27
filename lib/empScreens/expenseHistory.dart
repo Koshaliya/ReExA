@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+import 'package:ReExA/data/users.dart';
 
 class ExpenseHistory extends StatefulWidget {
   static const String id = 'ExpenseHistory';
@@ -13,6 +14,13 @@ class ExpenseHistory extends StatefulWidget {
 }
 
 class _ExpenseHistoryState extends State<ExpenseHistory> {
+  @override
+  void initState() {
+    super.initState();
+    _getExpenseHistory();
+    fetchManegerData();
+  }
+
   Color color;
 
   Future<List<dynamic>> _getExpenseHistory() async {
@@ -61,16 +69,15 @@ class _ExpenseHistoryState extends State<ExpenseHistory> {
                   return GestureDetector(
                     onTap: () {
                       expenseHistoryShowDialog(
-                        context,
-                        snapshot.data[index]['status'],
-                        snapshot.data[index]['managerIncharge'].toString(),
-                        snapshot.data[index]['transactionBy'].toString(),
-                        snapshot.data[index]['amount'].toString(),
-                        snapshot.data[index]['paymentMethod'].toString(),
-                        snapshot.data[index]['category'].toString(),
-                        transDate,
-                        snapshot.data[index]['description'].toString(),
-                      );
+                          context,
+                          snapshot.data[index]['status'],
+                          snapshot.data[index]['managerIncharge'].toString(),
+                          snapshot.data[index]['amount'].toString(),
+                          snapshot.data[index]['paymentMethod'].toString(),
+                          snapshot.data[index]['category'].toString(),
+                          transDate,
+                          snapshot.data[index]['description'].toString(),
+                          managerData);
                     },
                     child: Container(
                       padding: EdgeInsets.only(

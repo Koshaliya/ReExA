@@ -35,17 +35,17 @@ class _ExpenseStatState extends State<ExpenseStat> {
       },
     );
 
-    final responseData = json.decode(response.body);
+    final responseData = await json.decode(response.body);
 
-    countPending = await responseData
+    countPending =  responseData
         .where((c) => c['status'] == 'Pending')
         .toList()
         .length;
-    countRejected = await responseData
+    countRejected =  responseData
         .where((c) => c['status'] == 'Rejected')
         .toList()
         .length;
-    countApproved = await responseData
+    countApproved =  responseData
         .where((c) => c['status'] == 'Approved')
         .toList()
         .length;
@@ -54,9 +54,9 @@ class _ExpenseStatState extends State<ExpenseStat> {
     var pieData;
     setState(() {
        pieData = [
-        Expense(status: 'Pending', count: countPending),
-        Expense(status: 'Rejected', count: countRejected),
-        Expense(status: 'Approved', count: countApproved),
+        Expense(status: 'Pending', count: 5),
+        Expense(status: 'Rejected', count: 10),
+        Expense(status: 'Approved', count: 2),
       ];
     });
 

@@ -1,4 +1,4 @@
-import 'package:ReExA/empScreens/forgotPass.dart';
+
 import 'package:ReExA/empScreens/loginPage.dart';
 import 'package:ReExA/empScreens/news.dart';
 import 'package:ReExA/empScreens/profilePage.dart';
@@ -35,7 +35,6 @@ class MyApp extends StatelessWidget {
         initialRoute: LoginPage.id,
         routes: {
           LoginPage.id: (context) => LoginPage(),
-          ForgotPassword.id: (context) => ForgotPassword(),
           EmpDashboard.id: (context) => EmpDashboard(),
           AddExpense.id: (context) => AddExpense(),
           ReimbursementStatus.id: (context) => ReimbursementStatus(),

@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloudinary_public/cloudinary_public.dart';
 
-
 class ProfilePage extends StatefulWidget {
   static const String id = 'profilePage';
 
@@ -16,42 +15,53 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   bool circular = true;
-  var currentuser;
+  var currentuser;//var bankdetail;
   var nameEdit, dateOfBirth, email, password, mobileNumber, gender;
-  var accBranch, accNo,accBank;
+//   var accBranch, accNumber, accBank;
+// final myList = [];
+
   @override
   void initState() {
     super.initState();
     fetchData();
+   // getBankDetail();
+    setState(() {
+      circular = false;
+    });
   }
+
+  // getBankDetail() async {
+  //   final url = Uri.parse('https://reexapi.herokuapp.com/bankDetail');
+  //   var sharedPreferencesX = await SharedPreferences.getInstance();
+  //   var getToken = sharedPreferencesX.getString('token');
+
+  //   final http.Response response = await http.get(
+  //     url,
+  //     headers: <String, String>{
+  //       "Content-Type": 'application/json;charset=UTF-8',
+  //       "Accept": 'application/json',
+  //       "Authorization": 'Bearer $getToken'
+  //     },
+  //   );
+
+  //   final responseData = json.decode(response.body);
+   
+  // // responseData.forEach((e) {    
+  // //   myList.add({"bank": e['bank'], 'branch': e['branch'], 'accountNumber': e['accountNumber']});
+    
+  // // });
+  // // return myList;
+  //   // accBank = responseData['bank'];
+  //   // print(accBank);
+  //   // accNumber = responseData['accountNumber'];
+  //   // accBranch = responseData['branch'];
+    
+  // }
 
   void fetchData() async {
     var sharedPreferencesX = await SharedPreferences.getInstance();
     String s = sharedPreferencesX.getString('user');
     currentuser = jsonDecode(s);
-
-    final url = Uri.parse('https://reexapi.herokuapp.com/bankDetail');
-
-    var getToken = sharedPreferencesX.getString('token');
-
-    final http.Response response = await http.get(
-      url,
-      headers: <String, String>{
-        "Content-Type": 'application/json;charset=UTF-8',
-        "Accept": 'application/json',
-        "Authorization": 'Bearer $getToken'
-      },
-    );
-
-    final responseData = json.decode(response.body);
-    //accNo=responseData['accountNumber'];
-    //accBank=responseData['bank'];
-    //accBranch=responseData['branch'];
-
-    setState(() {
-      circular = false;
-    });
-    
   }
 
   @override
@@ -76,317 +86,320 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       body: circular
           ? Center(child: CircularProgressIndicator())
-          : ListView(
-              children: [
-                Stack(
-                  children: [
-                    Container(
-                        height: MediaQuery.of(context).size.height - 82.0,
-                        width: MediaQuery.of(context).size.width,
-                        color: Colors.transparent),
-                    Positioned(
-                        top: 75.0,
-                        child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(45.0),
-                                  topRight: Radius.circular(45.0),
-                                ),
-                                color: Colors.white),
-                            height: MediaQuery.of(context).size.height - 100.0,
-                            width: MediaQuery.of(context).size.width)),
-                    Positioned(
-                        top: 30.0,
-                        left: (MediaQuery.of(context).size.width / 2) - 60,
-                        child: CircleAvatar(
-                          radius: 40.0,
-                          backgroundImage: AssetImage('images/pro5.jpg'),
-                          //CloudinaryImage('https://res.cloudinary.com/demo/image/upload/front_face.png');
-                          backgroundColor: kPrimaryColor,
-                        ),
-                        height: 150.0,
-                        width: 150.0),
-                    Positioned(
-                      top: 180.0,
-                      left: 25.0,
-                      right: 25.0,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Text(
-                                    'Personal Info',
-                                    style: TextStyle(
-                                        fontSize: 20.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w300),
+          :  ListView(
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                          height: MediaQuery.of(context).size.height - 82.0,
+                          width: MediaQuery.of(context).size.width,
+                          color: Colors.transparent),
+                      Positioned(
+                          top: 75.0,
+                          child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(45.0),
+                                    topRight: Radius.circular(45.0),
                                   ),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.all(14.0),
-                                          child: Text(
-                                            'Name',
-                                            style: TextStyle(
-                                                color: kPrimaryColor,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.all(14.0),
-                                          child: Text('Email',
+                                  color: Colors.white),
+                              height: MediaQuery.of(context).size.height - 100.0,
+                              width: MediaQuery.of(context).size.width)),
+                      Positioned(
+                          top: 30.0,
+                          left: (MediaQuery.of(context).size.width / 2) - 60,
+                          child: CircleAvatar(
+                            radius: 40.0,
+                            backgroundImage: AssetImage('images/pro5.jpg'),
+                            //AssetImage('images/pro5.jpg'),
+                            //,
+                            //CloudinaryImage('https://res.cloudinary.com/demo/image/upload/front_face.png');
+                            backgroundColor: kPrimaryColor,
+                          ),
+                          height: 150.0,
+                          width: 150.0),
+                      Positioned(
+                        top: 180.0,
+                        left: 25.0,
+                        right: 25.0,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      'Personal Info',
+                                      style: TextStyle(
+                                          fontSize: 20.0,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w300),
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.all(14.0),
+                                            child: Text(
+                                              'Name',
                                               style: TextStyle(
                                                   color: kPrimaryColor,
                                                   fontSize: 16,
-                                                  fontWeight: FontWeight.w500)),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.all(14.0),
-                                          child: Text(
-                                            'Employee Id',
-                                            style: TextStyle(
-                                                color: kPrimaryColor,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500),
+                                                  fontWeight: FontWeight.w500),
+                                            ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.all(14.0),
-                                          child: Text(
-                                            'Phone',
-                                            style: TextStyle(
-                                                color: kPrimaryColor,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500),
+                                          Padding(
+                                            padding: EdgeInsets.all(14.0),
+                                            child: Text('Email',
+                                                style: TextStyle(
+                                                    color: kPrimaryColor,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w500)),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.all(14.0),
-                                          child: Text(
-                                            'Date of Birth',
-                                            style: TextStyle(
-                                                color: kPrimaryColor,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500),
+                                          Padding(
+                                            padding: EdgeInsets.all(14.0),
+                                            child: Text(
+                                              'Employee Id',
+                                              style: TextStyle(
+                                                  color: kPrimaryColor,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.all(14.0),
-                                          child: Text(
-                                            'Gender',
-                                            style: TextStyle(
-                                                color: kPrimaryColor,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500),
+                                          Padding(
+                                            padding: EdgeInsets.all(14.0),
+                                            child: Text(
+                                              'Phone',
+                                              style: TextStyle(
+                                                  color: kPrimaryColor,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.all(14.0),
-                                          child: Text(
-                                            currentuser['name'].toString(),
-                                            style: TextStyle(fontSize: 16),
+                                          Padding(
+                                            padding: EdgeInsets.all(14.0),
+                                            child: Text(
+                                              'Date of Birth',
+                                              style: TextStyle(
+                                                  color: kPrimaryColor,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.all(14.0),
-                                          child: Text(
-                                            currentuser['email'].toString(),
-                                            style: TextStyle(fontSize: 16),
+                                          Padding(
+                                            padding: EdgeInsets.all(14.0),
+                                            child: Text(
+                                              'Gender',
+                                              style: TextStyle(
+                                                  color: kPrimaryColor,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.all(14.0),
-                                          child: Text(
-                                            currentuser['userId'].toString(),
-                                            style: TextStyle(fontSize: 16),
+                                        ],
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.all(14.0),
+                                            child: Text(
+                                              currentuser['name'].toString(),
+                                              style: TextStyle(fontSize: 16),
+                                            ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.all(14.0),
-                                          child: Text(
-                                            currentuser['mobileNumber']
-                                                .toString(),
-                                            style: TextStyle(fontSize: 16),
+                                          Padding(
+                                            padding: EdgeInsets.all(14.0),
+                                            child: Text(
+                                              currentuser['email'].toString(),
+                                              style: TextStyle(fontSize: 16),
+                                            ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.all(14.0),
-                                          child: Text(
-                                            DateFormat.yMMMd()
-                                                .format(DateTime.parse(
-                                                    currentuser['dateOfBirth']))
-                                                .toString(),
-                                            style: TextStyle(fontSize: 16),
+                                          Padding(
+                                            padding: EdgeInsets.all(14.0),
+                                            child: Text(
+                                              currentuser['userId'].toString(),
+                                              style: TextStyle(fontSize: 16),
+                                            ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.all(14.0),
-                                          child: Text(
-                                            currentuser['gender'].toString(),
-                                            style: TextStyle(fontSize: 16),
+                                          Padding(
+                                            padding: EdgeInsets.all(14.0),
+                                            child: Text(
+                                              currentuser['mobileNumber']
+                                                  .toString(),
+                                              style: TextStyle(fontSize: 16),
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      // mainAxisAlignment:
-                                      //     MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        IconButton(
-                                          padding: EdgeInsets.all(0.0),
-                                          icon: Icon(Icons.edit_rounded),
-                                          iconSize: 18,
-                                          onPressed: () {
-                                            nameEditPop();
-                                          },
-                                        ),
-                                        IconButton(
-                                          padding: EdgeInsets.all(0.0),
-                                          icon: Icon(Icons.edit_rounded),
-                                          iconSize: 18,
-                                          onPressed: () {
-                                            emailEditPop();
-                                          },
-                                        ),
-                                        IconButton(
-                                          padding: EdgeInsets.all(0.0),
-                                          icon: Icon(Icons.edit_rounded),
-                                          iconSize: 18,
-                                          color: Colors.white,
-                                          onPressed: () {},
-                                        ),
-                                        IconButton(
-                                          icon: Icon(Icons.edit_rounded),
-                                          iconSize: 18,
-                                          onPressed: () {
-                                            mobileEditPop();
-                                          },
-                                        ),
-                                        IconButton(
-                                          icon: Icon(Icons.edit_rounded),
-                                          iconSize: 18,
-                                          onPressed: () {
-                                            dOBEditPop();
-                                          },
-                                        ),
-                                        IconButton(
-                                          icon: Icon(Icons.edit_rounded),
-                                          iconSize: 18,
-                                          onPressed: () {
-                                            genderEditPop();
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 20.0),
-                          Container(
-                            padding: EdgeInsets.only(right: 40.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Text(
-                                    'Account Details',
-                                    style: TextStyle(
-                                        fontSize: 20.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w300),
+                                          Padding(
+                                            padding: EdgeInsets.all(14.0),
+                                            child: Text(
+                                              DateFormat.yMMMd()
+                                                  .format(DateTime.parse(
+                                                      currentuser['dateOfBirth']))
+                                                  .toString(),
+                                              style: TextStyle(fontSize: 16),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.all(14.0),
+                                            child: Text(
+                                              currentuser['gender'].toString(),
+                                              style: TextStyle(fontSize: 16),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        // mainAxisAlignment:
+                                        //     MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          IconButton(
+                                            padding: EdgeInsets.all(0.0),
+                                            icon: Icon(Icons.edit_rounded),
+                                            iconSize: 18,
+                                            onPressed: () {
+                                              nameEditPop();
+                                            },
+                                          ),
+                                          IconButton(
+                                            padding: EdgeInsets.all(0.0),
+                                            icon: Icon(Icons.edit_rounded),
+                                            iconSize: 18,
+                                            onPressed: () {
+                                              emailEditPop();
+                                            },
+                                          ),
+                                          IconButton(
+                                            padding: EdgeInsets.all(0.0),
+                                            icon: Icon(Icons.edit_rounded),
+                                            iconSize: 18,
+                                            color: Colors.white,
+                                            onPressed: () {},
+                                          ),
+                                          IconButton(
+                                            icon: Icon(Icons.edit_rounded),
+                                            iconSize: 18,
+                                            onPressed: () {
+                                              mobileEditPop();
+                                            },
+                                          ),
+                                          IconButton(
+                                            icon: Icon(Icons.edit_rounded),
+                                            iconSize: 18,
+                                            onPressed: () {
+                                              dOBEditPop();
+                                            },
+                                          ),
+                                          IconButton(
+                                            icon: Icon(Icons.edit_rounded),
+                                            iconSize: 18,
+                                            onPressed: () {
+                                              genderEditPop();
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.all(10.0),
-                                          child: Icon(
-                                            Icons.account_balance_rounded,
-                                            color: kPrimaryColor,
-                                            size: 28,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      // mainAxisAlignment:
-                                      //     MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 10.0),
-                                          child: Text(
-                                            'accNo',
-                                            style: TextStyle(fontSize: 16),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 10.0),
-                                          child: Text(
-                                            'accBank',
-                                            style: TextStyle(fontSize: 16),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 10.0),
-                                          child: Text(
-                                            'accBranch',
-                                            style: TextStyle(fontSize: 16),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                            SizedBox(height: 20.0),
+                            Container(
+                              padding: EdgeInsets.only(right: 40.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      'Account Details',
+                                      style: TextStyle(
+                                          fontSize: 20.0,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w300),
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.all(10.0),
+                                            child: Icon(
+                                              Icons.account_balance_rounded,
+                                              color: kPrimaryColor,
+                                              size: 28,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        // mainAxisAlignment:
+                                        //     MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(right: 10.0),
+                                            child: Text(
+                                               'bank',
+                                              style: TextStyle(fontSize: 16),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.only(right: 10.0),
+                                            child: Text(
+                                              'accBank',
+                                              style: TextStyle(fontSize: 16),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.only(right: 10.0),
+                                            child: Text(
+                                              'accBranch',
+                                              style: TextStyle(fontSize: 16),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                )
-              ],
-            ),
+                    ],
+                  )
+                ],
+              )
+              
     );
   }
 
