@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ReExA/empWidgets/constants.dart';
 import 'package:ReExA/empWidgets/expenseCard.dart';
+import 'package:ReExA/data/users.dart';
+
 
 class TopUpRequest extends StatefulWidget {
   static const String id = 'topUpRequest';
@@ -11,6 +13,12 @@ class TopUpRequest extends StatefulWidget {
 class _TopUpRequestState extends State<TopUpRequest> {
   final _formKey = GlobalKey<FormState>();
  
+  @override
+  void initState() {
+    super.initState();
+    fetchManegerData();
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +70,7 @@ class _TopUpRequestState extends State<TopUpRequest> {
                       onPressed: () async {
                         try {
                           buildTopUpPopUp(
-                              context, managerIncharge, amount, description);
+                              context, managerIncharge, amount, description,managerData);
                         } catch (error) {
                           print(error);
                           throw error;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ReExA/empWidgets/constants.dart';
 import 'package:ReExA/empWidgets/expenseCard.dart';
+import 'package:ReExA/data/users.dart';
 
 
 class AddExpense extends StatefulWidget {
@@ -10,6 +11,12 @@ class AddExpense extends StatefulWidget {
 }
 
 class _AddExpenseState extends State<AddExpense> {
+  @override
+  void initState() {
+    super.initState();
+    fetchManegerData();
+    
+  }
   final _formKey = GlobalKey<FormState>();
   TextEditingController dateCtl = TextEditingController(text: transactionDate);
   String dateDood;
@@ -146,7 +153,7 @@ class _AddExpenseState extends State<AddExpense> {
                         print(category);
                         print(paymentMethod);
                         print(receiptUrl);
-                        buildAddExpensePopUp(context,managerIncharge,category,paymentMethod,amount,dateCtl.text,description,receiptUrl);
+                        buildAddExpensePopUp(context,managerIncharge,category,paymentMethod,amount,dateCtl.text,description,receiptUrl,managerData);
                       },
                       child: Text(
                         'Submit',

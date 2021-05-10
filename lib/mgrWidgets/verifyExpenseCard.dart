@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+import 'package:ReExA/data/users.dart';
 
 class VerifyExpenseApproved extends StatefulWidget {
   final Function getdetail;
@@ -14,7 +15,12 @@ class VerifyExpenseApproved extends StatefulWidget {
 }
 
 class _VerifyExpenseApprovedState extends State<VerifyExpenseApproved> {
-
+ var employeeName, employeeId;
+  @override
+  void initState() {
+    super.initState();
+    fetchEmployeeData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +35,13 @@ class _VerifyExpenseApprovedState extends State<VerifyExpenseApproved> {
               return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
+                  employeeId = snapshot.data[index]['transactionBy'];
+                for (var i = 0; i < employeeData.length; i++) {
+                  if (employeeData[i]['_id'].toString() ==
+                      employeeId.toString()) {
+                    employeeName = (employeeData[i]['name'].toString());
+                  } else {}
+                }
                   var parsedDate =
                       DateTime.parse(snapshot.data[index]['transactionDate']);
                   var transDate =
@@ -39,7 +52,7 @@ class _VerifyExpenseApprovedState extends State<VerifyExpenseApproved> {
                     tilePadding:
                         EdgeInsets.only(top: 10.0, left: 15.0, right: 10.0),
                     title: Text(
-                      'reimbursementBy',
+                      employeeName.toString(),
                     ),
                     subtitle: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -187,7 +200,12 @@ class VerifyExpensePending extends StatefulWidget {
 }
 
 class _VerifyExpensePendingState extends State<VerifyExpensePending> {
-  
+  var employeeName, employeeId;
+  @override
+  void initState() {
+    super.initState();
+    fetchEmployeeData();
+  }
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).copyWith(dividerColor: kPrimaryColor);
@@ -200,6 +218,13 @@ class _VerifyExpensePendingState extends State<VerifyExpensePending> {
               return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
+                  employeeId = snapshot.data[index]['transactionBy'];
+                for (var i = 0; i < employeeData.length; i++) {
+                  if (employeeData[i]['_id'].toString() ==
+                      employeeId.toString()) {
+                    employeeName = (employeeData[i]['name'].toString());
+                  } else {}
+                }
                   var parsedDate =
                       DateTime.parse(snapshot.data[index]['transactionDate']);
                   var transDate =
@@ -210,7 +235,7 @@ class _VerifyExpensePendingState extends State<VerifyExpensePending> {
                     tilePadding:
                         EdgeInsets.only(top: 10.0, left: 15.0, right: 10.0),
                     title: Text(
-                      'reimbursementBy',
+                      employeeName.toString(),
                     ),
                     subtitle: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -490,7 +515,12 @@ class VerifyExpenseRejected extends StatefulWidget {
 }
 
 class _VerifyExpenseRejectedState extends State<VerifyExpenseRejected> {
-
+var employeeName, employeeId;
+  @override
+  void initState() {
+    super.initState();
+    fetchEmployeeData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -505,6 +535,13 @@ class _VerifyExpenseRejectedState extends State<VerifyExpenseRejected> {
               return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
+                  employeeId = snapshot.data[index]['transactionBy'];
+                for (var i = 0; i < employeeData.length; i++) {
+                  if (employeeData[i]['_id'].toString() ==
+                      employeeId.toString()) {
+                    employeeName = (employeeData[i]['name'].toString());
+                  } else {}
+                }
                   var parsedDate =
                       DateTime.parse(snapshot.data[index]['transactionDate']);
                   var transDate =
@@ -515,7 +552,7 @@ class _VerifyExpenseRejectedState extends State<VerifyExpenseRejected> {
                     tilePadding:
                         EdgeInsets.only(top: 10.0, left: 15.0, right: 10.0),
                     title: Text(
-                      'reimbursementBy',
+                      employeeName,
                     ),
                     subtitle: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

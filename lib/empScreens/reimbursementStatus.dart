@@ -30,8 +30,6 @@ class _ReimbursementStatusState extends State<ReimbursementStatus> {
     super.initState();
     _getReimbursement();
     fetchManegerData();
-    //print(managerId);
-
     setState(() {
       circular = false;
     });
@@ -105,7 +103,6 @@ class _ReimbursementStatusState extends State<ReimbursementStatus> {
                   icon = Icons.close_rounded;
                   iconColor = Colors.red;
                 }
-                // print(snapshot.data[index]['_id']);
                 return ReimbursementManagerDetail(
                   managerId,
                   icon,

@@ -506,7 +506,14 @@ class ConfirmButton extends StatelessWidget {
 //************************************************Top Up PopUp Screen************************************************************/
 
 Future buildTopUpPopUp(BuildContext context, String managerIncharge, var amount,
-    String description) {
+    String description, var managerData) {
+      var managerName;
+      for (var i = 0; i < managerData.length; i++) {
+      if (managerData[i]['_id'].toString() ==
+          managerIncharge.toString()) {
+        managerName = (managerData[i]['name'].toString());
+      } else {}
+    }
   return showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -566,7 +573,7 @@ Future buildTopUpPopUp(BuildContext context, String managerIncharge, var amount,
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              managerIncharge.toString(),
+                              managerName.toString(),
                               style: TextStyle(
                                 color: kPrimaryColor,
                               ),
@@ -713,7 +720,16 @@ Future buildAddExpensePopUp(
     var amount,
     var date,
     String description,
-    var receiptUrl) {
+    var receiptUrl,
+    var managerData
+    ) {
+      var mgrName;
+      for (var i = 0; i < managerData.length; i++) {
+      if (managerData[i]['_id'].toString() ==
+          managerIncharge.toString()) {
+        mgrName = (managerData[i]['name'].toString());
+      } else {}
+    }
   return showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -773,7 +789,7 @@ Future buildAddExpensePopUp(
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              managerIncharge.toString(),
+                              mgrName.toString(),
                               style: TextStyle(
                                 color: kPrimaryColor,
                               ),

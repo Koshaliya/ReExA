@@ -185,7 +185,7 @@ class _InboxTabState extends State<InboxTab> {
                   child: Column(children: [
                     Expanded(
                       child: Container(
-                        width: 300.0,
+                        width: 400.0,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -284,7 +284,7 @@ class _InboxTabState extends State<InboxTab> {
                               await SharedPreferences.getInstance();
 
                           var getToken = sharedPreferencesX.getString('token');
-                          final http.Response response = await http.post(
+                           await http.post(
                             url,
                             headers: <String, String>{
                               "Content-Type": 'application/json;charset=UTF-8',
@@ -299,8 +299,12 @@ class _InboxTabState extends State<InboxTab> {
                               },
                             ),
                           );
-                          final responseData = json.decode(response.body);
-                          print(responseData);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: const Text('Report has been sent'),
+                            ),
+                          );
+                          
                         },
                         style: ElevatedButton.styleFrom(
                           primary: kPrimaryColor,

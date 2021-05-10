@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+import 'package:ReExA/data/users.dart';
+
 
 class Reimburse extends StatefulWidget {
   static const String id = 'reimburse';
@@ -13,6 +15,13 @@ class Reimburse extends StatefulWidget {
 }
 
 class _ReimburseState extends State<Reimburse> {
+  var employeeName, employeeId;
+  @override
+  void initState() {
+    super.initState();
+    fetchEmployeeData();
+    _getReimburse();
+  }
   Future<List<dynamic>> _getReimburse() async {
     final url = Uri.parse('https://reexapi.herokuapp.com/reimbursementBy');
     var sharedPreferencesX = await SharedPreferences.getInstance();
@@ -54,6 +63,13 @@ class _ReimburseState extends State<Reimburse> {
                 itemCount: snapshot.data.length,
                 scrollDirection: Axis.vertical,
                 itemBuilder: (context, index) {
+                  employeeId = snapshot.data[index]['reimbursementTo'];
+                for (var i = 0; i < employeeData.length; i++) {
+                  if (employeeData[i]['_id'].toString() ==
+                      employeeId.toString()) {
+                    employeeName = (employeeData[i]['name'].toString());
+                  } else {}
+                }
                   var parsedDate =
                       DateTime.parse(snapshot.data[index]['createdAt']);
                   var transDate =
@@ -87,8 +103,6 @@ class _ReimburseState extends State<Reimburse> {
                                 },
                               ),
                             );
-
-                            
                             
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
@@ -114,14 +128,14 @@ class _ReimburseState extends State<Reimburse> {
                                     Padding(
                                       padding: const EdgeInsets.all(4.0),
                                       child: Text(
-                                        'M K Fernando',
+                                        employeeName.toString(),
                                         style: TextStyle(fontSize: 16.0),
                                       ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(4.0),
                                       child: Text(
-                                        transDate,
+                                        transDate.toString(),
                                         style: TextStyle(
                                             color: Colors.grey[700],
                                             fontSize: 16.0),
@@ -160,7 +174,7 @@ class _ReimburseState extends State<Reimburse> {
                                   Padding(
                                     padding: const EdgeInsets.all(4.0),
                                     child: Text(
-                                      'M K Fernando',
+                                      employeeName.toString(),
                                       style: TextStyle(fontSize: 16.0),
                                     ),
                                   ),

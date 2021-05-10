@@ -15,7 +15,8 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   bool circular = true;
-  var currentuser;//var bankdetail;
+  var currentuser;
+  //var bankdetail;
   var nameEdit, dateOfBirth, email, password, mobileNumber, gender;
 //   var accBranch, accNumber, accBank;
 // final myList = [];
@@ -322,76 +323,76 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                             SizedBox(height: 20.0),
-                            Container(
-                              padding: EdgeInsets.only(right: 40.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Text(
-                                      'Account Details',
-                                      style: TextStyle(
-                                          fontSize: 20.0,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w300),
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.all(10.0),
-                                            child: Icon(
-                                              Icons.account_balance_rounded,
-                                              color: kPrimaryColor,
-                                              size: 28,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Column(
-                                        // mainAxisAlignment:
-                                        //     MainAxisAlignment.spaceEvenly,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.only(right: 10.0),
-                                            child: Text(
-                                               'bank',
-                                              style: TextStyle(fontSize: 16),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(right: 10.0),
-                                            child: Text(
-                                              'accBank',
-                                              style: TextStyle(fontSize: 16),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(right: 10.0),
-                                            child: Text(
-                                              'accBranch',
-                                              style: TextStyle(fontSize: 16),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
+                            // Container(
+                            //   padding: EdgeInsets.only(right: 40.0),
+                            //   child: Column(
+                            //     crossAxisAlignment: CrossAxisAlignment.start,
+                            //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            //     children: [
+                            //       Padding(
+                            //         padding: const EdgeInsets.all(10.0),
+                            //         child: Text(
+                            //           'Account Details',
+                            //           style: TextStyle(
+                            //               fontSize: 20.0,
+                            //               color: Colors.black,
+                            //               fontWeight: FontWeight.w300),
+                            //         ),
+                            //       ),
+                            //       Row(
+                            //         mainAxisAlignment:
+                            //             MainAxisAlignment.spaceBetween,
+                            //         children: [
+                            //           Column(
+                            //             mainAxisAlignment:
+                            //                 MainAxisAlignment.spaceEvenly,
+                            //             crossAxisAlignment:
+                            //                 CrossAxisAlignment.start,
+                            //             children: [
+                            //               Padding(
+                            //                 padding: EdgeInsets.all(10.0),
+                            //                 child: Icon(
+                            //                   Icons.account_balance_rounded,
+                            //                   color: kPrimaryColor,
+                            //                   size: 28,
+                            //                 ),
+                            //               ),
+                            //             ],
+                            //           ),
+                            //           Column(
+                            //             // mainAxisAlignment:
+                            //             //     MainAxisAlignment.spaceEvenly,
+                            //             crossAxisAlignment:
+                            //                 CrossAxisAlignment.start,
+                            //             children: [
+                            //               Padding(
+                            //                 padding: EdgeInsets.only(right: 10.0),
+                            //                 child: Text(
+                            //                    'bank',
+                            //                   style: TextStyle(fontSize: 16),
+                            //                 ),
+                            //               ),
+                            //               Padding(
+                            //                 padding: EdgeInsets.only(right: 10.0),
+                            //                 child: Text(
+                            //                   'accBank',
+                            //                   style: TextStyle(fontSize: 16),
+                            //                 ),
+                            //               ),
+                            //               Padding(
+                            //                 padding: EdgeInsets.only(right: 10.0),
+                            //                 child: Text(
+                            //                   'accBranch',
+                            //                   style: TextStyle(fontSize: 16),
+                            //                 ),
+                            //               ),
+                            //             ],
+                            //           ),
+                            //         ],
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
