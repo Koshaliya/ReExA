@@ -78,7 +78,7 @@ class _ReimburseState extends State<Reimburse> {
                   return (snapshot.data[index]['status'] == 'Pending')
                       ? Dismissible(
                         
-                          key: UniqueKey(),
+                          key: Key(snapshot.data[index]),
                           background: myHiddenContainer(),
                           direction: DismissDirection.endToStart,
                           onDismissed: (direction) async {
@@ -124,7 +124,15 @@ class _ReimburseState extends State<Reimburse> {
                                 Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Text(
+                                        'New',
+                                        style: TextStyle(fontSize: 16.0,fontWeight: FontWeight.bold,color: Colors.deepPurple),
+                                      ),
+                                    ),
                                     Padding(
                                       padding: const EdgeInsets.all(4.0),
                                       child: Text(

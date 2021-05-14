@@ -8,12 +8,12 @@ import 'package:ReExA/data/users.dart';
 
 //************************************************************ inbox ***********************************************/
 
-class InboxTab extends StatefulWidget {
+class MgrInboxTab extends StatefulWidget {
   @override
-  _InboxTabState createState() => _InboxTabState();
+  _MgrInboxTabState createState() => _MgrInboxTabState();
 }
 
-class _InboxTabState extends State<InboxTab> {
+class _MgrInboxTabState extends State<MgrInboxTab> {
   var message, title;
   var userName;
 
@@ -22,6 +22,7 @@ class _InboxTabState extends State<InboxTab> {
     super.initState();
     _getInbox();
     fetchUserData();
+    
   }
 
   Future _getInbox() async {
@@ -186,8 +187,8 @@ class _InboxTabState extends State<InboxTab> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            DropDownManager(
-                              hintText: 'Select Manager',
+                            DropDownEmployee(
+                              hintText: 'Select Employee',
                             ),
                             SizedBox(
                               height: 20.0,
@@ -275,6 +276,8 @@ class _InboxTabState extends State<InboxTab> {
                           style: TextStyle(fontSize: 16),
                         ),
                         onPressed: () async {
+                          print(employeeIncharge);
+                          
                           final url =
                               Uri.parse('https://reexapi.herokuapp.com/report');
                           var sharedPreferencesX =
@@ -290,7 +293,7 @@ class _InboxTabState extends State<InboxTab> {
                             },
                             body: jsonEncode(
                               <dynamic, String>{
-                                'receiver': managerIncharge,
+                                'receiver': employeeIncharge,
                                 'title': title,
                                 'message': message,
                               },
@@ -323,12 +326,12 @@ class _InboxTabState extends State<InboxTab> {
 
 //************************************************************ sent ***********************************************/
 
-class SentTab extends StatefulWidget {
+class MgrSentTab extends StatefulWidget {
   @override
-  _SentTabState createState() => _SentTabState();
+  _MgrSentTabState createState() => _MgrSentTabState();
 }
 
-class _SentTabState extends State<SentTab> {
+class _MgrSentTabState extends State<MgrSentTab> {
   var userName;
 
   @override

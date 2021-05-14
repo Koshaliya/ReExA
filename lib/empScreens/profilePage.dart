@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
-import 'package:cloudinary_public/cloudinary_public.dart';
 
 class ProfilePage extends StatefulWidget {
   static const String id = 'profilePage';
@@ -25,7 +24,6 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
     fetchData();
-   // getBankDetail();
     setState(() {
       circular = false;
     });
@@ -111,10 +109,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           left: (MediaQuery.of(context).size.width / 2) - 60,
                           child: CircleAvatar(
                             radius: 40.0,
-                            backgroundImage: AssetImage('images/pro5.jpg'),
-                            //AssetImage('images/pro5.jpg'),
-                            //,
-                            //CloudinaryImage('https://res.cloudinary.com/demo/image/upload/front_face.png');
+                            backgroundImage: currentuser['gender'] =='female' ? AssetImage('images/female.jpg')
+                             :AssetImage('images/male.png'),
                             backgroundColor: kPrimaryColor,
                           ),
                           height: 150.0,

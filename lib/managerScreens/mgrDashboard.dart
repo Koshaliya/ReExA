@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:ReExA/empScreens/report.dart';
+import 'package:ReExA/managerScreens/mgrReport.dart';
 import 'package:ReExA/managerScreens/reimburse.dart';
 import 'package:ReExA/managerScreens/verifyTopUp.dart';
 
@@ -90,7 +90,7 @@ class _MgrDashboardState extends State<MgrDashboard> {
                               buttonIcon: Icons.comment_rounded,
                               label: 'Report',
                               buttonColor: Color(0xFFF169B1),
-                              route: ReportPage.id,
+                              route: MgrReport.id,
                             ),
                             DashboardButton(
                               buttonIcon: Icons.my_library_books_outlined,

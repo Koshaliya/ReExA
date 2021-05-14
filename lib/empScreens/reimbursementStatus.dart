@@ -17,13 +17,11 @@ class ReimbursementStatus extends StatefulWidget {
 
 class _ReimbursementStatusState extends State<ReimbursementStatus> {
   bool circular = true;
-  //List managerData;
   var manager;
   var managerId;
   var managerName;
   var reimbursementStatus;
   var totalExpense;
-  //int lengthOfManagerData;
 
   @override
   void initState() {
@@ -43,7 +41,6 @@ class _ReimbursementStatusState extends State<ReimbursementStatus> {
     var sharedPreferencesX = await SharedPreferences.getInstance();
 
     var getToken = sharedPreferencesX.getString('token');
-    //print(getToken);
     final http.Response response = await http.get(
       url,
       headers: <String, String>{
@@ -54,18 +51,9 @@ class _ReimbursementStatusState extends State<ReimbursementStatus> {
     );
 
     final responseData = json.decode(response.body);
-    //print('response:  ' + responseData.toString());
     return responseData;
   }
 
-  
-
-  // String getManagerName(dynamic id) {
-  //   manager = managerData.firstWhere((manager) => manager['_id'] == id,
-  //       orElse: () => print('No matching element.'));
-  //   managerName = manager['name'];
-  //   return manager['name'];
-  // }
 
   @override
   Widget build(BuildContext context) {

@@ -225,6 +225,7 @@ class _VerifyExpensePendingState extends State<VerifyExpensePending> {
                     employeeName = (employeeData[i]['name'].toString());
                   } else {}
                 }
+                var amountSub=snapshot.data[index]['amount'];
                   var parsedDate =
                       DateTime.parse(snapshot.data[index]['transactionDate']);
                   var transDate =
@@ -394,6 +395,34 @@ class _VerifyExpensePendingState extends State<VerifyExpensePending> {
                                 },
                               ),
                             );
+
+                            if (snapshot.data[index]['paymentMethod'] == 'Card'){
+                              
+                              final url = Uri.parse(
+                                'https://reexapi.herokuapp.com/subAmount/${snapshot.data[index]['transactionBy']}');
+                            var sharedPreferencesX =
+                                await SharedPreferences.getInstance();
+
+                            var getToken =
+                                sharedPreferencesX.getString('token');
+                            await http.patch(
+                              url,
+                              headers: <String, String>{
+                                "Content-Type":
+                                    'application/json;charset=UTF-8',
+                                "Accept": 'application/json',
+                                "Authorization": 'Bearer $getToken'
+                              },
+                              body: jsonEncode(
+                                <dynamic, dynamic>{
+                                  'amount': amountSub ,
+                                },
+                              ),
+                            );
+                              
+                            }
+                            else{print('not card');}
+
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content:

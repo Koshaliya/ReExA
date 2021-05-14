@@ -15,7 +15,7 @@ var managerIncharge,
     paymentMethod,
     amount,
     transactionDate,
-    description;
+    description,employeeIncharge;
 var receiptUrl;
 var amountControlller = TextEditingController();
 var descriptionController = TextEditingController();
@@ -174,7 +174,6 @@ class DropDownEmployee extends StatefulWidget {
 
 class _DropDownEmployeeState extends State<DropDownEmployee> {
   bool circular = true;
-  var employeeData;
 
   @override
   void initState() {
@@ -214,10 +213,10 @@ class _DropDownEmployeeState extends State<DropDownEmployee> {
                     [],
                 onChanged: (newValue) {
                   setState(() {
-                    managerIncharge = newValue;
+                    employeeIncharge = newValue;
                   });
                 },
-                value: managerIncharge,
+                value: employeeIncharge,
               ),
             ),
           );

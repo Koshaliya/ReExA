@@ -152,6 +152,8 @@ class _VerifyTopUpPendingState extends State<VerifyTopUpPending> {
                                 child: ElevatedButton(
                                   child: Text('Accept'),
                                   onPressed: () async {
+                                    var amountAdd=snapshot.data[index]['amount'];
+
                                     final url = Uri.parse(
                                         'https://reexapi.herokuapp.com/topUpRequest/${snapshot.data[index]['_id']}');
                                     var sharedPreferencesX =
@@ -173,6 +175,24 @@ class _VerifyTopUpPendingState extends State<VerifyTopUpPending> {
                                         },
                                       ),
                                     );
+                                    
+                              final urlx = Uri.parse(
+                                'https://reexapi.herokuapp.com/addAmount/${snapshot.data[index]['requestBy']}');
+                            
+                            await http.patch(
+                              urlx,
+                              headers: <String, String>{
+                                "Content-Type":
+                                    'application/json;charset=UTF-8',
+                                "Accept": 'application/json',
+                                "Authorization": 'Bearer $getToken'
+                              },
+                              body: jsonEncode(
+                                <dynamic, dynamic>{
+                                  'amount': amountAdd ,
+                                },
+                              ),
+                            );
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         content: const Text(

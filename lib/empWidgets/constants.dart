@@ -171,7 +171,8 @@ class _SideDrawerState extends State<SideDrawer> {
                           margin: EdgeInsets.only(top: 30.0, bottom: 10.0),
                           child: CircleAvatar(
                             radius: 50.0,
-                            backgroundImage: AssetImage('images/pro5.jpg'),
+                            backgroundImage: currentuser['gender'] =='female' ? AssetImage('images/female.jpg')
+                             :AssetImage('images/male.png'),
                             backgroundColor: kPrimaryColor,
                           ),
                         ),

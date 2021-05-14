@@ -18,7 +18,6 @@ class _VerifyTopUpState extends State<VerifyTopUp> {
     var sharedPreferencesX = await SharedPreferences.getInstance();
 
     var getToken = sharedPreferencesX.getString('token');
-    //print(getToken);
     final http.Response response = await http.get(
       url,
       headers: <String, String>{

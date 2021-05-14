@@ -30,7 +30,6 @@ class _ReimbursementManagerDetailState
       if (widget.managerData[i]['_id'].toString() ==
           widget.managerId.toString()) {
         managerName = (widget.managerData[i]['name'].toString());
-        //print(managerName);
       } else {}
     }
     return Container(

@@ -4,6 +4,7 @@ import 'package:ReExA/empScreens/news.dart';
 import 'package:ReExA/empScreens/profilePage.dart';
 import 'package:ReExA/empScreens/report.dart';
 import 'package:ReExA/managerScreens/mgrDashboard.dart';
+import 'package:ReExA/managerScreens/mgrReport.dart';
 import 'package:ReExA/managerScreens/reimburse.dart';
 import 'package:ReExA/managerScreens/verifyExpense.dart';
 import 'package:ReExA/managerScreens/verifyTopUp.dart';
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
           VerifyTopUp.id: (context) => VerifyTopUp(),
           Reimburse.id: (context) => Reimburse(),
           ReportPage.id:(context) => ReportPage(),
+          MgrReport.id:(context) => MgrReport()
         },
       ),
     );
