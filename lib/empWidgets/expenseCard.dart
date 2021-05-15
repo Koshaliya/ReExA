@@ -384,15 +384,6 @@ class _AttachImageState extends State<AttachImage> {
             ),
           ),
         ),
-        // Container(
-        //   margin: EdgeInsets.only(top: 20.0),
-        //   height: 30.0,
-        //   child: receiptUrl != null ? ''
-        //   : Text(
-        //     "Receipt Attached",
-        //     style: TextStyle(fontSize: 16.0, color: kPrimaryColor),
-        //   ),
-        // ),
       ],
     );
   }

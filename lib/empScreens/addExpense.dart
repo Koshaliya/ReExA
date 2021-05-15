@@ -50,7 +50,6 @@ class _AddExpenseState extends State<AddExpense> {
                     Expanded(
                       child: DropDownManager(
                         hintText: 'Select Manager',
-                        //hintList: manager,
                       ),
                     ),
                     Expanded(
@@ -146,13 +145,6 @@ class _AddExpenseState extends State<AddExpense> {
                     width: 250.0,
                     child: ElevatedButton(
                       onPressed: () async {
-                        print(amount);
-                        print(description);
-                        print(dateCtl.text);
-                        print(managerIncharge);
-                        print(category);
-                        print(paymentMethod);
-                        print(receiptUrl);
                         buildAddExpensePopUp(context,managerIncharge,category,paymentMethod,amount,dateCtl.text,description,receiptUrl,managerData);
                       },
                       child: Text(
@@ -182,7 +174,3 @@ class _AddExpenseState extends State<AddExpense> {
   }
 }
 
-// Future getTokenFromSF() async {
-//   SharedPreferences prefs = await SharedPreferences.getInstance();
-//   return prefs.getString('token');
-// }
