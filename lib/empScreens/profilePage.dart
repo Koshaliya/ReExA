@@ -13,8 +13,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  bool circular = true;
-  var currentuser;
+  var currentuser = {};
   //var bankdetail;
   var nameEdit, dateOfBirth, email, password, mobileNumber, gender;
 //   var accBranch, accNumber, accBank;
@@ -23,10 +22,8 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    fetchData();
-    setState(() {
-      circular = false;
-    });
+   fetchData();
+    
   }
 
   // getBankDetail() async {
@@ -57,10 +54,12 @@ class _ProfilePageState extends State<ProfilePage> {
     
   // }
 
-  void fetchData() async {
+  Future fetchData() async {
     var sharedPreferencesX = await SharedPreferences.getInstance();
     String s = sharedPreferencesX.getString('user');
-    currentuser = jsonDecode(s);
+    setState(() {
+          currentuser = jsonDecode(s);
+    });
   }
 
   @override
@@ -83,9 +82,7 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         centerTitle: true,
       ),
-      body: circular
-          ? Center(child: CircularProgressIndicator())
-          :  ListView(
+      body: ListView(
                 children: [
                   Stack(
                     children: [

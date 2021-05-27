@@ -47,9 +47,9 @@ class _LoginPageState extends State<LoginPage>
       var getUserRole = sharedPreferencesRole.getString('userRole');
 
       if (getUserRole == 'employee') {
-        Navigator.of(context).pushNamed(EmpDashboard.id);
+        Navigator.of(context).pushReplacementNamed(EmpDashboard.id);
       } else if (getUserRole == 'manager') {
-        Navigator.of(context).pushNamed(MgrDashboard.id);
+        Navigator.of(context).pushReplacementNamed(MgrDashboard.id);
       } else {
         print('error');
       }

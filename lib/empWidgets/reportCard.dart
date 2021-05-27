@@ -53,6 +53,7 @@ class _InboxTabState extends State<InboxTab> {
                 initialData: [],
                 future: _getInbox(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  
                   return ListView.builder(
                     itemCount: snapshot.data.length,
                     itemBuilder: (context, index) {

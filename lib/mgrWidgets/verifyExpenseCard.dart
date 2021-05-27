@@ -216,7 +216,7 @@ class _VerifyExpensePendingState extends State<VerifyExpensePending> {
             future: widget.getdetail(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               return ListView.builder(
-                itemCount: snapshot.data.length,
+                itemCount: snapshot.data?.length,
                 itemBuilder: (BuildContext context, int index) {
                   employeeId = snapshot.data[index]['transactionBy'];
                 for (var i = 0; i < employeeData.length; i++) {

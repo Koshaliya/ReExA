@@ -14,7 +14,7 @@ class Newspage extends StatefulWidget {
 
 class _NewspageState extends State<Newspage> {
   bool circular = true;
-  var currentuser;
+  var currentuser={};
 
   @override
   void initState() {
@@ -23,6 +23,7 @@ class _NewspageState extends State<Newspage> {
   }
 
   var username;
+  
   Future<List<dynamic>> _getNews() async {
     final url = Uri.parse('https://reexapi.herokuapp.com/news');
     var sharedPreferencesX = await SharedPreferences.getInstance();
@@ -39,7 +40,8 @@ class _NewspageState extends State<Newspage> {
 
     var sharedPreferencesUserName = await SharedPreferences.getInstance();
     String s = sharedPreferencesUserName.getString('user');
-    var currentuser = jsonDecode(s);
+  currentuser = jsonDecode(s);
+    
     username = currentuser['name'];
 
     final responseData = json.decode(response.body);

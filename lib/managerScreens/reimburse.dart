@@ -63,6 +63,7 @@ class _ReimburseState extends State<Reimburse> {
                 itemCount: snapshot.data.length,
                 scrollDirection: Axis.vertical,
                 itemBuilder: (context, index) {
+                  
                   employeeId = snapshot.data[index]['reimbursementTo'];
                 for (var i = 0; i < employeeData.length; i++) {
                   if (employeeData[i]['_id'].toString() ==
@@ -130,7 +131,7 @@ class _ReimburseState extends State<Reimburse> {
                                       padding: const EdgeInsets.all(4.0),
                                       child: Text(
                                         'New',
-                                        style: TextStyle(fontSize: 16.0,fontWeight: FontWeight.bold,color: Colors.deepPurple),
+                                        style: TextStyle(fontSize: 16.0,fontWeight: FontWeight.bold,color: kPrimaryColor),
                                       ),
                                     ),
                                     Padding(
