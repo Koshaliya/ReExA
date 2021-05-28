@@ -73,6 +73,7 @@ class _ReimbursementStatusState extends State<ReimbursementStatus> {
           initialData: [],
           future: _getReimbursement(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if(snapshot.hasData){
             return ListView.builder(
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
@@ -101,6 +102,10 @@ class _ReimbursementStatusState extends State<ReimbursementStatus> {
                 );
               },
             );
+            }
+            else{
+              return Center(child: CircularProgressIndicator());
+            }
           }),
     );
   }

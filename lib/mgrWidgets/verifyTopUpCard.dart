@@ -30,6 +30,7 @@ class _VerifyTopUpPendingState extends State<VerifyTopUpPending> {
           initialData: [],
           future: widget.getdetail(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if(snapshot.hasData){
             return ListView.builder(
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
@@ -298,6 +299,10 @@ class _VerifyTopUpPendingState extends State<VerifyTopUpPending> {
                     : SizedBox();
               },
             );
+            }
+            else{
+              return Center(child: CircularProgressIndicator());
+            }
           }),
     );
   }
@@ -329,6 +334,7 @@ class _VerifyTopUpApprovedState extends State<VerifyTopUpApproved> {
           initialData: [],
           future: widget.getdetail(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if(snapshot.hasData){
             return ListView.builder(
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
@@ -446,6 +452,10 @@ class _VerifyTopUpApprovedState extends State<VerifyTopUpApproved> {
                     : SizedBox();
               },
             );
+            }
+            else{
+              return Center(child: CircularProgressIndicator());
+            }
           }),
     );
   }
@@ -478,6 +488,7 @@ class _VerifyTopUpRejectedState extends State<VerifyTopUpRejected> {
           initialData: [],
           future: widget.getdetail(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if(snapshot.hasData){
             return ListView.builder(
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
@@ -595,6 +606,10 @@ class _VerifyTopUpRejectedState extends State<VerifyTopUpRejected> {
                     : SizedBox();
               },
             );
+            }
+            else{
+              return Center(child: CircularProgressIndicator());
+            }
           }),
     );
   }

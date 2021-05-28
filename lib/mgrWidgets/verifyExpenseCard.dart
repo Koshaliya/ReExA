@@ -32,6 +32,7 @@ class _VerifyExpenseApprovedState extends State<VerifyExpenseApproved> {
             initialData: [],
             future: widget.getdetail(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if(snapshot.hasData){
               return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -186,6 +187,10 @@ class _VerifyExpenseApprovedState extends State<VerifyExpenseApproved> {
                 : SizedBox();
                 },
               );
+              }
+            else{
+              return Center(child: CircularProgressIndicator());
+            }
             }));
   }
 }
@@ -215,6 +220,7 @@ class _VerifyExpensePendingState extends State<VerifyExpensePending> {
             initialData: [],
             future: widget.getdetail(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if(snapshot.hasData){
               return ListView.builder(
                 itemCount: snapshot.data?.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -528,6 +534,10 @@ class _VerifyExpensePendingState extends State<VerifyExpensePending> {
                 : SizedBox();
                 },
               );
+              }
+            else{
+              return Center(child: CircularProgressIndicator());
+            }
             }));
   }
 }
@@ -561,6 +571,7 @@ var employeeName, employeeId;
             initialData: [],
             future: widget.getdetail(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if(snapshot.hasData){
               return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -715,6 +726,10 @@ var employeeName, employeeId;
                 : SizedBox();
                 },
               );
+              }
+            else{
+              return Center(child: CircularProgressIndicator());
+            }
             }));
   }
 }

@@ -53,7 +53,7 @@ class _InboxTabState extends State<InboxTab> {
                 initialData: [],
                 future: _getInbox(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  
+                  if(snapshot.hasData){
                   return ListView.builder(
                     itemCount: snapshot.data.length,
                     itemBuilder: (context, index) {
@@ -137,6 +137,10 @@ class _InboxTabState extends State<InboxTab> {
                       );
                     },
                   );
+                  }
+            else{
+              return Center(child: CircularProgressIndicator());
+            }
                 }),
           ),
         ),
@@ -365,6 +369,7 @@ class _SentTabState extends State<SentTab> {
         initialData: [],
         future: _getSent(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if(snapshot.hasData){
           return ListView.builder(
             itemCount: snapshot.data.length,
             itemBuilder: (context, index) {
@@ -448,6 +453,10 @@ class _SentTabState extends State<SentTab> {
               );
             },
           );
+          }
+            else{
+              return Center(child: CircularProgressIndicator());
+            }
         });
   }
 }

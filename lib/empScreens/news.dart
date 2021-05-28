@@ -15,14 +15,18 @@ class Newspage extends StatefulWidget {
 class _NewspageState extends State<Newspage> {
   bool circular = true;
   var currentuser={};
+  // var username;
 
   @override
   void initState() {
     super.initState();
     _getNews();
+    // fetchData();
+    setState(() {
+      circular=false;
+    });
   }
 
-  var username;
   
   Future<List<dynamic>> _getNews() async {
     final url = Uri.parse('https://reexapi.herokuapp.com/news');
@@ -38,18 +42,19 @@ class _NewspageState extends State<Newspage> {
       },
     );
 
-    var sharedPreferencesUserName = await SharedPreferences.getInstance();
-    String s = sharedPreferencesUserName.getString('user');
-  currentuser = jsonDecode(s);
-    
-    username = currentuser['name'];
-
     final responseData = json.decode(response.body);
-    setState(() {
-      circular = false;
-    });
     return responseData;
   }
+
+// Future fetchData() async {
+//     var sharedPreferencesX = await SharedPreferences.getInstance();
+//     String s = sharedPreferencesX.getString('user');
+//     setState(() {
+//           currentuser = jsonDecode(s);
+//     });
+//     username=currentuser['username'];
+//   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +84,7 @@ class _NewspageState extends State<Newspage> {
                 circular
                     ? Center(child: CircularProgressIndicator())
                     : Text(
-                        'Hello, $username',
+                        'Hello, Welcome',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 25),
                       ),
@@ -101,6 +106,7 @@ class _NewspageState extends State<Newspage> {
               initialData: [],
               future: _getNews(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if(snapshot.hasData){
                 return Expanded(
                   child: ListView.builder(
                       scrollDirection: Axis.vertical,
@@ -149,6 +155,10 @@ class _NewspageState extends State<Newspage> {
                         );
                       }),
                 );
+                }
+                else{
+                  return Center(child: CircularProgressIndicator());
+                }
               }),
         ],
       ),
@@ -156,10 +166,3 @@ class _NewspageState extends State<Newspage> {
   }
 }
 
-// Color(0xFFF7D794),
-
-//  Color(0xFF64CDDB),
-
-//  Color(0xFF596174),
-
-//  Color(0xFF786FA6),
